@@ -63,13 +63,10 @@ const TeamCard: React.FC<{
   const [scanX, setScanX] = useState(0);
   const [imgIndex, setImgIndex] = useState(0);
 
-  // Logic: Interactive Scrubbing (Scanning)
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isActive) return;
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    setScanX(x); // Track mouse for the visual scanner line
+  // Logic: Interactive Scrubbing (Scanning) - Unified for Mouse and Touch
+  const processInput = (clientX: number, rect: DOMRect) => {
+    const x = clientX - rect.left;
+    setScanX(x); // Track position for the visual scanner line
 
     // Map horizontal position to image index
     if (allImages.length > 1) {
@@ -84,7 +81,25 @@ const TeamCard: React.FC<{
     }
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isActive) return;
+    processInput(e.clientX, e.currentTarget.getBoundingClientRect());
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    // Prevent default only if necessary to stop scrolling (optional, but usually better UX to allow scroll + scrub)
+    // e.preventDefault(); 
+    if (!isActive) return;
+    processInput(e.touches[0].clientX, e.currentTarget.getBoundingClientRect());
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    onActivate(index);
+    // Calculate immediate position on first touch so it doesn't wait for a move
+    processInput(e.touches[0].clientX, e.currentTarget.getBoundingClientRect());
+  };
+
+  const handleDeactivate = () => {
     onDeactivate();
     setCurrentImg(allImages[0]); // Reset to identity
     setImgIndex(0);
@@ -93,16 +108,21 @@ const TeamCard: React.FC<{
   return (
     <div 
         className={`
-            relative border-b md:border-b-0 md:border-r border-white/10 overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] select-none
+            relative border-b md:border-b-0 md:border-r border-white/10 overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] select-none touch-pan-y
             ${isActive ? 'flex-[5] opacity-100 grayscale-0' : 'flex-[1] opacity-80 md:opacity-50 grayscale hover:opacity-80 hover:grayscale-0'}
         `}
         onMouseEnter={() => onActivate(index)}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={handleDeactivate}
         onMouseMove={handleMouseMove}
-        onTouchStart={() => onActivate(index)} // Ensure touch responsiveness
+        
+        // Mobile Touch Events
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleDeactivate}
+        onTouchCancel={handleDeactivate}
     >
         {/* BACKGROUND IMAGE */}
-        <div className="absolute inset-0 bg-black">
+        <div className="absolute inset-0 bg-black pointer-events-none">
              <img 
                 src={currentImg} 
                 alt={member.name}
@@ -116,8 +136,8 @@ const TeamCard: React.FC<{
         {/* SCANNER LINE UI (The "WOW" Factor) */}
         {isActive && allImages.length > 1 && (
             <div 
-                className="absolute top-0 bottom-0 w-[2px] bg-brand-accent z-20 pointer-events-none shadow-[0_0_15px_#00FFFF] mix-blend-screen"
-                style={{ left: scanX }}
+                className="absolute top-0 bottom-0 w-[2px] bg-brand-accent z-20 pointer-events-none shadow-[0_0_15px_#00FFFF] mix-blend-screen transition-transform duration-75 ease-out"
+                style={{ transform: `translateX(${scanX}px)` }}
             >
                 {/* Top Glow */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-32 bg-gradient-to-b from-brand-accent/40 to-transparent"></div>
@@ -137,10 +157,10 @@ const TeamCard: React.FC<{
         </div>
 
         {/* EXPANDED CONTENT (Active State) */}
-        <div className={`absolute inset-0 flex flex-col justify-end p-6 md:p-12 transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`absolute inset-0 flex flex-col justify-end p-6 md:p-12 transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} pointer-events-none`}>
             
             {/* Name & Role with DECODING EFFECT */}
-            <div className="mb-4 md:mb-6 pointer-events-none">
+            <div className="mb-4 md:mb-6">
                 <div className="text-brand-accent font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase mb-2 flex items-center gap-2">
                     <span className={`w-2 h-2 bg-brand-accent rounded-full ${imgIndex > 0 ? 'animate-ping' : 'animate-pulse'}`}></span>
                     {/* Re-trigger scramble on image change for dynamic feel */}
@@ -153,7 +173,7 @@ const TeamCard: React.FC<{
             </div>
 
             {/* Stats Grid (HUD) - ANIMATED BARS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8 max-w-2xl border-t border-white/10 pt-4 md:pt-6 pointer-events-none">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8 max-w-2xl border-t border-white/10 pt-4 md:pt-6">
                 {member.stats.map((stat, i) => (
                     <div key={i} className="group/stat">
                         <div className="flex justify-between text-xs text-brand-light font-mono mb-1 md:mb-2">
@@ -174,8 +194,8 @@ const TeamCard: React.FC<{
                 ))}
             </div>
 
-            {/* Socials */}
-            <div className="flex gap-4 relative z-30">
+            {/* Socials - Enable pointer events for links */}
+            <div className="flex gap-4 relative z-30 pointer-events-auto">
                  {member.social.map(link => (
                     <a key={link.platform} href={link.url} className="text-brand-muted hover:text-white transition-colors p-2 border border-transparent hover:border-white/20 rounded-full">
                         <SocialIcons platform={link.platform} className="w-5 h-5" />

@@ -5,31 +5,36 @@ declare const gsap: any;
 
 // Content for the new process showcase section
 const processContent = {
-  title: "From Idea to Motion",
-  simplePrompt: "A dynamic, photorealistic video of a whisk mixing ingredients in a bowl, creating a delicious sauce, with dramatic lighting.",
-  technicalPrompt: "Cinematic, ultra-realistic photo, Kodak Portra 400 film. Mood: pensive, mysterious.A 50-year-old rugged man with a backpack and a small white robot stand back to viewer on a grassy hill, sharp focus.Background: A smooth, flat, non-reflective, luminous green chroma key studio wall, no distortions.Dramatic low-key lighting silhouettes man and robot against the uniform green.Foreground grass softly lit with gentle shadows.Shallow depth of field: man/robot extremely sharp, chroma key flat in soft focus.Slightly high-angle shot, muted greens on hill and bright chroma key.",
-  steps: [
-    {
-      id: 1,
-      title: "1. Generating Key Assets",
-      description: "The main subject, the whisk, is generated with precise detail and realistic textures based on the prompt's description."
-    },
-    {
-      id: 2,
-      title: "2. Building the Scene",
-      description: "Next, the environment and other elements are created, like this bowl with raw ingredients, ready for action."
-    },
-    {
-      id: 3,
-      title: "3. Compositing a Keyframe",
-      description: "The elements are combined into a single, cohesive image that serves as the visual anchor and starting point for the animation."
-    },
-    {
-      id: 4,
-      title: "4. Animating the Final Shot",
-      description: "Finally, the keyframe is brought to life. The AI generates the motion, creating a fluid and captivating video sequence."
-    }
-  ],
+title: "De la Idea al Movimiento",
+
+// Prompt Simple: Lo que el usuario pediría para obtener este resultado final
+simplePrompt: "Una escena cinemática de un viajero y su pequeño robot mirando hacia una metrópolis futurista en las nubes, con luces de neón y logotipos corporativos gigantes.",
+
+// Prompt Técnico: He copiado y adaptado lo que se ve en tu captura (image_ef0ade.jpg)
+technicalPrompt: "Foto cinemática ultra realista, estilo Kodak Portra 400. Ambiente pensativo y misterioso. Un hombre robusto de 50 años con mochila y un pequeño robot blanco, de espaldas en una colina de hierba. Fondo: Pantalla verde croma de estudio, iluminación dramática que siluetea a los personajes. Enfoque nítido en los sujetos, fondo plano desenfocado.",
+
+steps: [
+  {
+    id: 1,
+    title: "1. Creando a los Protagonistas",
+    description: "Todo empieza con los personajes. Generamos al viajero y a su robot con un nivel de detalle fotográfico sobre un fondo verde, dejándolos listos para ser transportados a cualquier universo."
+  },
+  {
+    id: 2,
+    title: "2. Construyendo el Mundo",
+    description: "Mientras tanto, diseñamos el escenario. Creamos esa impresionante ciudad futurista entre la niebla, definiendo la atmósfera, las luces de neón y la arquitectura imposible."
+  },
+  {
+    id: 3,
+    title: "3. La Fusión Perfecta",
+    description: "Aquí ocurre la magia de la composición. Integramos a los personajes dentro del paisaje urbano, ajustando las luces y sombras para que parezca que siempre estuvieron allí parados."
+  },
+  {
+    id: 4,
+    title: "4. ¡Dándole Vida!",
+    description: "El toque final: movimiento. Hacemos que la niebla fluya, que las luces parpadeen y que la cámara se mueva sutilmente. Ya no es una imagen estática, es una historia viva."
+  }
+],
   assets: {
     image2: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjz2KndddO5ApH9P2Ic8li8zIdMYMxyhCxxXlJPDFXA1zSNNGI0szA6DGTxIvfT_zUtsJfAK-UHRtdVP9CzksJePX9Rj_n15LBQAsDUbJLYuRPaBV9U2UjsbFcBbKiMR6GmldN3TcoxG-tE_XHZzVwRGBTABRRINB-m7yi_-jcBLObtXwOzS49DwcJxBpZ1/s1600/Gemini_Generated_Image_k0e5hek0e5hek0e5.png',
     image3: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhW0C7_WUTw0stvYIc9HhhzTlcQpuv48Z9FnRSu9UmOGGWzJhms8AxwHvBmN89KbEf5Q-2RznNiUYjXoogyTmKT8ZmGybwb2jFwOTg06mT-yks6iKzmAtXpphV6XJMsHzlVbkQ4vM7l3laqwh5yQsZcitAcB2uF9cvnO9NVBptbIPOsw2TwaP8jkiZUK6b4/s1600/Whisk_6c2b320cb27dbe58ebc41b7da48239a3dr.png',
@@ -63,7 +68,7 @@ const Comparison: React.FC = () => {
                     pin: pinnedContainerRef.current,
                     scrub: 1, // Increased scrub for smoother, heavier feel
                     start: 'top top',
-                    end: `+=${window.innerHeight * 15}` // Increased to 15x for much slower pacing
+                    end: `+=${window.innerHeight * 10}` // Reduced to 10x per user request for better mobile pacing
                 }
             });
 

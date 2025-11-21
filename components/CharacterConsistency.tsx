@@ -3,8 +3,8 @@ import React, { useEffect, useRef } from 'react';
 declare const Swiper: any;
 
 const consistencyContent = {
-  title: "Consistencia de Personaje con Nano Banana",
-  description: "Gracias a los avances en la generación de imágenes, ahora podemos crear múltiples escenas y poses manteniendo la identidad y rasgos del personaje principal, una capacidad clave para la narrativa visual y el branding.",
+  title: "Consistencia de Personaje",
+  description: "Gracias a los avances en la generación de imágenes, ahora podemos crear múltiples escenas y poses manteniendo la identidad y rasgos del personaje principal, una capacidad clave para la narrativa visual.",
   slides: [
     {
       image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh53GERrGpL1wOodX-JQAgyaVthDbppyFLPnjBadlJL5K5DnbcuMY-7KxyousjCfiQzidKjkkq89fmNRgoI7jEb30C96r4eBJY-H0QDrZvb_DGy5Yo1UQpzPLPR6wM3Lq0V3G0Uytxq5so7fOsIy9Rqtxuqw6stUce-xtETRpXEiZFGPtesAxalSG92Lx4/s1024/s1.webp',

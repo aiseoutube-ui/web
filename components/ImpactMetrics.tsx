@@ -136,11 +136,11 @@ const ImpactMetrics: React.FC = () => {
              </h2>
           </div>
           <h3 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-            La IA no es una amenaza.<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-white">Es tu Copiloto.</span>
+            Tú marcas el rumbo <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-white">La IA la materializa.</span>
           </h3>
           <p className="text-brand-light/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            Transformamos el miedo en oportunidad. Nuestra tecnología actúa como un multiplicador de fuerza para tu equipo, liberándolos para hacer lo imposible.
+            Recupera el control total. Nuestra tecnología elimina la fricción técnica para que tu equipo pueda enfocarse 100% en dirigir, imaginar y crear, mientras nosotros nos encargamos de hacerlo posible.
           </p>
         </div>
 
