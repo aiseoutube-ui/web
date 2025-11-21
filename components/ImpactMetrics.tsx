@@ -33,31 +33,32 @@ const ImpactMetrics: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. ENTRADA CINEMÁTICA (WOW FACTOR)
-      // Usamos fromTo para garantizar el estado inicial invisible
-      gsap.fromTo('.metric-card', 
-        { 
-          autoAlpha: 0, // Visibility + Opacity
-          y: 150,       // Empiezan mucho más abajo
-          scale: 0.6,   // Empiezan más pequeñas
-          rotationX: -45, // Ligera inclinación 3D inicial
-        },
-        {
+      // 1. SETUP INITIAL STATE (Force hidden immediately)
+      gsap.set('.metric-card', { 
+        autoAlpha: 0, 
+        y: 100, 
+        scale: 0.6, 
+        rotationX: -45 
+      });
+
+      // 2. ENTRADA CINEMÁTICA (WOW FACTOR)
+      gsap.to('.metric-card', {
           autoAlpha: 1,
           y: 0,
           scale: 1,
           rotationX: 0,
-          duration: 1.8, // Duración larga para apreciar el rebote
-          stagger: 0.25, // Retraso entre cada tarjeta
-          ease: 'elastic.out(1, 0.5)', // Rebote muy elástico y jugoso
+          duration: 1.2,
+          stagger: 0.2,
+          ease: 'elastic.out(1, 0.75)',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 80%', // Empieza cuando la sección entra al 80% de la pantalla
+            start: 'top 65%', // Waits until the section is 65% into the viewport (more strict)
+            toggleActions: 'play none none reverse' // Reverses if you scroll back up
           }
         }
       );
 
-      // 2. ANIMACIÓN DE NÚMEROS (COUNT UP)
+      // 3. ANIMACIÓN DE NÚMEROS (COUNT UP)
       metrics.forEach((metric) => {
         const counter = { val: 0 };
         const element = document.getElementById(`counter-${metric.id}`);
@@ -65,11 +66,12 @@ const ImpactMetrics: React.FC = () => {
         if (element) {
             gsap.to(counter, {
                 val: metric.value,
-                duration: 3, // Lento para generar anticipación
+                duration: 2.5, 
                 ease: 'power2.out', 
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 80%',
+                    start: 'top 65%', // Sync with cards
+                    toggleActions: 'play none none reverse'
                 },
                 onUpdate: () => {
                     element.innerText = Math.floor(counter.val) + metric.suffix;
@@ -78,7 +80,7 @@ const ImpactMetrics: React.FC = () => {
         }
       });
 
-      // 3. ANIMACIÓN DE FONDO (PULSO)
+      // 4. ANIMACIÓN DE FONDO (PULSO)
       gsap.to('.bg-blob', {
         y: 'random(-30, 30)',
         x: 'random(-30, 30)',
@@ -92,7 +94,7 @@ const ImpactMetrics: React.FC = () => {
 
     }, sectionRef);
 
-    // 4. EFECTO SPOTLIGHT INTERACTIVO (MOUSE MOVE)
+    // 5. EFECTO SPOTLIGHT INTERACTIVO (MOUSE MOVE)
     const handleMouseMove = (e: MouseEvent) => {
       if (!cardsRef.current) return;
       
@@ -117,7 +119,6 @@ const ImpactMetrics: React.FC = () => {
   }, []);
 
   return (
-    // NOTA: Eliminé la clase 'section-reveal' para evitar conflictos con la animación global
     <section id="impact" ref={sectionRef} className="py-24 md:py-40 bg-brand-primary relative overflow-hidden perspective-1000">
       
       {/* Background decorative elements */}

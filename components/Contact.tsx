@@ -93,6 +93,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const [aiSpeaking, setAiSpeaking] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSecureLoading, setIsSecureLoading] = useState(false); // New state for initial load
+  const [latency, setLatency] = useState<number>(0); // Speed measurement
   
   // Live Data Extraction States
   const [readyToSubmit, setReadyToSubmit] = useState(false);
@@ -121,6 +122,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   
   const isRecordingRef = useRef(false);
   const aiSpeakingRef = useRef(false);
+  const lastAudioInputTimeRef = useRef<number>(0); // For calculating latency
 
   useEffect(() => { isFocusingRef.current = isFocusing; }, [isFocusing]);
   useEffect(() => { isRecordingRef.current = isRecording; }, [isRecording]);
@@ -452,6 +454,14 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                       if (audioData && outputAudioContextRef.current && outputGainRef.current) {
                           const ctx = outputAudioContextRef.current;
                           setIsProcessing(false);
+                          
+                          // Calculate Latency approximation
+                          if (lastAudioInputTimeRef.current > 0) {
+                            const now = Date.now();
+                            setLatency(now - lastAudioInputTimeRef.current);
+                            lastAudioInputTimeRef.current = 0; // Reset
+                          }
+
                           nextStartTimeRef.current = Math.max(nextStartTimeRef.current, ctx.currentTime);
 
                           const arrayBuffer = base64ToArrayBuffer(audioData.data);
@@ -549,6 +559,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
               sessionRef.current.sendRealtimeInput({
                   media: { mimeType: "audio/pcm;rate=16000", data: base64Params }
               });
+              // Timestamp for latency tracking
+              lastAudioInputTimeRef.current = Date.now();
           };
           source.connect(processor);
           processor.connect(ctx.destination);
@@ -692,6 +704,12 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                  (aiSpeaking ? 'HABLANDO...' : 
                                  (isProcessing ? 'ANALIZANDO...' : 'CONECTADO'))}
                             </span>
+                            {/* LATENCY METER - SPEED TEST TOOL */}
+                            {latency > 0 && (
+                              <span className="ml-2 text-[10px] font-mono text-brand-muted border-l border-white/20 pl-2">
+                                {latency}ms
+                              </span>
+                            )}
                         </div>
                     </div>
 

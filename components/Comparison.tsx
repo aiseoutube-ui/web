@@ -68,7 +68,7 @@ const Comparison: React.FC = () => {
                     pin: pinnedContainerRef.current,
                     scrub: 1, // Increased scrub for smoother, heavier feel
                     start: 'top top',
-                    end: `+=${window.innerHeight * 10}` // Reduced to 10x per user request for better mobile pacing
+                    end: `+=${window.innerHeight * 7}` // Reduced to 7x for faster mobile pacing
                 }
             });
 
@@ -137,7 +137,7 @@ const Comparison: React.FC = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative bg-brand-primary">
+        <section id="comparison" ref={sectionRef} className="relative bg-brand-primary">
             {/* Using min-h-[100dvh] helps mobile browsers address bar resizing */}
             <div ref={pinnedContainerRef} className="min-h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-20 items-center">
