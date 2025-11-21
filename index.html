@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PRIMARY SEO -->
+    <title>The Last Art | Agencia Creativa de Inteligencia Artificial</title>
+    <meta name="title" content="The Last Art | Agencia Creativa de Inteligencia Artificial">
+    <meta name="description" content="Transformamos marcas fusionando arte y algoritmos. Agencia de publicidad especializada en contenido generado por IA, video sintético y experiencias digitales inmersivas.">
+    <meta name="keywords" content="Agencia IA, Publicidad Artificial, Generación de Video AI, Diseño Generativo, Marketing Futuro, Gemini API, Creatividad Sintética">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <meta name="author" content="The Last Art">
+    <link rel="canonical" href="https://thelastart.ai/" />
+
+    <!-- OPEN GRAPH / FACEBOOK / LINKEDIN -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thelastart.ai/">
+    <meta property="og:title" content="The Last Art | El Futuro de la Creatividad">
+    <meta property="og:description" content="Descubre cómo la Inteligencia Artificial potencia la narrativa visual. Videos, imágenes y experiencias web de última generación.">
+    <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhaglXGCfTfSx6bIN3Ym88Aw_09Xv2X62ytp_mMSyFWHEmvPl-l_tly6GtynOqQBBYSSfdnVGCoVIhM57AGFlM8W0IPuByO3vVA0VIX-K_AMNmSIlYV0_bCKIdKS4c5r7neZfyHRhS8Vki3AZluy9kX-mmjgQoOoM4NPYZN7X4Ompp2NDki-Elbbrze6uis/s769/cb971b78-d8b3-45a3-93c9-b9e2570d4ec2.webp">
+
+    <!-- TWITTER -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://thelastart.ai/">
+    <meta property="twitter:title" content="The Last Art | Agencia Creativa de IA">
+    <meta property="twitter:description" content="Fusionamos arte y algoritmos. Agencia líder en contenido generado por IA.">
+    <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhaglXGCfTfSx6bIN3Ym88Aw_09Xv2X62ytp_mMSyFWHEmvPl-l_tly6GtynOqQBBYSSfdnVGCoVIhM57AGFlM8W0IPuByO3vVA0VIX-K_AMNmSIlYV0_bCKIdKS4c5r7neZfyHRhS8Vki3AZluy9kX-mmjgQoOoM4NPYZN7X4Ompp2NDki-Elbbrze6uis/s769/cb971b78-d8b3-45a3-93c9-b9e2570d4ec2.webp">
+
+    <!-- PRELOAD CRITICAL ASSETS -->
+    <link rel="preload" href="https://aiseoutube-ui.github.io/thelastart/video.mp4" as="video" type="video/mp4">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'brand-primary': '#0A0A0A',
+              'brand-secondary': '#1A1A1A',
+              'brand-accent': '#00FFFF',
+              'brand-light': '#F5F5F5',
+              'brand-muted': '#888888',
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+              'pulse-subtle': 'pulseSubtle 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1)',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              pulseSubtle: {
+                '0%, 100%': { opacity: '0.7' },
+                '50%': { opacity: '1' },
+              }
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      /* --- GLOBAL STYLES --- */
+      * { box-sizing: border-box; }
+      html {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          scroll-behavior: smooth; /* Native smooth scroll for anchors */
+      }
+      body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden; 
+          margin: 0;
+          padding: 0;
+          background-color: #000000;
+          color: #e0e0e0;
+          font-family: 'Inter', sans-serif;
+          overscroll-behavior: none;
+      }
+      /* --- SCRAMBLE PRELOADER --- */
+      #scramble-preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        background-color: #000;
+        opacity: 1;
+        visibility: visible;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-container, .percentage-counter {
+        opacity: 0; /* Initially hidden */
+        visibility: hidden; /* Initially hidden */
+      }
+      #start-orb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        z-index: 10001; /* Above other preloader elements but below cursor */
+        cursor: pointer;
+        will-change: transform; /* Performance hint for animation */
+        opacity: 0; /* Hidden until JS positions it */
+      }
+
+      .hero-container {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          height: 100vh;
+          width: 100%; 
+          padding: 2rem;
+      }
+      #target-text {
+          font-family: 'Archivo', sans-serif;
+          font-size: clamp(2rem, 6vw, 5.5rem);
+          font-weight: 700;
+          line-height: 1.1;
+          margin: 0;
+          min-height: 1.2em;
+          white-space: pre-wrap;
+          color: #ffffff;
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+      .percentage-counter {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        font-family: 'Archivo', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #ffffff;
+        letter-spacing: 0.1em;
+      }
+      .scramble-char {
+          color: #ffffff; 
+          display: inline-block;
+          font-weight: bold;
+          text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px rgba(255, 255, 255, 0.7);
+          animation: panic-flicker 0.1s infinite;
+      }
+      .scramble-char.red-glitch {
+          color: transparent; 
+          -webkit-text-stroke: 1px #E20000; 
+          text-stroke: 1px #E20000; 
+          font-weight: 500; 
+          text-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 12px rgba(255, 0, 0, 0.4);
+          animation: none;
+      }
+      @keyframes panic-flicker {
+          0% { opacity: 1; filter: brightness(1.5); }
+          50% { opacity: 0.6; filter: brightness(1); }
+          100% { opacity: 1; filter: brightness(1.5); }
+      }
+      .is-glitching {
+          animation: shake-hard 0.2s infinite;
+      }
+      @keyframes shake-hard {
+          0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-1px, -1px); }
+          20% { transform: translate(1px, 1px); } 30% { transform: translate(-1px, 1px); }
+          40% { transform: translate(1px, -1px); } 50% { transform: translate(-1px, 0); }
+          60% { transform: translate(1px, 0); } 70% { transform: translate(0, 1px); }
+          80% { transform: translate(0, -1px); } 90% { transform: translate(-1px, 1px); }
+      }
+      .scanline {
+          width: 100%; height: 100%; z-index: 99;
+          background: linear-gradient(0deg, rgba(0,0,0,0) 50%, rgba(255, 255, 255, 0.01) 50%), linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+          background-size: 100% 3px, 3px 100%; position: fixed; top: 0; left: 0;
+          pointer-events: none;
+      }
+
+      /* --- REACT APP CONTAINER --- */
+      #root {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      /* --- SWIPER & CURSOR STYLES --- */
+      ::selection { background-color: #00FFFF; color: #0A0A0A; }
+      .swiper-button-next, .swiper-button-prev { color: #00FFFF !important; transition: transform 0.3s ease; }
+      .swiper-button-next:hover, .swiper-button-prev:hover { transform: scale(1.2); }
+      .swiper-pagination-bullet-active { background: #00FFFF !important; }
+      .custom-cursor { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
+      .cursor-dot { width: 8px; height: 8px; background-color: white; border-radius: 50%; transform: translate(-50%, -50%); }
+      .cursor-outline { width: 40px; height: 40px; border: 2px solid white; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-width 0.3s; }
+      .cursor-outline.hovered { width: 60px; height: 60px; border-width: 2px; }
+      
+      /* UTILITY: Hide Scrollbar */
+      .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+      }
+      .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+      }
+
+      /* Hide default cursor only on devices that can support the custom cursor */
+      @media (min-width: 768px) and (pointer: fine) {
+        body, .cursor-pointer-grow, .cursor-pointer-grow * {
+          cursor: none;
+        }
+      }
+
+      /* --- COMPARISON SECTION --- */
+      .comparisonSection {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .comparisonImage {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+      }
+      .comparisonImage img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      /* --- CONTACT SECTION --- */
+      .contact-orb {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #5DFDFD, #004D4D 70%, #0A0A0A 100%);
+        box-shadow: 0 0 15px 5px rgba(0, 255, 255, var(--glow-opacity, 0.2));
+        position: relative;
+        will-change: transform, box-shadow;
+        transition: background 0.3s, box-shadow 0.3s;
+      }
+      .orb-error {
+        background: radial-gradient(circle at 30% 30%, #ff8080, #800000 70%, #0A0A0A 100%);
+        box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
+      }
+      .contact-input {
+        background-color: transparent;
+        border: 1px solid #333;
+        color: #F5F5F5;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+      .contact-input:focus {
+        outline: none;
+        border-color: #00FFFF;
+        box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.2);
+      }
+      .submit-btn {
+        background-color: #0A0A0A;
+        color: #F5F5F5;
+        border: 1px solid #F5F5F5;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+      .submit-btn:hover {
+        background-color: #00FFFF;
+        color: #0A0A0A;
+        border-color: #00FFFF;
+      }
+      .secondary-btn {
+        background-color: transparent;
+        color: #F5F5F5;
+        border: 1px solid #333;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        transition: all 0.3s ease;
+      }
+      .secondary-btn:hover {
+        border-color: #F5F5F5;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "url": "https://aistudiocdn.com/url@^0.11.4",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.2",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+</head>
+  <body class="preloader-active">
+    <!-- SCRAMBLE PRELOADER -->
+    <div id="scramble-preloader">
+      <audio id="bg-audio" src="https://cdn.pixabay.com/audio/2025/06/06/audio_d5026f8df6.mp3" loop></audio>
+      <audio id="loop-audio" src="https://cdn.pixabay.com/audio/2022/03/17/audio_5f88a20fde.mp3"></audio>
+      <audio id="glitch-audio" src="https://cdn.pixabay.com/audio/2022/03/10/audio_caa9fe2ba1.mp3"></audio>
+      <audio id="transition-audio" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2ab03de167.mp3"></audio>
+      
+      <div id="start-orb" class="contact-orb"></div>
+
+      <div class="scanline"></div>
+      <div class="hero-container">
+          <h1 id="target-text"></h1>
+      </div>
+      <div class="percentage-counter">0%</div>
+    </div>
+    
+    <!-- MAIN REACT APP -->
+    <div id="root"></div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+    
+    <script>
+        class TextScramble {
+            constructor(el, glitchAudioEl) {
+                this.el = el;
+                this.glitchEl = glitchAudioEl;
+                this.chars = '█▓▒░▀▄▌▐ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                this.glitchPlayCount = 0;
+                this.maxGlitches = Math.floor(Math.random() * 3);
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 80) + 40;
+                    this.queue.push({ from, to, start, end, char: from });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    let charClass = '';
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (Math.random() < 0.2) char = this.chars[Math.floor(Math.random() * this.chars.length)];
+                        if (this.glitchEl && Math.random() < 0.05) charClass = ' red-glitch';
+                        if (this.glitchEl && this.glitchPlayCount < this.maxGlitches && Math.random() < 0.01 && window.isAudioReady) {
+                            if (this.glitchEl.paused) {
+                                if (isFinite(this.glitchEl.duration) && this.glitchEl.duration > 0) this.glitchEl.currentTime = Math.random() * this.glitchEl.duration;
+                                else this.glitchEl.currentTime = 0;
+                                this.glitchEl.play().catch(e => {});
+                                this.glitchPlayCount++;
+                            }
+                        }
+                        output += `<span class="scramble-char${charClass}">${char}</span>`;
+                        this.queue[i].char = char;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.innerHTML = output;
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloaderEl = document.getElementById('scramble-preloader');
+            const rootEl = document.getElementById('root');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const skipIntro = urlParams.get('skipIntro') === 'true';
+
+            // --- DEVELOPMENT: Set to true to skip preloader, false to enable it ---
+            const forceSkip = true;
+
+            // Check if the intro has been seen before or if skipIntro is true
+            if (forceSkip || skipIntro || localStorage.getItem('hasSeenIntro') === 'true') {
+                // If yes, skip the preloader immediately
+                preloaderEl.style.display = 'none';
+                rootEl.style.opacity = '1';
+                rootEl.style.visibility = 'visible';
+                document.body.classList.remove('preloader-active');
+                
+                // Use a small timeout to ensure the DOM is fully ready for JS manipulation in React
+                setTimeout(() => {
+                    window.dispatchEvent(new CustomEvent('preloaderFinished'));
+                }, 10);
+
+            } else {
+                // If it's the first visit, run the full preloader sequence
+                const bgAudioEl = document.getElementById('bg-audio');
+                const loopAudioEl = document.getElementById('loop-audio');
+                const glitchAudioEl = document.getElementById('glitch-audio');
+                const transitionAudioEl = document.getElementById('transition-audio');
+                window.isAudioReady = false;
+
+                const unlockAudio = () => {
+                    if (window.isAudioReady) return;
+                    bgAudioEl.play().catch(e => {});
+                    loopAudioEl.play().catch(e => {});
+                    glitchAudioEl.play().then(() => { glitchAudioEl.pause(); glitchAudioEl.currentTime = 0; }).catch(e => {});
+                    transitionAudioEl.play().then(() => { transitionAudioEl.pause(); transitionAudioEl.currentTime = 0; }).catch(e => {});
+                    window.isAudioReady = true;
+                };
+                
+                const startMainAppTransition = () => {
+                    if(window.isAudioReady) {
+                      transitionAudioEl.currentTime = 0;
+                      transitionAudioEl.volume = 0.8;
+                      transitionAudioEl.play().catch(e => {});
+                      gsap.to([bgAudioEl, loopAudioEl], { volume: 0, duration: 1 });
+                    }
+
+                    const tl = gsap.timeline({
+                      onComplete: () => {
+                        preloaderEl.style.display = 'none';
+                        document.body.classList.remove('preloader-active');
+
+                        try {
+                          localStorage.setItem('hasSeenIntro', 'true');
+                        } catch (e) {
+                          console.error("Could not save to localStorage", e);
+                        }
+
+                        window.dispatchEvent(new CustomEvent('preloaderFinished'));
+                      }
+                    });
+                    tl.to(preloaderEl, { opacity: 0, duration: 1.5, ease: 'power2.inOut' })
+                      .to(rootEl, { opacity: 1, visibility: 'visible', duration: 1.5, ease: 'power3.out' }, '-=0.8');
+                };
+
+                const runIntroSequence = () => {
+                    const textElement = document.getElementById('target-text');
+                    const percentageElement = document.querySelector('.percentage-counter');
+                    const fx = new TextScramble(textElement, glitchAudioEl);
+                    const phrases = ['FROM SENSING', 'TO LEARNING.', 'CAPABILITIES', 'THAT MULTIPLY.'];
+                    let progress = { value: 0 };
+
+                    const masterTl = gsap.timeline({
+                        onComplete: startMainAppTransition
+                    });
+
+                    masterTl.to(progress, {
+                        value: 100,
+                        duration: 20,
+                        ease: 'none',
+                        onUpdate: () => {
+                            if (Math.random() > 0.15) {
+                                percentageElement.innerText = `${Math.floor(progress.value)}%`;
+                            } else {
+                                percentageElement.innerText = `${Math.floor(Math.random() * 100)}%`;
+                            }
+                        }
+                    }, 0);
+
+                    const phraseTimings = [1, 6, 11, 16];
+                    phrases.forEach((phrase, index) => {
+                        masterTl.call(() => {
+                            textElement.classList.add('is-glitching');
+                            if (window.isAudioReady) {
+                                gsap.to(bgAudioEl, { volume: 0.8, duration: 0.3 });
+                                gsap.to(loopAudioEl, { volume: 0.3, duration: 0.3 });
+                            }
+                            fx.setText(phrase).then(() => {
+                                textElement.classList.remove('is-glitching');
+                                if (window.isAudioReady) {
+                                    gsap.to(bgAudioEl, { volume: 0, duration: 1.0 });
+                                    gsap.to(loopAudioEl, { volume: 0, duration: 1.0 });
+                                }
+                            });
+                        }, [], phraseTimings[index]);
+                    });
+                };
+
+                const startOrbEl = document.getElementById('start-orb');
+                
+                // --- INTERACTIVE ORB LOGIC ---
+                gsap.set(startOrbEl, { xPercent: -50, yPercent: -50, opacity: 1 });
+                const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+                const mouse = { x: pos.x, y: pos.y };
+                const xSet = gsap.quickSetter(startOrbEl, "x", "px");
+                const ySet = gsap.quickSetter(startOrbEl, "y", "px");
+                
+                const breathing = { scale: 1 };
+                gsap.to(breathing, {
+                    scale: 1.15,
+                    duration: 3,
+                    ease: 'sine.inOut',
+                    repeat: -1,
+                    yoyo: true,
+                });
+
+                gsap.set(startOrbEl, { x: pos.x, y: pos.y });
+
+                const mouseMoveHandler = e => {
+                    mouse.x = e.clientX;
+                    mouse.y = e.clientY;
+                };
+                window.addEventListener("mousemove", mouseMoveHandler);
+
+                const mouseLeaveHandler = () => {
+                    mouse.x = window.innerWidth / 2;
+                    mouse.y = window.innerHeight / 2;
+                    
+                    // A simple delay before glowing, allows the orb time to return
+                    gsap.delayedCall(0.7, () => {
+                        // Only trigger glow if the preloader is still active
+                        if (document.body.classList.contains('preloader-active')) {
+                            gsap.fromTo(startOrbEl, 
+                                { '--glow-opacity': 0.2 }, 
+                                { 
+                                    '--glow-opacity': 0.9, 
+                                    duration: 0.5, 
+                                    yoyo: true, 
+                                    repeat: 1,
+                                    ease: 'power2.inOut'
+                                }
+                            );
+                        }
+                    });
+                };
+                document.documentElement.addEventListener("mouseleave", mouseLeaveHandler);
+
+                const ticker = () => {
+                    const dt = 1.0 - Math.pow(1.0 - 0.15, gsap.ticker.deltaRatio()); 
+                    const prevX = pos.x;
+                    const prevY = pos.y;
+                    
+                    pos.x += (mouse.x - pos.x) * dt;
+                    pos.y += (mouse.y - pos.y) * dt;
+
+                    const speedX = pos.x - prevX;
+                    const speedY = pos.y - prevY;
+                    const rotation = Math.atan2(speedY, speedX) * (180 / Math.PI);
+                    const scaleDistortion = Math.min(Math.sqrt(speedX**2 + speedY**2) * 0.05, 0.4);
+
+                    // Combine breathing with mouse-follow distortion
+                    gsap.set(startOrbEl, {
+                        rotation: rotation,
+                        scaleX: (1 + scaleDistortion) * breathing.scale,
+                        scaleY: (1 - scaleDistortion) * breathing.scale,
+                    });
+                    
+                    xSet(pos.x);
+                    ySet(pos.y);
+                };
+                gsap.ticker.add(ticker);
+
+                startOrbEl.addEventListener('click', () => {
+                    // Cleanup orb animation logic
+                    window.removeEventListener("mousemove", mouseMoveHandler);
+                    document.documentElement.removeEventListener("mouseleave", mouseLeaveHandler);
+                    gsap.ticker.remove(ticker);
+                    gsap.killTweensOf(breathing); // Stop the breathing animation
+                    gsap.killTweensOf(startOrbEl); // Stop any direct animations on the orb
+
+                    unlockAudio();
+                    
+                    const tl = gsap.timeline();
+                    // Animate orb as it fades out for a smooth transition
+                    tl.to(startOrbEl, {
+                        opacity: 0,
+                        scale: 0.2,
+                        duration: 0.7,
+                        ease: 'power3.in',
+                        onComplete: () => startOrbEl.style.display = 'none'
+                    }).to(['.hero-container', '.percentage-counter'], {
+                        opacity: 1,
+                        visibility: 'visible',
+                        duration: 1,
+                        ease: 'power3.out',
+                        onComplete: runIntroSequence
+                    }, "-=0.2"); // Overlap animations for a smoother flow
+
+                }, { once: true });
+            }
+        });
+    </script>
+    <script type="module" src="index.tsx"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const percentageElement = document.querySelector(".percentage-counter");
+    if (!percentageElement) return;
+
+    const glitchChars = ["Ô", "▒", "░", "▀", "▄", "¥", "▐", "█"];
+
+    const glitchEffect = () => {
+      // 5% solo para probar — bájalo a 0.01 cuando funcione
+      if (Math.random() < 0.45) {
+        const original = percentageElement.textContent;
+        const randIndex = Math.floor(Math.random() * glitchChars.length);
+        const glitchChar = glitchChars[randIndex];
+
+        // Inserta el carácter glitch
+        const glitched = original.replace(/\d+%/, (m) => {
+          const pos = Math.floor(Math.random() * m.length);
+          return (
+            m.substring(0, pos) +
+            glitchChar +
+            m.substring(pos + 1)
+          );
+        });
+
+        // Cambia color temporal a rojo glitch
+        percentageElement.style.color = "#ff2a2a";
+        percentageElement.textContent = glitched;
+
+        // Restaura texto y color en pocos milisegundos
+        setTimeout(() => {
+          percentageElement.textContent = original;
+          percentageElement.style.color = "#ffffff";
+        }, gsap.utils.random(60, 200));
+      }
+
+      // Repite con intervalo aleatorio
+      gsap.delayedCall(gsap.utils.random(0.2, 0.8), glitchEffect);
+    };
+
+    glitchEffect();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "AI Discovery Site",
+  "description": "A visually stunning and interactive portfolio website for a creative advertising agency, showcasing AI-generated images and videos with advanced animations.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
