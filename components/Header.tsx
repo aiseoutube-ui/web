@@ -21,11 +21,13 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
   
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  /* TEMPORARILY DISABLED SASHA AI
   const openSashaAI = (e: React.MouseEvent) => {
       e.preventDefault();
       window.dispatchEvent(new CustomEvent('openSashaAI'));
       setIsOpen(false); // Close mobile menu if open
   };
+  */
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isOpen ? 'bg-brand-primary/80 backdrop-blur-lg' : 'bg-transparent'}`}>
@@ -44,7 +46,8 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
               </a>
             ))}
             
-            {/* SASHA AI BUTTON - DESKTOP */}
+            {/* SASHA AI BUTTON - DESKTOP (DISABLED) */}
+            {/* 
             <button 
                 onClick={openSashaAI}
                 aria-label="Activar Sasha AI"
@@ -55,6 +58,7 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
                     Sasha AI <span className="text-[10px] opacity-60">BETA</span>
                 </span>
             </button>
+            */}
           </nav>
 
           <div className="hidden md:flex items-center space-x-4 ml-4">
@@ -66,7 +70,8 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
           </div>
 
           <div className="md:hidden flex items-center gap-4">
-            {/* SASHA AI BUTTON - MOBILE COMPACT */}
+            {/* SASHA AI BUTTON - MOBILE COMPACT (DISABLED) */}
+             {/* 
              <button 
                 onClick={openSashaAI}
                 aria-label="Activar Sasha AI"
@@ -74,6 +79,7 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
             >
                 <div className="w-2 h-2 rounded-full bg-brand-accent shadow-[0_0_5px_#00FFFF]"></div>
             </button>
+            */}
 
             <button onClick={toggleMenu} className="cursor-pointer-grow text-brand-light focus:outline-none" aria-label="Abrir menú de navegación">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +94,8 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
       <div className={`md:hidden absolute top-full left-0 w-full bg-brand-secondary overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
         <nav className="flex flex-col items-center p-4 space-y-4">
             
-          {/* SASHA AI BUTTON - MOBILE MENU BIG */}
+          {/* SASHA AI BUTTON - MOBILE MENU BIG (DISABLED) */}
+          {/* 
           <button 
                 onClick={openSashaAI}
                 aria-label="Hablar con Sasha AI"
@@ -99,6 +106,7 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
                     Hablar con Sasha
                 </span>
             </button>  
+          */}
 
           {content.navLinks.map((link) => (
             <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-brand-light text-lg hover:text-brand-accent transition-colors duration-300">
