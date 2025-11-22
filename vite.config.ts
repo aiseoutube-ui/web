@@ -7,13 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig(({ mode }) => {
-    // Load env file based on `mode` in the current working directory.
-    // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-    const env = loadEnv(mode, process.cwd(), '');
-    
-    // Priority: 1. Vercel/Netlify System Env, 2. .env file
-    const apiKey = process.env.GEMINI_API_KEY || env.GEMINI_API_KEY;
-
+    const env = loadEnv(mode, '.', '');
     return {
       server: {
         port: 3000,
@@ -21,9 +15,8 @@ export default defineConfig(({ mode }) => {
       },
       plugins: [react()],
       define: {
-        // Properly stringify the key for injection into client-side code
-        'process.env.API_KEY': JSON.stringify(apiKey),
-        'process.env.GEMINI_API_KEY': JSON.stringify(apiKey)
+        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
       },
       resolve: {
         alias: {
@@ -36,7 +29,6 @@ export default defineConfig(({ mode }) => {
             output: {
                 manualChunks: {
                     vendor: ['react', 'react-dom'],
-                    ai: ['@google/genai']
                 }
             }
         }

@@ -5,7 +5,33 @@ import { GoogleGenAI, LiveServerMessage, Modality, FunctionDeclaration, Type } f
 
 declare const gsap: any;
 
-// --- AUDIO UTILS (Helpers for PCM conversion) ---
+// --- AUDIO UTILS (Helpers for PCM conversion & Resampling) ---
+
+// Downsampling Function: Converts incoming browser audio (e.g., 44.1k/48k) to Gemini's required 16k
+function downsampleBuffer(buffer: Float32Array, inputRate: number, outputRate: number): Float32Array {
+    if (outputRate === inputRate) {
+        return buffer;
+    }
+    const sampleRateRatio = inputRate / outputRate;
+    const newLength = Math.round(buffer.length / sampleRateRatio);
+    const result = new Float32Array(newLength);
+    let offsetResult = 0;
+    let offsetBuffer = 0;
+    while (offsetResult < result.length) {
+        const nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
+        // Use average value of skipped samples (simple anti-aliasing)
+        let accum = 0, count = 0;
+        for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
+            accum += buffer[i];
+            count++;
+        }
+        result[offsetResult] = count > 0 ? accum / count : 0;
+        offsetResult++;
+        offsetBuffer = nextOffsetBuffer;
+    }
+    return result;
+}
+
 function floatTo16BitPCM(input: Float32Array): Int16Array {
     const output = new Int16Array(input.length);
     for (let i = 0; i < input.length; i++) {
@@ -81,6 +107,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState({ name: false, email: false, phone: false, message: false });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [latency, setLatency] = useState<number | null>(null);
+  const lastAudioSentTimeRef = useRef<number>(0);
   
   // UI States
   const [isFocusing, setIsFocusing] = useState(false);
@@ -93,7 +121,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const [aiSpeaking, setAiSpeaking] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSecureLoading, setIsSecureLoading] = useState(false); // New state for initial load
-  const [latency, setLatency] = useState<number>(0); // Speed measurement
   
   // Live Data Extraction States
   const [readyToSubmit, setReadyToSubmit] = useState(false);
@@ -122,7 +149,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   
   const isRecordingRef = useRef(false);
   const aiSpeakingRef = useRef(false);
-  const lastAudioInputTimeRef = useRef<number>(0); // For calculating latency
 
   useEffect(() => { isFocusingRef.current = isFocusing; }, [isFocusing]);
   useEffect(() => { isRecordingRef.current = isRecording; }, [isRecording]);
@@ -301,7 +327,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   // --- LIVE API SETUP ---
   const initializeAudioContexts = () => {
       if (!inputAudioContextRef.current) {
-          inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
+          // Do not force sampleRate here for input; let browser decide to avoid hardware mismatch
+          inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
           // Create Input Analyser for Mic Visualization
           inputAnalyserRef.current = inputAudioContextRef.current.createAnalyser();
           inputAnalyserRef.current.fftSize = 256;
@@ -385,7 +412,10 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                   onopen: () => {
                       setIsConnected(true);
                       setIsSecureLoading(false); // Stop loading
-                      if(outputAudioContextRef.current) nextStartTimeRef.current = outputAudioContextRef.current.currentTime;
+                      if(outputAudioContextRef.current) {
+                          // Add a small buffer to current time to prevent initial cutout
+                          nextStartTimeRef.current = outputAudioContextRef.current.currentTime + 0.1;
+                      }
                       
                       // Trigger Welcome Message LIVE
                       setTimeout(() => {
@@ -455,14 +485,10 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                           const ctx = outputAudioContextRef.current;
                           setIsProcessing(false);
                           
-                          // Calculate Latency approximation
-                          if (lastAudioInputTimeRef.current > 0) {
-                            const now = Date.now();
-                            setLatency(now - lastAudioInputTimeRef.current);
-                            lastAudioInputTimeRef.current = 0; // Reset
-                          }
-
-                          nextStartTimeRef.current = Math.max(nextStartTimeRef.current, ctx.currentTime);
+                          // Jitter Buffer: Ensure next audio starts at least slightly in the future relative to "now"
+                          // This prevents dropped frames on shaky connections
+                          const now = ctx.currentTime;
+                          nextStartTimeRef.current = Math.max(nextStartTimeRef.current, now + 0.05);
 
                           const arrayBuffer = base64ToArrayBuffer(audioData.data);
                           const rawInt16 = new Int16Array(arrayBuffer);
@@ -477,6 +503,13 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                           source.connect(outputGainRef.current);
                           if(analyserRef.current) source.connect(analyserRef.current);
                           
+                          // Latency Check
+                          if (lastAudioSentTimeRef.current > 0) {
+                              const lat = Date.now() - lastAudioSentTimeRef.current;
+                              setLatency(lat);
+                              lastAudioSentTimeRef.current = 0; // Reset
+                          }
+
                           const textToDisplay = pendingAiTextRef.current.trim(); 
                           const delay = Math.max(0, (nextStartTimeRef.current - ctx.currentTime) * 1000);
                           
@@ -549,18 +582,29 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
               source.connect(inputAnalyserRef.current);
           }
 
+          // IMPORTANT: Get the REAL sample rate of the context (e.g., 44100 or 48000 on mobile)
+          const inputSampleRate = ctx.sampleRate;
+          const targetSampleRate = 16000;
+
           const processor = ctx.createScriptProcessor(4096, 1, 1);
           processorRef.current = processor;
           processor.onaudioprocess = (e) => {
               if (!isRecordingRef.current) return;
+              
               const inputData = e.inputBuffer.getChannelData(0);
-              const pcm16 = floatTo16BitPCM(inputData);
+              
+              // DOWNSAMPLE: Convert from Hardware Rate (e.g. 48k) to Gemini Rate (16k)
+              // This fixes the "choppy" or "fast" audio on mobile/production
+              const downsampledData = downsampleBuffer(inputData, inputSampleRate, targetSampleRate);
+
+              const pcm16 = floatTo16BitPCM(downsampledData);
               const base64Params = arrayBufferToBase64(pcm16.buffer);
+              
+              lastAudioSentTimeRef.current = Date.now(); // Mark time for latency check
+
               sessionRef.current.sendRealtimeInput({
                   media: { mimeType: "audio/pcm;rate=16000", data: base64Params }
               });
-              // Timestamp for latency tracking
-              lastAudioInputTimeRef.current = Date.now();
           };
           source.connect(processor);
           processor.connect(ctx.destination);
@@ -703,13 +747,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                  isRecording ? 'ESCUCHANDO...' : 
                                  (aiSpeaking ? 'HABLANDO...' : 
                                  (isProcessing ? 'ANALIZANDO...' : 'CONECTADO'))}
+                                 {latency && <span className="ml-2 opacity-50">({latency}ms)</span>}
                             </span>
-                            {/* LATENCY METER - SPEED TEST TOOL */}
-                            {latency > 0 && (
-                              <span className="ml-2 text-[10px] font-mono text-brand-muted border-l border-white/20 pl-2">
-                                {latency}ms
-                              </span>
-                            )}
                         </div>
                     </div>
 
@@ -773,15 +812,15 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                 {/* Holographic Effects active in AI Mode */}
                 <div className={`absolute -inset-[1px] bg-gradient-to-r from-brand-accent via-purple-600 to-brand-accent rounded-xl blur-sm transition-all duration-1000 ${isAIMode ? 'opacity-100 blur-md animate-pulse' : 'opacity-50 group-hover:opacity-80'}`}></div>
                 
-                <div className={`relative rounded-xl min-h-[550px] border shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-500
+                <div className={`relative rounded-xl min-h-[600px] md:min-h-[550px] border shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-500
                     ${isAIMode 
                         ? 'bg-black/60 backdrop-blur-xl border-brand-accent/50 shadow-[0_0_30px_rgba(0,255,255,0.15)]' 
                         : 'bg-black/40 backdrop-blur-md border-white/5'
                     }
                 `}>
                     
-                    {/* Removed overflow-y-auto and added scrollbar-hide to prevent visual scrolling bars */}
-                    <div className={`p-6 md:p-12 transition-all duration-500 absolute inset-0 opacity-100 scrollbar-hide`}>
+                    {/* Content Container - Enabled scrolling for overflowing content */}
+                    <div className={`p-6 md:p-12 transition-all duration-500 absolute inset-0 opacity-100 overflow-y-auto scrollbar-hide`}>
                         <div ref={formContentRef}>
                             <div className="flex justify-between items-start mb-6">
                                 <p className={`font-mono text-xs tracking-widest uppercase border-b pb-3 inline-block transition-colors duration-500 ${isAIMode ? 'text-brand-accent border-brand-accent' : 'text-brand-accent border-brand-accent/10'}`}>
@@ -881,7 +920,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                     ></textarea>
                                 </div>
 
-                                <div className="pt-2 flex flex-col sm:flex-row gap-4">
+                                <div className="pt-2 flex flex-col sm:flex-row gap-4 pb-4">
                                     <button 
                                         type="submit" 
                                         disabled={isAIMode && !readyToSubmit}

@@ -33,32 +33,31 @@ const ImpactMetrics: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. SETUP INITIAL STATE (Force hidden immediately)
-      gsap.set('.metric-card', { 
-        autoAlpha: 0, 
-        y: 100, 
-        scale: 0.6, 
-        rotationX: -45 
-      });
-
-      // 2. ENTRADA CINEMÁTICA (WOW FACTOR)
-      gsap.to('.metric-card', {
+      // 1. ENTRADA CINEMÁTICA (WOW FACTOR)
+      // Usamos fromTo para garantizar el estado inicial invisible
+      gsap.fromTo('.metric-card', 
+        { 
+          autoAlpha: 0, // Visibility + Opacity
+          y: 150,       // Empiezan mucho más abajo
+          scale: 0.6,   // Empiezan más pequeñas
+          rotationX: -45, // Ligera inclinación 3D inicial
+        },
+        {
           autoAlpha: 1,
           y: 0,
           scale: 1,
           rotationX: 0,
-          duration: 1.2,
-          stagger: 0.2,
-          ease: 'elastic.out(1, 0.75)',
+          duration: 1.8, // Duración larga para apreciar el rebote
+          stagger: 0.25, // Retraso entre cada tarjeta
+          ease: 'elastic.out(1, 0.5)', // Rebote muy elástico y jugoso
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 65%', // Waits until the section is 65% into the viewport (more strict)
-            toggleActions: 'play none none reverse' // Reverses if you scroll back up
+            start: 'top 80%', // Empieza cuando la sección entra al 80% de la pantalla
           }
         }
       );
 
-      // 3. ANIMACIÓN DE NÚMEROS (COUNT UP)
+      // 2. ANIMACIÓN DE NÚMEROS (COUNT UP)
       metrics.forEach((metric) => {
         const counter = { val: 0 };
         const element = document.getElementById(`counter-${metric.id}`);
@@ -66,12 +65,11 @@ const ImpactMetrics: React.FC = () => {
         if (element) {
             gsap.to(counter, {
                 val: metric.value,
-                duration: 2.5, 
+                duration: 3, // Lento para generar anticipación
                 ease: 'power2.out', 
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 65%', // Sync with cards
-                    toggleActions: 'play none none reverse'
+                    start: 'top 80%',
                 },
                 onUpdate: () => {
                     element.innerText = Math.floor(counter.val) + metric.suffix;
@@ -80,7 +78,7 @@ const ImpactMetrics: React.FC = () => {
         }
       });
 
-      // 4. ANIMACIÓN DE FONDO (PULSO)
+      // 3. ANIMACIÓN DE FONDO (PULSO)
       gsap.to('.bg-blob', {
         y: 'random(-30, 30)',
         x: 'random(-30, 30)',
@@ -94,7 +92,7 @@ const ImpactMetrics: React.FC = () => {
 
     }, sectionRef);
 
-    // 5. EFECTO SPOTLIGHT INTERACTIVO (MOUSE MOVE)
+    // 4. EFECTO SPOTLIGHT INTERACTIVO (MOUSE MOVE)
     const handleMouseMove = (e: MouseEvent) => {
       if (!cardsRef.current) return;
       
@@ -119,6 +117,7 @@ const ImpactMetrics: React.FC = () => {
   }, []);
 
   return (
+    // NOTA: Eliminé la clase 'section-reveal' para evitar conflictos con la animación global
     <section id="impact" ref={sectionRef} className="py-24 md:py-40 bg-brand-primary relative overflow-hidden perspective-1000">
       
       {/* Background decorative elements */}
@@ -137,11 +136,11 @@ const ImpactMetrics: React.FC = () => {
              </h2>
           </div>
           <h3 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-            Tú marcas el rumbo <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-white">La IA la materializa.</span>
+            La IA es el aliado <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-white">que multiplica tu potencial.</span>
           </h3>
           <p className="text-brand-light/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            Recupera el control total. Nuestra tecnología elimina la fricción técnica para que tu equipo pueda enfocarse 100% en dirigir, imaginar y crear, mientras nosotros nos encargamos de hacerlo posible.
+            Transformamos la tecnología en el motor que impulsa a tu equipo, eliminando las barreras técnicas para que tengan la libertad de crear, innovar y hacer posible lo imposible.
           </p>
         </div>
 

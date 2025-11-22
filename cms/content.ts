@@ -28,10 +28,10 @@ export const content: CMSContent = {
   about: {
     title: 'Sobre el Proyecto',
     paragraphs: [
-      'Somos una casa realizadora de vanguardia que aprovecha el poder de la inteligencia artificial para redefinir los límites de la creatividad. Nuestro AI Discovery Site es un escaparate de esta visión.',
+      'Somos una agencia de publicidad de vanguardia que aprovecha el poder de la inteligencia artificial para redefinir los límites de la creatividad. Nuestro AI Discovery Site es un escaparate de esta visión.',
       'Aquí, exploramos y exhibimos contenido visual generado por IA, desde imágenes surrealistas hasta secuencias de video dinámicas, todo curado para inspirar y sorprender. Cada pieza es un testimonio de la colaboración entre la mente humana y la máquina.',
     ],
-    imageUrl: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg',
+    imageUrl: 'https://picsum.photos/1200/800?random=10',
   },
   gallery: [
     { id: 1, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=1', src: 'https://picsum.photos/1200/1600?random=1', title: 'Cosmic Voyager', description: 'An astronaut discovering a nebula of vibrant colors and shapes.' },

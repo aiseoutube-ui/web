@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 
 const consistencyContent2 = {
-  title: "Branding Intacto y Diversidad con IA",
-  description: "Protegemos tu branding de los imprevistos de la vida real (como cambios físicos en el talento), asegurando una identidad visual coherente campaña tras campaña. A la vez, alterando ligeramente las especificaciones, la IA nos da la flexibilidad de crear personajes completamente nuevos y diversos cuando la marca lo pida.",
+  title: "Tu Seguro ante lo Inesperado",
+  description: "Alterando ligeramente las especificaciones iniciales, la IA puede generar un personaje completamente nuevo, demostrando su flexibilidad para crear identidades visuales únicas y diversas.",
   slides: [
     {
       id: 0,
