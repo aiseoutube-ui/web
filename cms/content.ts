@@ -27,22 +27,23 @@ export const content: CMSContent = {
   about: {
     title: 'Sobre el Proyecto',
     paragraphs: [
-      'Somos una agencia de publicidad de vanguardia que aprovecha el poder de la inteligencia artificial para redefinir los límites de la creatividad. Nuestro AI Discovery Site es un escaparate de esta visión.',
+      'Somos una casa realizadora de vanguardia que aprovecha el poder de la inteligencia artificial para redefinir los límites de la creatividad. Nuestro Site The Last Art es un escaparate de esta visión.',
       'Aquí, exploramos y exhibimos contenido visual generado por IA, desde imágenes surrealistas hasta secuencias de video dinámicas, todo curado para inspirar y sorprender. Cada pieza es un testimonio de la colaboración entre la mente humana y la máquina.',
     ],
     imageUrl: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg',
   },
   gallery: [
-    { id: 1, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=1', src: 'https://picsum.photos/1200/1600?random=1', title: 'Cosmic Voyager', description: 'An astronaut discovering a nebula of vibrant colors and shapes.' },
+    { id: 1, type: 'video', thumbnail: 'https://img.youtube.com/vi/i_vfh_kB7i4/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=i_vfh_kB7i4', title: 'LOMO SALTADO: La Receta Perfecta y Definitiva', description: 'Descubre cómo hacer el Lomo Saltado Peruano perfecto, el plato más emblemático del Perú.' },
     // VIDEO 1: YouTube (Link CORREGIDO: ID LXb3EKWsInQ permite embedding)
-    { id: 2, type: 'video', thumbnail: 'https://img.youtube.com/vi/LXb3EKWsInQ/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', title: 'Nature in 4K', description: 'Experiencia inmersiva generada con técnicas de alta resolución.' },
-    { id: 3, type: 'image', thumbnail: 'https://picsum.photos/800/600?random=3', src: 'https://picsum.photos/1600/1200?random=3', title: 'Cybernetic Forest', description: 'A forest where nature and technology merge into a glowing biome.' },
-    { id: 4, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=4', src: 'https://picsum.photos/1200/1600?random=4', title: 'Steampunk Metropolis', description: 'A bustling city powered by steam and intricate clockwork.' },
-    { id: 5, type: 'image', thumbnail: 'https://picsum.photos/800/600?random=5', src: 'https://picsum.photos/1600/1200?random=5', title: 'Oceanic Leviathan', description: 'A gentle giant of the deep, adorned with bioluminescent patterns.' },
+    { id: 2, type: 'video', thumbnail: 'https://img.youtube.com/vi/vPJNx3g2MBA/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=vPJNx3g2MBA', title: 'Aji con Limon Tv | Humor Peruano', description: 'Sketches de Humor Peruano: Historias cortas con la chispa del día a día.' },
+    { id: 3, type: 'video', thumbnail: 'https://img.youtube.com/vi/0g7eUwvaWqY/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=0g7eUwvaWqY', title: 'Canción para Antes de Dormir: El Osito de Crochet', description: 'Crea un momento de calma antes de dormir con El Osito de Crochet.' },
+    { id: 4, type: 'video', thumbnail: 'https://img.youtube.com/vi/xoWMrPvjGCc/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=xoWMrPvjGCc', title: '@coco.projects', description: 'Creative Agency (@coco.projects)' },
+    { id: 5, type: 'video', thumbnail: 'https://img.youtube.com/vi/XxGi7wkEvU8/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=XxGi7wkEvU8', title: '@Honda.projects', description: 'Creative Agency (@Honda.projects).' },
     // VIDEO 2: Vimeo (Link verificado de CGI de alta calidad)
-    { id: 6, type: 'video', thumbnail: 'https://i.vimeocdn.com/video/1355664848-6c7184c093d2956203266b964a0771588498344660d20b81141b1493e3780156-d_640', src: 'https://vimeo.com/22439234', title: 'The Third & The Seventh', description: 'Una obra maestra de arquitectura CGI que desafía la realidad.' },
-    { id: 7, type: 'image', thumbnail: 'https://picsum.photos/800/600?random=7', src: 'https://picsum.photos/1600/1200?random=7', title: 'Desert Mirage', description: 'An oasis that appears in the vast, shimmering desert landscape.' },
-    { id: 8, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=8', src: 'https://picsum.photos/1200/1600?random=8', title: 'Retrofuture Portrait', description: 'A portrait of a figure from a future imagined in the past.' },
+    { id: 6, type: 'video', thumbnail: 'https://img.youtube.com/vi/VGmM9guMuxI/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=VGmM9guMuxI', title: '@Sasha.projects', description: 'Creative Agency (@Sasha.projects).' },
+    { id: 7, type: 'video', thumbnail: 'https://img.youtube.com/vi/a3yci_Y8Ksw/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=a3yci_Y8Ksw', title: '@AlanRitchson.projects', description: 'Creative Agency (@AlanRitchson.projects)' },
+    { id: 8, type: 'video', thumbnail: 'https://img.youtube.com/vi/8dzjTEDyhsI/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=8dzjTEDyhsI', title: '(@Sasha2.projects', description: 'Creative Agency (@Sasha2.projects).' },
+    { id: 9, type: 'video', thumbnail: 'https://img.youtube.com/vi/lRC5MsRP_SY/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=_FtIc4ZZhu4', title: '(@SashaCR.projects', description: 'Creative Agency (@SashaCR.projects).' },
   ],
   team: [
     { 
