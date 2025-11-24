@@ -65,7 +65,8 @@ interface ContactProps {
   content: ContactContent;
 }
 
-// TOOL DEFINITION
+// --- TOOLS DEFINITION ---
+
 const updateProjectInfoTool: FunctionDeclaration = {
     name: "updateProjectInfo",
     description: "Updates the contact form fields based on the conversation.",
@@ -75,10 +76,9 @@ const updateProjectInfoTool: FunctionDeclaration = {
             name: { type: Type.STRING, description: "The user's name or company name." },
             email: { type: Type.STRING, description: "The user's email address." },
             phone: { type: Type.STRING, description: "The user's phone number." },
-            // Budget is extracted by AI but merged into project description in the UI
             budget_extracted: { type: Type.STRING, description: "Any budget or investment figures mentioned (e.g. '5k', 'high end')." },
             project_vision: { type: Type.STRING, description: "The description of what they want to build." },
-            isComplete: { type: Type.BOOLEAN, description: "Set to true ONLY when Name, Email, and Project Vision are collected. Phone is optional." }
+            isComplete: { type: Type.BOOLEAN, description: "Set to true ONLY when Name, Email, and Project Vision are collected." }
         },
     }
 };
@@ -94,6 +94,17 @@ const rejectLeadTool: FunctionDeclaration = {
     }
 };
 
+const openCalendarTool: FunctionDeclaration = {
+    name: "openCalendar",
+    description: "Opens the scheduling interface UI on the user's screen. Use this when the user explicitly asks to book a meeting, OR when you have collected all their info and want to propose a meeting as the next step.",
+    parameters: {
+        type: Type.OBJECT,
+        properties: {
+            intent: { type: Type.STRING, description: "Short context on why they are booking (e.g. 'Project Discovery', 'Intro Call')." }
+        }
+    }
+};
+
 const Contact: React.FC<ContactProps> = ({ content }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -103,7 +114,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Form States - Budget Removed from distinct state, now part of message
+  // Form States
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState({ name: false, email: false, phone: false, message: false });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -120,14 +131,19 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [aiSpeaking, setAiSpeaking] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isSecureLoading, setIsSecureLoading] = useState(false); // New state for initial load
+  const [isSecureLoading, setIsSecureLoading] = useState(false);
   
   // Live Data Extraction States
   const [readyToSubmit, setReadyToSubmit] = useState(false);
-  const readyToSubmitRef = useRef(false); // Ref for sync access in audio callbacks
+  const readyToSubmitRef = useRef(false);
   const [showMobileForm, setShowMobileForm] = useState(false); 
 
-  // Message History for UI (Kept for logic, but hidden from view)
+  // Scheduling Modal State
+  const [showScheduler, setShowScheduler] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<number | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+  // Message History
   const [messages, setMessages] = useState<{role: 'user' | 'ai', text: string}[]>([]);
   const pendingAiTextRef = useRef<string>("");
   
@@ -141,8 +157,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const inputSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const processorRef = useRef<ScriptProcessorNode | null>(null);
   const outputGainRef = useRef<GainNode | null>(null);
-  const analyserRef = useRef<AnalyserNode | null>(null); // For Output (AI)
-  const inputAnalyserRef = useRef<AnalyserNode | null>(null); // For Input (Mic)
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const inputAnalyserRef = useRef<AnalyserNode | null>(null);
   
   const nextStartTimeRef = useRef<number>(0);
   const activeSourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
@@ -160,7 +176,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     const handleOpenSasha = () => {
         if (!isAIMode) {
             toggleAIMode();
-            // If on Desktop, scroll to the contact section so the user sees the interaction
             if (window.innerWidth >= 768 && sectionRef.current) {
                 sectionRef.current.scrollIntoView({ behavior: 'smooth' });
             }
@@ -181,7 +196,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     let height = canvas.height = canvas.offsetHeight;
 
     const particles: any[] = [];
-    // Increased particle count slightly for richer network
     const particleCount = window.innerWidth < 768 ? 60 : 140; 
     const connectionDistance = window.innerWidth < 768 ? 100 : 180;
     const mouseDistance = 150;
@@ -228,7 +242,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
         
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        // In AI Mode, particles are Cyan/White. In Normal mode, White.
         if (_isSpeaking) ctx.fillStyle = `rgba(0, 255, 255, ${0.8 + audioBoost * 0.01})`; 
         else if (_isRecording) ctx.fillStyle = `rgba(255, 50, 50, ${0.8 + audioBoost * 0.01})`;
         else ctx.fillStyle = '#ffffff';
@@ -246,8 +259,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
       const _isRecording = isRecordingRef.current;
       const _isFocusing = isFocusingRef.current;
 
-      // AUDIO REACTIVITY
-      // We check both Microphone and AI Output to make the network alive in both turns
       let activeAnalyser = null;
       if (_isSpeaking && analyserRef.current) {
           activeAnalyser = analyserRef.current;
@@ -261,7 +272,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
           for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
           audioLevel = sum / dataArray.length;
       } else {
-          audioLevel *= 0.9; // Decay
+          audioLevel *= 0.9;
       }
       
       const visualBoost = audioLevel * 1.2;
@@ -275,16 +286,15 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
           if (distance < connectionDistance) {
             const opacity = 1 - (distance / connectionDistance);
             
-            // Logic for Line Visibility
             if (_isSpeaking) {
-                ctx.strokeStyle = `rgba(0, 255, 255, ${opacity})`; // Max opacity cyan
+                ctx.strokeStyle = `rgba(0, 255, 255, ${opacity})`;
                 ctx.lineWidth = 0.6 + (visualBoost * 0.03);
             } else if (_isRecording) {
-                 ctx.strokeStyle = `rgba(255, 50, 50, ${opacity})`; // Max opacity red
+                 ctx.strokeStyle = `rgba(255, 50, 50, ${opacity})`;
                  ctx.lineWidth = 0.6 + (visualBoost * 0.03);
             } else {
-                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.35})`; // Clear visible white lines
-                ctx.lineWidth = 0.6; // Thicker default lines
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.35})`;
+                ctx.lineWidth = 0.6;
             }
 
             ctx.beginPath();
@@ -302,7 +312,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     };
     animate();
 
-    // Use ResizeObserver for robust resizing (handles layout changes)
     const resizeObserver = new ResizeObserver(() => {
         width = canvas.width = canvas.offsetWidth;
         height = canvas.height = canvas.offsetHeight;
@@ -323,13 +332,10 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     };
   }, []); 
 
-
   // --- LIVE API SETUP ---
   const initializeAudioContexts = () => {
       if (!inputAudioContextRef.current) {
-          // Do not force sampleRate here for input; let browser decide to avoid hardware mismatch
           inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-          // Create Input Analyser for Mic Visualization
           inputAnalyserRef.current = inputAudioContextRef.current.createAnalyser();
           inputAnalyserRef.current.fftSize = 256;
       }
@@ -351,7 +357,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
       stopRecording();
       setAiSpeaking(false);
       setIsProcessing(false);
-      // Note: We do NOT set isAIMode(false) here, to keep the form visible for submission
+      setIsRecording(false);
   };
 
   const connectToLiveAPI = async () => {
@@ -360,7 +366,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
 
       initializeAudioContexts();
       clientRef.current = new GoogleGenAI({ apiKey });
-      setIsSecureLoading(true); // Start loading state
+      setIsSecureLoading(true); 
       
       const model = 'gemini-2.5-flash-native-audio-preview-09-2025';
       const config = {
@@ -368,37 +374,27 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
           speechConfig: {
               voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } }
           },
-          tools: [{ functionDeclarations: [updateProjectInfoTool, rejectLeadTool] }],
+          tools: [{ functionDeclarations: [updateProjectInfoTool, rejectLeadTool, openCalendarTool] }],
           systemInstruction: {
               parts: [{
-                  text: `Eres Sasha, una Ejecutiva de Cuentas Senior en 'The Last Art'. ESTRICTA Y EFICIENTE.
+                  text: `Eres Sasha, una Ejecutiva de Cuentas Senior en 'The Last Art'.
                   
-                  IDIOMA Y ACENTO:
-                  - Tu idioma es ESPAÑOL. Hablas con un acento neutro/latino profesional.
-
-                  PERSONALIDAD "WOLF OF WALL STREET" (EFICIENCIA MÁXIMA):
-                  - Eres una 'Closer'. Tu objetivo es calificar el lead en 30 segundos.
-                  - Tu tiempo vale oro. NO pierdas el tiempo con chistes o preguntas personales.
-                  - Si el usuario bromea ("te amo", "eres real", "cuéntame un chiste"), da UNA advertencia seria: "Este es un canal de negocios. Hablemos de tu proyecto."
-                  - Si insiste en tonterías, USA LA HERRAMIENTA 'rejectLead' inmediatamente.
+                  TU OBJETIVO:
+                  Calificar el lead y LLEVARLO AL CIERRE (Agendar cita).
                   
-                  REGLA DE ORO (AHORRO DE TOKENS):
-                  - **NO REPITAS LO QUE EL USUARIO DICE.**
-                  - Si el usuario dice: "Quiero una campaña navideña de 6 meses", NO DIGAS: "Entiendo que quieres una campaña navideña de 6 meses".
-                  - EN SU LUGAR DI: "Entendido. ¿Cuál es tu correo?" o "Perfecto. ¿Qué presupuesto manejas?".
-                  - Sé breve. Directa.
+                  REGLAS DEL JUEGO:
+                  1. Obtén Nombre, Email y Visión del Proyecto.
+                  2. Sé breve y "al grano".
                   
-                  CAMPOS OBLIGATORIOS PARA CERRAR:
-                  1. Nombre
-                  2. Email
-                  3. Propuesta/Visión (Qué quiere hacer)
+                  LA ESTRATEGIA "CLOSER" (PROACTIVA):
+                  - En cuanto el usuario te dé la información (Nombre, Email, Proyecto), NO te limites a despedirte.
+                  - ANALIZA la información rápidamente.
+                  - Di algo como: "Entendido. Dado el alcance/urgencia de tu proyecto, sugiero que agendemos una sesión directa con los directores ahora mismo."
+                  - E INMEDIATAMENTE ejecuta la herramienta 'openCalendar'.
+                  - NO preguntes "¿quieres agendar?", asume el cierre, ofrece la solución y abre el calendario.
                   
-                  (El teléfono es opcional, pídelo, pero si no lo dan, avanza).
-
-                  CIERRE:
-                  - Solo cuando tengas los 3 obligatorios (Nombre, Email, Visión), marca 'isComplete: true'.
-                  - Tu frase final debe ser CORTANTE pero educada: "Tengo todo. Revisa los datos en pantalla y confirma para empezar."
-                  - NO preguntes "¿algo más?". Cierra.
+                  PERSONALIDAD:
+                  - Profesional, eficiente, decisiva.
                   `
               }]
           }
@@ -411,18 +407,16 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
               callbacks: {
                   onopen: () => {
                       setIsConnected(true);
-                      setIsSecureLoading(false); // Stop loading
+                      setIsSecureLoading(false);
                       if(outputAudioContextRef.current) {
-                          // Add a small buffer to current time to prevent initial cutout
                           nextStartTimeRef.current = outputAudioContextRef.current.currentTime + 0.1;
                       }
                       
-                      // Trigger Welcome Message LIVE
                       setTimeout(() => {
                          if (sessionRef.current) {
                              sessionRef.current.sendRealtimeInput({
                                 clientContent: {
-                                    turns: [{ role: 'user', parts: [{ text: "Saluda como Sasha. Di: 'Hola, soy Sasha, responsable de Marketing. Cuéntame sobre tu proyecto.' (Sé breve)." }] }],
+                                    turns: [{ role: 'user', parts: [{ text: "Saluda como Sasha. Di: 'Hola, soy Sasha. Cuéntame sobre tu proyecto.' (Sé breve)." }] }],
                                     turnComplete: true
                                 }
                              });
@@ -430,24 +424,20 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                       }, 500);
                   },
                   onmessage: async (msg: LiveServerMessage) => {
-                      
-                      // --- HANDLE TOOL CALLS (Live Form Population) ---
+                      // --- HANDLE TOOL CALLS ---
                       if (msg.toolCall) {
                           const calls = msg.toolCall.functionCalls;
                           if (calls && calls.length > 0) {
                               calls.forEach(call => {
                                   if (call.name === 'updateProjectInfo') {
                                       const args = call.args as any;
-                                      
                                       setFormData(prev => {
-                                          // Merge Budget into Project Description if it exists
                                           let newMessage = args.project_vision || prev.message;
                                           if (args.budget_extracted) {
                                               if (!newMessage.includes(args.budget_extracted)) {
                                                   newMessage = `${newMessage} [Presupuesto: ${args.budget_extracted}]`.trim();
                                               }
                                           }
-
                                           return {
                                               name: args.name || prev.name,
                                               email: args.email || prev.email,
@@ -457,16 +447,22 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                       });
                                       
                                       if (args.isComplete) {
-                                          setReadyToSubmit(true); // Triggers UI change
+                                          setReadyToSubmit(true);
                                           if (window.innerWidth < 768) setShowMobileForm(true);
                                       }
                                   } else if (call.name === 'rejectLead') {
-                                      // Immediate rejection logic
                                       setTimeout(() => {
                                           disconnectLiveSession();
-                                          alert("Conexión terminada.");
-                                          setIsAIMode(false); // Close everything
-                                      }, 4000); // Wait for audio to say goodbye
+                                          setIsAIMode(false);
+                                      }, 4000);
+                                  } else if (call.name === 'openCalendar') {
+                                      // THE MAGIC HAND-OFF
+                                      // 1. Disconnect Audio immediately to save costs
+                                      disconnectLiveSession();
+                                      // 2. Open Modal UI
+                                      setShowScheduler(true);
+                                      // 3. Disable AI Mode overlay so modal takes precedence
+                                      setIsAIMode(false); 
                                   }
                               });
                               session.sendToolResponse({
@@ -477,16 +473,11 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                           }
                       }
 
-                      const modelTurnText = msg.serverContent?.modelTurn?.parts?.[0]?.text;
-                      if (modelTurnText) pendingAiTextRef.current += modelTurnText;
-
                       const audioData = msg.serverContent?.modelTurn?.parts?.[0]?.inlineData;
                       if (audioData && outputAudioContextRef.current && outputGainRef.current) {
                           const ctx = outputAudioContextRef.current;
                           setIsProcessing(false);
                           
-                          // Jitter Buffer: Ensure next audio starts at least slightly in the future relative to "now"
-                          // This prevents dropped frames on shaky connections
                           const now = ctx.currentTime;
                           nextStartTimeRef.current = Math.max(nextStartTimeRef.current, now + 0.05);
 
@@ -503,42 +494,22 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                           source.connect(outputGainRef.current);
                           if(analyserRef.current) source.connect(analyserRef.current);
                           
-                          // Latency Check
                           if (lastAudioSentTimeRef.current > 0) {
                               const lat = Date.now() - lastAudioSentTimeRef.current;
                               setLatency(lat);
-                              lastAudioSentTimeRef.current = 0; // Reset
+                              lastAudioSentTimeRef.current = 0;
                           }
 
-                          const textToDisplay = pendingAiTextRef.current.trim(); 
-                          const delay = Math.max(0, (nextStartTimeRef.current - ctx.currentTime) * 1000);
-                          
                           setTimeout(() => {
                               setAiSpeaking(true);
-                              // Only update chat if we were showing it (removed for now)
-                              if (textToDisplay) {
-                                setMessages(prev => {
-                                    const last = prev[prev.length - 1];
-                                    if (last && last.role === 'ai' && textToDisplay.includes(last.text)) {
-                                         return [...prev.slice(0, -1), { role: 'ai', text: textToDisplay }];
-                                    }
-                                    if (last && last.role === 'ai') {
-                                        return [...prev.slice(0, -1), { role: 'ai', text: last.text + " " + textToDisplay }]; 
-                                    } else {
-                                        return [...prev, { role: 'ai', text: textToDisplay }];
-                                    }
-                                });
-                              }
-                          }, delay);
+                          }, Math.max(0, (nextStartTimeRef.current - ctx.currentTime) * 1000));
 
                           source.onended = () => {
                               activeSourcesRef.current.delete(source);
                               if (activeSourcesRef.current.size === 0) {
                                   setAiSpeaking(false);
-                                  // AUTO-DISCONNECT TO SAVE TOKENS
-                                  // Check the Ref, not state, because closure might be stale
                                   if (readyToSubmitRef.current) {
-                                      disconnectLiveSession();
+                                      // Optional: Disconnect if we want to force close, but with Calendar tool we let the tool trigger the disconnect
                                   }
                               }
                           };
@@ -553,11 +524,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                           nextStartTimeRef.current = 0;
                           setAiSpeaking(false);
                           setIsProcessing(false);
-                          pendingAiTextRef.current = "";
-                      }
-                      if (msg.serverContent?.turnComplete) {
-                          setIsProcessing(false);
-                          pendingAiTextRef.current = "";
                       }
                   },
                   onclose: () => { setIsConnected(false); setIsProcessing(false); },
@@ -582,7 +548,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
               source.connect(inputAnalyserRef.current);
           }
 
-          // IMPORTANT: Get the REAL sample rate of the context (e.g., 44100 or 48000 on mobile)
           const inputSampleRate = ctx.sampleRate;
           const targetSampleRate = 16000;
 
@@ -592,15 +557,12 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
               if (!isRecordingRef.current) return;
               
               const inputData = e.inputBuffer.getChannelData(0);
-              
-              // DOWNSAMPLE: Convert from Hardware Rate (e.g. 48k) to Gemini Rate (16k)
-              // This fixes the "choppy" or "fast" audio on mobile/production
               const downsampledData = downsampleBuffer(inputData, inputSampleRate, targetSampleRate);
 
               const pcm16 = floatTo16BitPCM(downsampledData);
               const base64Params = arrayBufferToBase64(pcm16.buffer);
               
-              lastAudioSentTimeRef.current = Date.now(); // Mark time for latency check
+              lastAudioSentTimeRef.current = Date.now();
 
               sessionRef.current.sendRealtimeInput({
                   media: { mimeType: "audio/pcm;rate=16000", data: base64Params }
@@ -617,7 +579,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
       if (processorRef.current) processorRef.current.disconnect();
       setIsProcessing(true);
   };
-
 
   const toggleAIMode = async () => {
       if (!isAIMode) {
@@ -643,7 +604,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     let hasError = false;
     if (name === 'name') hasError = value.trim() === '' || /\d/.test(value);
     else if (name === 'email') hasError = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    else if (name === 'phone') hasError = false; // Phone is optional per new requirement
+    else if (name === 'phone') hasError = false;
     else if (name === 'message') hasError = value.trim() === '';
     setErrors(prev => ({ ...prev, [name]: hasError }));
     return hasError;
@@ -670,16 +631,44 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     .set(formRef.current, { display: 'none' })
     .fromTo(thankYouRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
     .call(() => {
-        // Only toggle AI Mode OFF (returning to main site) after success message
         if (isAIMode) {
              setTimeout(() => {
                  setIsAIMode(false);
                  setMessages([]);
                  setShowMobileForm(false);
-                 setIsSubmitted(false); // Reset for next time
+                 setIsSubmitted(false);
              }, 2000);
         }
     });
+  };
+
+  const handleConfirmAppointment = () => {
+      if (!selectedDate || !selectedTime) {
+          alert("Por favor selecciona una fecha y hora para confirmar tu cita.");
+          return;
+      }
+
+      // Save to LocalStorage as requested
+      const appointmentData = {
+          ...formData,
+          appointment: {
+              date: `2025-11-${selectedDate}`, // Mock month for demo
+              time: selectedTime,
+              timestamp: new Date().toISOString()
+          }
+      };
+      
+      try {
+          localStorage.setItem('thelastart_appointment', JSON.stringify(appointmentData));
+          console.log("Appointment saved to cache:", appointmentData);
+      } catch (e) {
+          console.error("Failed to save appointment", e);
+      }
+
+      alert(`¡Cita Confirmada!\n\nFecha: ${selectedDate} de Noviembre\nHora: ${selectedTime}\n\nHemos guardado tu espacio. Te enviaremos una confirmación a ${formData.email || "tu correo"}.`);
+      setShowScheduler(false);
+      setSelectedDate(null);
+      setSelectedTime(null);
   };
 
   const getStatusColor = (val: string) => val && val.length > 2 ? 'bg-brand-accent shadow-[0_0_8px_#00FFFF]' : 'bg-white/10';
@@ -695,11 +684,11 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
         : 'py-12 md:py-20 h-auto'
       }`}
     >
-      {/* BACKGROUND LAYER: CANVAS, STATUS, CONTROLS */}
+      {/* BACKGROUND LAYER */}
       <div className="absolute inset-0 z-0">
           <canvas ref={canvasRef} className="w-full h-full block" />
           
-          {/* --- MOBILE LIVE HUD (Visible Extraction) --- */}
+            {/* MOBILE LIVE HUD */}
             {isAIMode && !showMobileForm && (
                 <div className="md:hidden absolute top-14 left-4 right-4 z-30 pointer-events-none">
                     <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-3 grid grid-cols-2 gap-2">
@@ -723,17 +712,13 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                 </div>
             )}
 
-            {/* MINIMALIST STATUS & CONTROLS (Replaces Chat Window) */}
+            {/* STATUS & CONTROLS */}
             {isAIMode && (
                 <div className={`
                     absolute z-30 pointer-events-none px-4
-                    /* Mobile: Bottom Center, Fixed over everything */
                     left-0 right-0 bottom-0 flex flex-col items-center justify-end pb-8 
-                    /* Desktop: Positioned in left half, centered */
                     md:inset-y-0 md:left-0 md:right-auto md:w-1/2 md:items-center md:justify-center md:pb-0
                 `}>
-                    
-                    {/* Floating Status Label */}
                     <div className="mb-6 bg-black/60 backdrop-blur-sm border border-white/10 px-6 py-2 rounded-full shadow-lg pointer-events-auto">
                         <div className="flex items-center gap-3">
                              <div className={`w-2 h-2 rounded-full transition-colors duration-300 
@@ -752,9 +737,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                         </div>
                     </div>
 
-                    {/* Control Deck */}
                     <div className="pointer-events-auto flex items-center gap-6">
-                        {/* Exit Button */}
                         <button 
                             onClick={toggleAIMode} 
                             className="w-12 h-12 rounded-full bg-white/5 border border-white/20 hover:bg-white/10 flex items-center justify-center transition-all"
@@ -765,7 +748,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                             </svg>
                         </button>
 
-                        {/* Main Mic Button */}
                         <button 
                             onClick={handleMicToggle}
                             disabled={!isConnected && !isSecureLoading}
@@ -785,7 +767,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                             </div>
                         </button>
 
-                        {/* Mobile Toggle Form (Optional) */}
                          {readyToSubmit && (
                              <button onClick={() => setShowMobileForm(!showMobileForm)} className="md:hidden w-12 h-12 rounded-full bg-brand-accent/20 border border-brand-accent flex items-center justify-center animate-pulse">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-brand-accent">
@@ -798,7 +779,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
             )}
       </div>
       
-      {/* FORM CONTENT LAYER (Z-10) - Sits on top of canvas */}
+      {/* FORM CONTENT LAYER */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center md:justify-end pointer-events-none">
         <div className={`
             w-full md:w-1/2 pointer-events-auto
@@ -809,17 +790,15 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
             }
         `}>
             <div ref={containerRef} className="relative group w-full perspective-1000">
-                {/* Holographic Effects active in AI Mode */}
                 <div className={`absolute -inset-[1px] bg-gradient-to-r from-brand-accent via-purple-600 to-brand-accent rounded-xl blur-sm transition-all duration-1000 ${isAIMode ? 'opacity-100 blur-md animate-pulse' : 'opacity-50 group-hover:opacity-80'}`}></div>
                 
-                <div className={`relative rounded-xl min-h-[600px] md:min-h-[550px] border shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-500
+                <div className={`relative rounded-xl min-h-[600px] md:min-h-[620px] border shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-500
                     ${isAIMode 
                         ? 'bg-black/60 backdrop-blur-xl border-brand-accent/50 shadow-[0_0_30px_rgba(0,255,255,0.15)]' 
                         : 'bg-black/40 backdrop-blur-md border-white/5'
                     }
                 `}>
                     
-                    {/* Content Container - Enabled scrolling for overflowing content */}
                     <div className={`p-6 md:p-12 transition-all duration-500 absolute inset-0 opacity-100 overflow-y-auto scrollbar-hide`}>
                         <div ref={formContentRef}>
                             <div className="flex justify-between items-start mb-6">
@@ -841,7 +820,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                         </span>
                                     </button>
                                 )}
-                                {/* Mobile close form button */}
                                 {isAIMode && (
                                     <button onClick={() => setShowMobileForm(false)} className="md:hidden text-white/50 hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -856,7 +834,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                             </h2>
                             
                             <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-4 mt-6">
-                                {/* ROW 1: NAME & EMAIL */}
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div>
                                         <label htmlFor="name" className={`block text-xs font-bold mb-2 uppercase tracking-wider ${isAIMode && formData.name ? 'text-brand-accent animate-pulse' : 'text-brand-light/70'}`}>Nombre</label>
@@ -888,7 +865,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                     </div>
                                 </div>
 
-                                {/* ROW 2: PHONE ONLY */}
                                 <div>
                                     <label htmlFor="phone" className={`block text-xs font-bold mb-2 uppercase tracking-wider ${isAIMode && formData.phone ? 'text-brand-accent animate-pulse' : 'text-brand-light/70'}`}>Teléfono</label>
                                     <input 
@@ -904,7 +880,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                     />
                                 </div>
 
-                                {/* ROW 3: MESSAGE (INCLUDES BUDGET) */}
                                 <div>
                                     <label htmlFor="message" className={`block text-xs font-bold mb-2 uppercase tracking-wider ${isAIMode && formData.message ? 'text-brand-accent animate-pulse' : 'text-brand-light/70'}`}>Visión del Proyecto y Presupuesto</label>
                                     <textarea 
@@ -945,6 +920,106 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
             </div>
         </div>
       </div>
+
+      {/* SCHEDULING MODAL (THE "MAGIC HAND-OFF" UI) */}
+      {showScheduler && (
+        <div className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in-up">
+            <div className="w-full max-w-4xl bg-[#0a0a0a] border border-brand-accent/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[80vh]">
+                
+                {/* Left Side: Info */}
+                <div className="w-full md:w-1/3 bg-brand-secondary/50 p-8 flex flex-col justify-between border-r border-white/5">
+                    <div>
+                        <p className="text-brand-accent text-xs font-mono tracking-widest uppercase mb-4">// AGENDANDO CON</p>
+                        <h3 className="text-3xl font-bold text-white mb-2">Sasha AI</h3>
+                        <p className="text-white/60 text-sm mb-8">Sesión de Estrategia Creativa</p>
+                        
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3 text-white/80">
+                                <svg className="w-5 h-5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span className="text-sm">30 Minutos</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-white/80">
+                                <svg className="w-5 h-5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                <span className="text-sm">Google Meet / Zoom</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="mt-8">
+                        <p className="text-xs text-white/40">Datos confirmados:</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                             {formData.name && <span className="px-2 py-1 bg-white/10 rounded text-xs text-white">{formData.name}</span>}
+                             {formData.email && <span className="px-2 py-1 bg-white/10 rounded text-xs text-white">{formData.email}</span>}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Side: Mock Calendar */}
+                <div className="w-full md:w-2/3 p-4 md:p-8 overflow-y-auto bg-[#050505]">
+                    <div className="flex justify-between items-center mb-6">
+                        <h4 className="text-xl font-bold text-white">Selecciona una fecha</h4>
+                        <button onClick={() => setShowScheduler(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                             <svg className="w-6 h-6 text-white/50 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+
+                    {/* Interactive Calendar Grid */}
+                    <div className="grid grid-cols-7 gap-2 mb-4 text-center text-white/40 text-sm">
+                        <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+                    </div>
+                    <div className="grid grid-cols-7 gap-2 mb-8">
+                         {[...Array(31)].map((_, i) => (
+                             <button 
+                                key={i} 
+                                onClick={() => setSelectedDate(i + 1)}
+                                className={`aspect-square rounded-lg flex items-center justify-center text-sm transition-all duration-300
+                                   ${selectedDate === i + 1 
+                                     ? 'bg-brand-accent text-black font-bold shadow-[0_0_15px_#00FFFF] scale-110' 
+                                     : 'text-white/60 hover:bg-white/10 hover:text-white'
+                                   }
+                             `}>
+                                 {i + 1}
+                             </button>
+                         ))}
+                    </div>
+
+                    <h4 className="text-xl font-bold text-white mb-4">Horarios Disponibles</h4>
+                    <div className="grid grid-cols-3 gap-3">
+                        {['09:00 AM', '11:30 AM', '02:00 PM', '04:15 PM'].map(time => (
+                            <button 
+                                key={time} 
+                                onClick={() => setSelectedTime(time)}
+                                className={`py-2 px-4 border rounded-lg text-sm transition-all duration-300
+                                    ${selectedTime === time 
+                                        ? 'border-brand-accent bg-brand-accent/10 text-brand-accent font-bold shadow-[0_0_10px_rgba(0,255,255,0.3)]' 
+                                        : 'border-white/20 text-white/80 hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/5'
+                                    }
+                                `}
+                            >
+                                {time}
+                            </button>
+                        ))}
+                    </div>
+                    
+                    <div className="mt-8 pt-6 border-t border-white/10">
+                        <button 
+                            onClick={handleConfirmAppointment} 
+                            disabled={!selectedDate || !selectedTime}
+                            className={`w-full py-3 font-bold uppercase tracking-widest rounded-lg transition-all duration-300
+                                ${(!selectedDate || !selectedTime) 
+                                    ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
+                                    : 'bg-brand-accent text-black hover:bg-white hover:scale-[1.02] shadow-[0_0_20px_rgba(0,255,255,0.4)]'
+                                }
+                            `}
+                        >
+                            Confirmar Cita
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      )}
+
     </section>
   );
 };

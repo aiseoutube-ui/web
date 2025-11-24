@@ -90,15 +90,16 @@ const Hero: React.FC<HeroProps> = ({ content, isLoaded }) => {
 
   return (
     // Changed h-screen to h-[100dvh] for better mobile browser support
-    <section id="hero" ref={heroRef} className="relative h-[100dvh] w-full flex items-center justify-center text-center overflow-hidden">
+    <section id="hero" ref={heroRef} className="relative h-[100dvh] w-full flex items-center justify-center text-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-0">
         <video
-          className="hero-video absolute top-0 left-0 w-full h-full object-cover"
+          className="hero-video absolute top-0 left-0 w-full h-full object-contain"
           src={content.backgroundVideoUrl}
           autoPlay
           loop
           muted
           playsInline
+          // @ts-ignore
           webkit-playsinline="true" 
         />
         <div className="absolute inset-0 bg-brand-primary opacity-60"></div>

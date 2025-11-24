@@ -1,4 +1,3 @@
-
 import type { CMSContent } from '../types';
 
 export const content: CMSContent = {
@@ -31,15 +30,17 @@ export const content: CMSContent = {
       'Somos una agencia de publicidad de vanguardia que aprovecha el poder de la inteligencia artificial para redefinir los límites de la creatividad. Nuestro AI Discovery Site es un escaparate de esta visión.',
       'Aquí, exploramos y exhibimos contenido visual generado por IA, desde imágenes surrealistas hasta secuencias de video dinámicas, todo curado para inspirar y sorprender. Cada pieza es un testimonio de la colaboración entre la mente humana y la máquina.',
     ],
-    imageUrl: 'https://picsum.photos/1200/800?random=10',
+    imageUrl: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg',
   },
   gallery: [
     { id: 1, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=1', src: 'https://picsum.photos/1200/1600?random=1', title: 'Cosmic Voyager', description: 'An astronaut discovering a nebula of vibrant colors and shapes.' },
-    { id: 2, type: 'video', thumbnail: 'https://picsum.photos/800/600?random=2', src: 'https://videos.pexels.com/video-files/857039/857039-hd_1920_1080_25fps.mp4', title: 'Liquid Dreams', description: 'Flowing metallic liquids creating abstract, mesmerizing patterns.' },
+    // VIDEO 1: YouTube (Link CORREGIDO: ID LXb3EKWsInQ permite embedding)
+    { id: 2, type: 'video', thumbnail: 'https://img.youtube.com/vi/LXb3EKWsInQ/maxresdefault.jpg', src: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', title: 'Nature in 4K', description: 'Experiencia inmersiva generada con técnicas de alta resolución.' },
     { id: 3, type: 'image', thumbnail: 'https://picsum.photos/800/600?random=3', src: 'https://picsum.photos/1600/1200?random=3', title: 'Cybernetic Forest', description: 'A forest where nature and technology merge into a glowing biome.' },
     { id: 4, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=4', src: 'https://picsum.photos/1200/1600?random=4', title: 'Steampunk Metropolis', description: 'A bustling city powered by steam and intricate clockwork.' },
     { id: 5, type: 'image', thumbnail: 'https://picsum.photos/800/600?random=5', src: 'https://picsum.photos/1600/1200?random=5', title: 'Oceanic Leviathan', description: 'A gentle giant of the deep, adorned with bioluminescent patterns.' },
-    { id: 6, type: 'video', thumbnail: 'https://picsum.photos/600/800?random=6', src: 'https://videos.pexels.com/video-files/4782071/4782071-hd_1920_1080_30fps.mp4', title: 'Quantum Flux', description: 'Particles of light dancing and shifting in a quantum state.' },
+    // VIDEO 2: Vimeo (Link verificado de CGI de alta calidad)
+    { id: 6, type: 'video', thumbnail: 'https://i.vimeocdn.com/video/1355664848-6c7184c093d2956203266b964a0771588498344660d20b81141b1493e3780156-d_640', src: 'https://vimeo.com/22439234', title: 'The Third & The Seventh', description: 'Una obra maestra de arquitectura CGI que desafía la realidad.' },
     { id: 7, type: 'image', thumbnail: 'https://picsum.photos/800/600?random=7', src: 'https://picsum.photos/1600/1200?random=7', title: 'Desert Mirage', description: 'An oasis that appears in the vast, shimmering desert landscape.' },
     { id: 8, type: 'image', thumbnail: 'https://picsum.photos/600/800?random=8', src: 'https://picsum.photos/1200/1600?random=8', title: 'Retrofuture Portrait', description: 'A portrait of a figure from a future imagined in the past.' },
   ],
