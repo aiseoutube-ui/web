@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <a href="#hero" className="cursor-pointer-grow" aria-label="Ir al inicio">
-            <span className="text-2xl font-bold text-brand-light font-['Archivo'] tracking-wider hover:text-brand-accent transition-colors duration-300">
+            <span className="text-2xl font-bold text-brand-light font-strasua tracking-wider hover:text-brand-accent transition-colors duration-300">
               The Last Art
             </span>
           </a>

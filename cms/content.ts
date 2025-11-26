@@ -1,3 +1,4 @@
+
 import type { CMSContent } from '../types';
 
 export const content: CMSContent = {
@@ -142,7 +143,7 @@ export const content: CMSContent = {
     disclaimer: 'By submitting this form, you acknowledge receipt of our company Privacy and policy.',
   },
   footer: {
-    copyright: `© ${new Date().getFullYear()} AI Discovery. Todos los derechos reservados.`,
+    copyright: `© ${new Date().getFullYear()} The Last Art. Todos los derechos reservados.`,
     links: [
       { name: 'Inicio', href: '#hero' },
       { name: 'Galería', href: '#gallery' },

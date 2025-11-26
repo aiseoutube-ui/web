@@ -38,7 +38,13 @@ const About: React.FC<AboutProps> = ({ content }) => {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">{content.title}</h2>
             {content.paragraphs.map((p, index) => (
               <p key={index} className="text-brand-light mb-4 leading-relaxed">
-                {p}
+                {/* Apply custom font to brand name without changing color or size */}
+                {p.split('The Last Art').map((part, i, arr) => (
+                    <React.Fragment key={i}>
+                        {part}
+                        {i < arr.length - 1 && <span className="font-strasua">The Last Art</span>}
+                    </React.Fragment>
+                ))}
               </p>
             ))}
           </div>

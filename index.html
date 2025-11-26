@@ -89,6 +89,7 @@
           extend: {
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
+              strasua: ['Strasua', 'sans-serif'], // Custom font registration
             },
             colors: {
               'brand-primary': '#0A0A0A',
@@ -118,6 +119,16 @@
     <style>
       /* --- GLOBAL STYLES --- */
       * { box-sizing: border-box; }
+
+      /* --- CUSTOM FONTS --- */
+      @font-face {
+        font-family: 'Strasua';
+        src: url('/Strasua.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
       html {
           width: 100%;
           margin: 0;

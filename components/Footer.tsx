@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { FooterContent } from '../types';
 import { SocialIcons } from './icons/SocialIcons';
@@ -24,7 +25,14 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
                 </a>
              ))}
         </div>
-        <p>{content.copyright}</p>
+        <p>
+          {content.copyright.split('The Last Art').map((part, i, arr) => (
+            <React.Fragment key={i}>
+              {part}
+              {i < arr.length - 1 && <span className="font-strasua">The Last Art</span>}
+            </React.Fragment>
+          ))}
+        </p>
       </div>
     </footer>
   );
