@@ -1,0 +1,27 @@
+# The Last Art - Agencia Creativa de Inteligencia Artificial
+
+## Descripción de la Entidad
+The Last Art es una agencia de publicidad y consultora tecnológica de vanguardia con sede en Lima, Perú, especializada en la fusión de arte y algoritmos. Utilizamos Inteligencia Artificial Generativa (GenAI) para crear contenido visual, automatizar marketing y desarrollar experiencias digitales inmersivas para marcas globales.
+
+## Propuesta de Valor
+A diferencia de las agencias tradicionales, The Last Art elimina las barreras técnicas de la producción creativa. Utilizamos modelos avanzados (Gemini, Midjourney, Runway, Sora) para reducir costos de producción y tiempos de entrega, manteniendo una calidad cinematográfica y una consistencia de marca perfecta.
+
+## Servicios Principales
+1. **Contenido Generado por IA:** Creación de imágenes y videos hiperrealistas para campañas publicitarias.
+2. **Video Sintético:** Producción de comerciales y contenido para redes sociales utilizando video generativo.
+3. **Consistencia de Personaje:** Desarrollo de influencers virtuales y mascotas de marca que mantienen su identidad en múltiples escenarios.
+4. **Automatización de Marketing:** Integración de agentes de IA (como Sasha AI) para calificación de leads y atención al cliente.
+
+## Equipo Directivo
+- **Cristobal Pallete:** Director Creativo. Experto en visión artística y dirección.
+- **Peter Queens:** Peter Queens: Chief AI Officer (CAIO). Especialista en ingeniería de prompts y arquitectura de sistemas de IA..
+- **Sasha Moretti:** Marketing Communications Manager.
+
+## Información de Contacto
+- **Sitio Web:** https://www.thelastart.com
+- **Ubicación:** Lima, Perú (Servicio Global)
+- **Email:** aiseoutube@gmail.com (Sasha AI gestiona el primer contacto)
+- **Agente de IA:** Sasha (Disponible en la web para consultas en tiempo real y agendamiento)
+
+## Filosofía
+"Fusionamos arte y algoritmos para liberar el potencial de tu marca."

@@ -67,7 +67,7 @@ export const content: CMSContent = {
     { 
         id: 2, 
         name: 'Peter Queens', 
-        role: 'Director IA', 
+        role: 'Peter Queens: Chief AI Officer (CAIO)', 
         image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3CO5r51IGOzX6xS9atNPnikklH7-EK6YtSydBx7Bx9y0A2yHguX3OJdBLWPSrYmkgEVZnFPCQvW71H9TC3jWMA60Kqaswi6THG6udQiZBzrBZ3DuUUhU9QeAjqn0tLIZv2qphqoAy_LVxpClis9yvauJAPVekUWqhcp_c2k6Ktbvj7S9M3DMSQrsgWAZ3/s1184/past-forward-1960s.jpg', 
         burstImages: [
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgoPgDdMfFrFS7qm1HLPsF9MpSdPengO-lBV5c7xbbXfQgaWlAHnLnqubYgJBwBXXtyx9n1Jm5ayv6pazciKW6uJ0BYvhpWcWo-5XrACDLx_tesZG0-bB2NdpPtsBBF0SNTcUj3qblhQQiSL-uQE270Q0T5LDLU5lpgFoe3MqyaZseQp7ATR3yp3pSJN_m8/s1184/past-forward-1950s.jpg',
@@ -84,8 +84,8 @@ export const content: CMSContent = {
     },
     { 
         id: 3, 
-        name: 'Carlos Gomez', 
-        role: 'Diseñador Principal', 
+        name: 'Sasha Moretti', 
+        role: 'Marketing Communications Manager', 
         image: 'https://picsum.photos/500/700?random=40', 
         burstImages: [
             'https://picsum.photos/500/700?random=41',
