@@ -145,6 +145,11 @@
           color: #e0e0e0;
           font-family: 'Inter', sans-serif;
           overscroll-behavior: none;
+          
+          /* FIX FOR MAC/IOS FONT RENDERING */
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
       }
       /* --- SCRAMBLE PRELOADER --- */
       #scramble-preloader {
