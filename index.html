@@ -123,12 +123,8 @@
       /* --- CUSTOM FONTS --- */
       @font-face {
         font-family: 'Strasua';
-        src: url('Strasua-Regular.woff2') format('woff2'),
-             url('Strasua-Regular.woff') format('woff'),
-             url('Strasua.otf') format('opentype');
-        /* CRITICAL FOR IOS: Defines that this single file supports ALL weights.
-           Without this, iOS falls back to system font if 'font-bold' is used in HTML. */
-        font-weight: 100 900; 
+        src: url('/Strasua.otf') format('opentype');
+        font-weight: normal;
         font-style: normal;
         font-display: swap;
       }
@@ -149,11 +145,6 @@
           color: #e0e0e0;
           font-family: 'Inter', sans-serif;
           overscroll-behavior: none;
-          
-          /* FIX FOR MAC/IOS FONT RENDERING */
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          text-rendering: optimizeLegibility;
       }
       /* --- SCRAMBLE PRELOADER --- */
       #scramble-preloader {
