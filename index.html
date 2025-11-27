@@ -123,7 +123,9 @@
       /* --- CUSTOM FONTS --- */
       @font-face {
         font-family: 'Strasua';
-        src: url('/Strasua.otf') format('opentype');
+        /* Prioritizamos WOFF2 para iOS/Mac y moderno web, fallback a OTF */
+        src: url('/Strasua.woff2') format('woff2'),
+             url('/Strasua.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
         font-display: swap;
