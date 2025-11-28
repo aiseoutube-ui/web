@@ -91,16 +91,15 @@
       /* --- GLOBAL STYLES --- */
       * { box-sizing: border-box; }
 
-      /* --- CUSTOM FONTS (CORREGIDO PARA MÓVIL) --- */
       @font-face {
         font-family: 'Strasua';
-        /* El orden importa: WOFF2 primero para móviles modernos, luego WOFF, y OTF al final por si acaso */
-        src: url('/Strasua-Regular.woff2') format('woff2'),
-             url('/Strasua-Regular.woff') format('woff'),
-             url('/Strasua.otf') format('opentype');
+        /* FIX MÓVIL: Rutas relativas (sin / al inicio) + Cache Buster + Orden WOFF2 primero */
+        src: url('Strasua-Regular.woff2?v=mobile_fix_final') format('woff2'),
+             url('Strasua-Regular.woff?v=mobile_fix_final') format('woff'),
+             url('Strasua.otf?v=mobile_fix_final') format('opentype');
         font-weight: normal;
         font-style: normal;
-        font-display: swap; 
+        font-display: block; /* Obliga a esperar la fuente en móvil */
       }
 
       html { width: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
@@ -108,6 +107,10 @@
           width: 100%; max-width: 100%; overflow-x: hidden; margin: 0; padding: 0;
           background-color: #000000; color: #e0e0e0; font-family: 'Inter', sans-serif;
           overscroll-behavior: none;
+          /* Mejoras de renderizado de texto para móvil */
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
       }
 
       /* --- SCRAMBLE PRELOADER --- */
@@ -138,13 +141,13 @@
         color: #ffffff; letter-spacing: 0.1em;
       }
       
-      /* --- ESTILOS DEL FLASH SUBLIMINAL (CINE + GLITCH) --- */
+      /* --- ESTILOS DEL FLASH SUBLIMINAL --- */
       .flash-glitch {
         font-family: 'Strasua', sans-serif;
-        font-size: 1.6em; /* Un poco más grande para impacto */
+        font-size: 1.6em; 
         color: #ffffff;
         display: inline-block;
-        /* Sombra roja fuerte + offset cian + resplandor rojo sutil */
+        /* Sombra roja fuerte + offset cian */
         text-shadow: 4px 0 0 rgba(255, 40, 40, 0.9), -3px 0 0 rgba(0, 255, 255, 0.7), 0 0 20px rgba(255, 0, 0, 0.8);
         letter-spacing: 2px;
       }
@@ -260,7 +263,7 @@
                     const from = oldText[i] || '';
                     const to = newText[i] || '';
                     const start = Math.floor(Math.random() * 40);
-                    // UPGRADE VISUAL: Mayor duración del efecto scramble (de 40 a 60)
+                    // UPGRADE VISUAL: Duración 60
                     const end = start + Math.floor(Math.random() * 60) + 60;
                     this.queue.push({ from, to, start, end, char: from });
                 }
@@ -282,7 +285,7 @@
                         if (Math.random() < 0.2) char = this.chars[Math.floor(Math.random() * this.chars.length)];
                         if (this.glitchEl && Math.random() < 0.05) charClass = ' red-glitch';
                         
-                        // LÓGICA DE AUDIO: Probabilidad bajada a 0.5% (0.005) para cuando se active
+                        // LÓGICA DE AUDIO: 0.5% probabilidad
                         if (this.glitchEl && this.glitchPlayCount < this.maxGlitches && Math.random() < 0.005 && window.isAudioReady) {
                             if (this.glitchEl.paused && this.glitchEl.currentSrc) {
                                 if (isFinite(this.glitchEl.duration) && this.glitchEl.duration > 0) this.glitchEl.currentTime = Math.random() * this.glitchEl.duration;
@@ -383,7 +386,6 @@
                          const currentContent = textElement.innerHTML;
 
                          // SECUENCIA: NEGRO (60ms) -> FLASH (120ms) -> NEGRO (60ms) -> RESTAURAR
-                         // Tiempos aumentados para mayor impacto
                          textElement.innerHTML = ""; 
 
                          setTimeout(() => {
