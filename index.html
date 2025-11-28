@@ -85,16 +85,17 @@
     </script>
 
     <style>
-      /* --- ROBUST FONT LOADING FOR MOBILE/SAFARI --- */
-      @font-face {
-        font-family: 'Strasua';
-        src: url('/Strasua-Regular.woff2') format('woff2'),
-             url('/Strasua-Regular.woff') format('woff'),
-             url('/Strasua.otf') format('opentype');
-        font-weight: 100 900; /* Force variable weight range for iOS */
-        font-style: normal;
-        font-display: swap;
-      }
+      /* --- FIXED FONT LOADING FOR MOBILE IOS/SAFARI --- */
+@font-face {
+  font-family: 'Strasua';
+  src: url('/fonts/Strasua-Regular.woff2') format('woff2'),
+       url('/fonts/Strasua-Regular.woff') format('woff'),
+       url('/fonts/Strasua-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 
       /* Base Reset */
       * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
