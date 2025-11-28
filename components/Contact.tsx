@@ -1,9 +1,12 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import type { ContactContent } from '../types';
 import { GoogleGenAI, LiveServerMessage, Modality, FunctionDeclaration, Type } from "@google/genai";
 
 declare const gsap: any;
+
+// --- CONFIGURACIÓN BACKEND ---
+// IMPORTANTE: Reemplaza esta URL con la que obtuviste al hacer Deploy en Apps Script
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzqkiT7sAGfJSRzSUQcxZT3uqc9iU0djuYhDV-6loDg2fv0zTB3PLSI4lmJpIbcs6yp/exec"; 
 
 // --- AUDIO UTILS (Helpers for PCM conversion & Resampling) ---
 
@@ -114,8 +117,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Form States
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  // Form States - Added appointmentDate
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '', appointmentDate: '' });
   const [errors, setErrors] = useState({ name: false, email: false, phone: false, message: false });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [latency, setLatency] = useState<number | null>(null);
@@ -142,10 +145,13 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const [showScheduler, setShowScheduler] = useState(false);
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]); 
+  
+  // Calendar Logic State
+  const [currentCalendarDate, setCurrentCalendarDate] = useState(new Date());
 
   // Message History
   const [messages, setMessages] = useState<{role: 'user' | 'ai', text: string}[]>([]);
-  const pendingAiTextRef = useRef<string>("");
   
   // Refs for Live API
   const clientRef = useRef<GoogleGenAI | null>(null);
@@ -184,6 +190,58 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     window.addEventListener('openSashaAI', handleOpenSasha);
     return () => window.removeEventListener('openSashaAI', handleOpenSasha);
   }, [isAIMode]);
+
+  // Fetch Booked Slots when Modal Opens
+  const fetchBookedSlots = async () => {
+      try {
+          const response = await fetch(GOOGLE_SCRIPT_URL);
+          const data = await response.json();
+          if (Array.isArray(data)) {
+              setBookedSlots(data.map(String)); 
+          }
+      } catch (e) {
+          console.error("Error fetching booked slots", e);
+      }
+  };
+
+  useEffect(() => {
+      if (showScheduler) {
+          fetchBookedSlots();
+          // Reset to current date on open
+          setCurrentCalendarDate(new Date()); 
+      }
+  }, [showScheduler]);
+
+  // --- GOOGLE SHEETS INTEGRATION (CORS BYPASS) ---
+  const sendDataToSheets = async (data: any) => {
+      if (!GOOGLE_SCRIPT_URL) {
+          console.warn("Falta configurar la URL de Google Apps Script en Contact.tsx");
+          return;
+      }
+
+      const payload = {
+          nombre: data.name,
+          email: data.email,
+          telefono: data.phone,
+          mensaje: data.message,
+          fechaCita: data.appointmentDate || "N/A",
+          confirmacion: data.confirmation || "No" 
+      };
+
+      try {
+          await fetch(GOOGLE_SCRIPT_URL, {
+              method: "POST",
+              mode: "no-cors", 
+              headers: {
+                  "Content-Type": "text/plain"
+              },
+              body: JSON.stringify(payload)
+          });
+          console.log("Datos enviados a Google Sheets con éxito (Modo No-Cors)");
+      } catch (error) {
+          console.error("Error enviando datos a Sheets:", error);
+      }
+  };
 
   // --- CANVAS & PARTICLE SYSTEM ---
   useEffect(() => {
@@ -442,7 +500,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                               name: args.name || prev.name,
                                               email: args.email || prev.email,
                                               phone: args.phone || prev.phone,
-                                              message: newMessage
+                                              message: newMessage,
+                                              appointmentDate: prev.appointmentDate 
                                           };
                                       });
                                       
@@ -456,13 +515,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                           setIsAIMode(false);
                                       }, 4000);
                                   } else if (call.name === 'openCalendar') {
-                                      // THE MAGIC HAND-OFF
-                                      // 1. Disconnect Audio immediately to save costs
                                       disconnectLiveSession();
-                                      // 2. Open Modal UI
                                       setShowScheduler(true);
-                                      // 3. Disable AI Mode overlay so modal takes precedence
-                                      setIsAIMode(false); 
                                   }
                               });
                               session.sendToolResponse({
@@ -508,9 +562,6 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                               activeSourcesRef.current.delete(source);
                               if (activeSourcesRef.current.size === 0) {
                                   setAiSpeaking(false);
-                                  if (readyToSubmitRef.current) {
-                                      // Optional: Disconnect if we want to force close, but with Calendar tool we let the tool trigger the disconnect
-                                  }
                               }
                           };
                           source.start(nextStartTimeRef.current);
@@ -584,7 +635,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
       if (!isAIMode) {
           setIsAIMode(true);
           setReadyToSubmit(false);
-          setFormData({ name: '', email: '', phone: '', message: '' });
+          setFormData({ name: '', email: '', phone: '', message: '', appointmentDate: '' });
           await connectToLiveAPI();
       } else {
           disconnectLiveSession();
@@ -624,6 +675,14 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
     if (nameError || emailError || messageError) return;
     setIsSubmitted(true);
     
+    // SEND TO GOOGLE SHEETS (SINGLE SOURCE OF TRUTH)
+    // Now this sends the date too if one was selected
+    sendDataToSheets({
+        ...formData,
+        confirmation: formData.appointmentDate ? "Si" : "No",
+        appointmentDate: formData.appointmentDate || "N/A"
+    });
+
     const tl = gsap.timeline();
     tl.to(formContentRef.current, { opacity: 0, y: 50, duration: 0.6, ease: 'power3.in' })
     .to(flashOverlayRef.current, { opacity: 1, duration: 0.5, ease: 'power3.inOut' })
@@ -648,31 +707,43 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
           return;
       }
 
-      // Save to LocalStorage as requested
-      const appointmentData = {
-          ...formData,
-          appointment: {
-              date: `2025-11-${selectedDate}`, // Mock month for demo
-              time: selectedTime,
-              timestamp: new Date().toISOString()
-          }
-      };
-      
-      try {
-          localStorage.setItem('thelastart_appointment', JSON.stringify(appointmentData));
-          console.log("Appointment saved to cache:", appointmentData);
-      } catch (e) {
-          console.error("Failed to save appointment", e);
-      }
+      const year = currentCalendarDate.getFullYear();
+      const month = currentCalendarDate.getMonth() + 1; // 1-12 for formatting
+      const formattedDate = `${year}-${month}-${selectedDate} ${selectedTime}`; // Matches GAS format
 
-      alert(`¡Cita Confirmada!\n\nFecha: ${selectedDate} de Noviembre\nHora: ${selectedTime}\n\nHemos guardado tu espacio. Te enviaremos una confirmación a ${formData.email || "tu correo"}.`);
+      // 1. UPDATE FORM STATE (Don't send yet)
+      setFormData(prev => ({
+          ...prev,
+          appointmentDate: formattedDate
+      }));
+
+      // 2. CLOSE MODAL (Return to form for review)
       setShowScheduler(false);
       setSelectedDate(null);
       setSelectedTime(null);
+      
+      // 3. ENABLE MOBILE FORM TO SHOW THE DATA
+      if (window.innerWidth < 768) setShowMobileForm(true);
+      setReadyToSubmit(true); // Enable submit button
   };
 
   const getStatusColor = (val: string) => val && val.length > 2 ? 'bg-brand-accent shadow-[0_0_8px_#00FFFF]' : 'bg-white/10';
   const getStatusText = (val: string) => val && val.length > 2 ? 'text-brand-accent' : 'text-gray-500';
+
+  // --- CALENDAR LOGIC HELPERS ---
+  const getDaysInMonth = (date: Date) => {
+      return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+  
+  const getFirstDayOfMonth = (date: Date) => {
+      // 0 = Sunday, 1 = Monday... but we want Mon=0, Sun=6
+      const day = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+      return (day + 6) % 7;
+  };
+
+  const getMonthName = (date: Date) => {
+      return date.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  };
 
   return (
     <section 
@@ -684,7 +755,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
         : 'py-12 md:py-20 h-auto'
       }`}
     >
-      {/* BACKGROUND LAYER */}
+      {/* ... (Background layer code remains the same) ... */}
       <div className="absolute inset-0 z-0">
           <canvas ref={canvasRef} className="w-full h-full block" />
           
@@ -834,6 +905,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                             </h2>
                             
                             <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-4 mt-6">
+                                {/* Form Inputs (Name, Email, Phone, Message) remain same ... */}
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div>
                                         <label htmlFor="name" className={`block text-xs font-bold mb-2 uppercase tracking-wider ${isAIMode && formData.name ? 'text-brand-accent animate-pulse' : 'text-brand-light/70'}`}>Nombre</label>
@@ -895,6 +967,28 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                     ></textarea>
                                 </div>
 
+                                {/* Appointment Display Block (Visible if date is selected) */}
+                                {formData.appointmentDate && (
+                                    <div 
+                                        onClick={() => setShowScheduler(true)}
+                                        className="bg-brand-accent/10 border border-brand-accent/30 rounded-lg p-3 flex items-center gap-3 animate-pulse cursor-pointer hover:bg-brand-accent/20 transition-colors group/appoint"
+                                    >
+                                        <div className="bg-brand-accent p-2 rounded text-black group-hover/appoint:scale-110 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                                                <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                                                <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clipRule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div className="flex-1">
+                                            <p className="text-[10px] text-brand-accent uppercase tracking-wider font-bold">Cita Programada (Click para editar)</p>
+                                            <p className="text-white text-sm font-bold">{formData.appointmentDate}</p>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-white/50 group-hover/appoint:text-white">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                        </svg>
+                                    </div>
+                                )}
+
                                 <div className="pt-2 flex flex-col sm:flex-row gap-4 pb-4">
                                     <button 
                                         type="submit" 
@@ -954,10 +1048,10 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                     </div>
                 </div>
 
-                {/* Right Side: Mock Calendar */}
+                {/* Right Side: REAL DYNAMIC CALENDAR */}
                 <div className="w-full md:w-2/3 p-4 md:p-8 overflow-y-auto bg-[#050505]">
                     <div className="flex justify-between items-center mb-6">
-                        <h4 className="text-xl font-bold text-white">Selecciona una fecha</h4>
+                        <h4 className="text-xl font-bold text-white capitalize">{getMonthName(currentCalendarDate)}</h4>
                         <button onClick={() => setShowScheduler(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
                              <svg className="w-6 h-6 text-white/50 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
@@ -968,37 +1062,59 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                         <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
                     </div>
                     <div className="grid grid-cols-7 gap-2 mb-8">
-                         {[...Array(31)].map((_, i) => (
-                             <button 
-                                key={i} 
-                                onClick={() => setSelectedDate(i + 1)}
-                                className={`aspect-square rounded-lg flex items-center justify-center text-sm transition-all duration-300
-                                   ${selectedDate === i + 1 
-                                     ? 'bg-brand-accent text-black font-bold shadow-[0_0_15px_#00FFFF] scale-110' 
-                                     : 'text-white/60 hover:bg-white/10 hover:text-white'
-                                   }
-                             `}>
-                                 {i + 1}
-                             </button>
+                         {/* Empty slots for days before the 1st of the month */}
+                         {Array.from({ length: getFirstDayOfMonth(currentCalendarDate) }).map((_, i) => (
+                             <div key={`empty-${i}`} className="aspect-square"></div>
                          ))}
+                         
+                         {/* Actual Days */}
+                         {Array.from({ length: getDaysInMonth(currentCalendarDate) }).map((_, i) => {
+                             const dayNum = i + 1;
+                             return (
+                                 <button 
+                                    key={dayNum} 
+                                    onClick={() => setSelectedDate(dayNum)}
+                                    className={`aspect-square rounded-lg flex items-center justify-center text-sm transition-all duration-300
+                                       ${selectedDate === dayNum 
+                                         ? 'bg-brand-accent text-black font-bold shadow-[0_0_15px_#00FFFF] scale-110' 
+                                         : 'text-white/60 hover:bg-white/10 hover:text-white'
+                                       }
+                                 `}>
+                                     {dayNum}
+                                 </button>
+                             );
+                         })}
                     </div>
 
                     <h4 className="text-xl font-bold text-white mb-4">Horarios Disponibles</h4>
                     <div className="grid grid-cols-3 gap-3">
-                        {['09:00 AM', '11:30 AM', '02:00 PM', '04:15 PM'].map(time => (
-                            <button 
-                                key={time} 
-                                onClick={() => setSelectedTime(time)}
-                                className={`py-2 px-4 border rounded-lg text-sm transition-all duration-300
-                                    ${selectedTime === time 
-                                        ? 'border-brand-accent bg-brand-accent/10 text-brand-accent font-bold shadow-[0_0_10px_rgba(0,255,255,0.3)]' 
-                                        : 'border-white/20 text-white/80 hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/5'
-                                    }
-                                `}
-                            >
-                                {time}
-                            </button>
-                        ))}
+                        {['09:00 AM', '11:30 AM', '02:00 PM', '04:15 PM'].map(time => {
+                            // Construct string to match GAS format: YYYY-M-D HH:MM AM/PM
+                            // Note: We need to be careful with formatting to match exactly what is saved
+                            const year = currentCalendarDate.getFullYear();
+                            const month = currentCalendarDate.getMonth() + 1;
+                            const dateStringToCheck = `${year}-${month}-${selectedDate} ${time}`; 
+                            
+                            const isTaken = bookedSlots.some(slot => slot === dateStringToCheck);
+                            
+                            return (
+                                <button 
+                                    key={time} 
+                                    onClick={() => setSelectedTime(time)}
+                                    disabled={!selectedDate || isTaken}
+                                    className={`py-2 px-4 border rounded-lg text-sm transition-all duration-300 relative
+                                        ${isTaken 
+                                            ? 'border-red-900/50 bg-red-900/10 text-white/20 cursor-not-allowed line-through' 
+                                            : selectedTime === time 
+                                                ? 'border-brand-accent bg-brand-accent/10 text-brand-accent font-bold shadow-[0_0_10px_rgba(0,255,255,0.3)]' 
+                                                : 'border-white/20 text-white/80 hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/5'
+                                        }
+                                    `}
+                                >
+                                    {time}
+                                </button>
+                            );
+                        })}
                     </div>
                     
                     <div className="mt-8 pt-6 border-t border-white/10">
@@ -1012,7 +1128,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                 }
                             `}
                         >
-                            Confirmar Cita
+                            Guardar Fecha
                         </button>
                     </div>
                 </div>
