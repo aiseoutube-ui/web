@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
         <div className="flex items-center justify-between h-20">
           <a href="#hero" className="cursor-pointer-grow flex items-center" aria-label="Ir al inicio">
             {/* LOGO COMPONENT - Native white color - Reduced size to h-6 */}
-            <BrandLogo className="h-6 w-auto hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] transition-all duration-300" />
+            <BrandLogo className="h-5 w-auto hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] transition-all duration-300" />
           </a>
           
           <nav className="hidden md:flex items-center space-x-8">
