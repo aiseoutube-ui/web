@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import type { HeaderContent } from '../types';
 import { SocialIcons } from './icons/SocialIcons';
+import { BrandLogo } from './BrandLogo';
 
 interface HeaderProps {
   content: HeaderContent;
@@ -25,10 +26,9 @@ const Header: React.FC<HeaderProps> = ({ content }) => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isOpen ? 'bg-brand-primary/80 backdrop-blur-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="#hero" className="cursor-pointer-grow" aria-label="Ir al inicio">
-            <span className="text-2xl font-bold text-brand-light font-strasua tracking-wider hover:text-brand-accent transition-colors duration-300">
-              The Last Art
-            </span>
+          <a href="#hero" className="cursor-pointer-grow flex items-center" aria-label="Ir al inicio">
+            {/* LOGO COMPONENT - Native white color - Reduced size to h-6 */}
+            <BrandLogo className="h-6 w-auto hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] transition-all duration-300" />
           </a>
           
           <nav className="hidden md:flex items-center space-x-8">

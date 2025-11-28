@@ -2,6 +2,7 @@
 import React from 'react';
 import type { FooterContent } from '../types';
 import { SocialIcons } from './icons/SocialIcons';
+import { BrandLogo } from './BrandLogo';
 
 interface FooterProps {
   content: FooterContent;
@@ -25,14 +26,13 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
                 </a>
              ))}
         </div>
-        <p>
-          {content.copyright.split('The Last Art').map((part, i, arr) => (
-            <React.Fragment key={i}>
-              {part}
-              {i < arr.length - 1 && <span className="font-strasua">The Last Art</span>}
-            </React.Fragment>
-          ))}
-        </p>
+        
+        {/* LOGO SVG FOOTER IMPLEMENTATION - Native white color - Reduced size to h-3 */}
+        <div className="flex items-center justify-center gap-2 text-sm opacity-60">
+          <span>© {new Date().getFullYear()}</span>
+          <BrandLogo className="h-3 w-auto hover:opacity-100 transition-all duration-500" />
+          <span>Todos los derechos reservados.</span>
+        </div>
       </div>
     </footer>
   );
