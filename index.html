@@ -126,20 +126,14 @@
           animation: none;
       }
       
-      /* --- FLASH GLITCH FOR INLINE SVG --- */
-      .flash-glitch-svg {
-        width: clamp(200px, 60vw, 500px); /* Responsive width */
+      /* --- FLASH GLITCH FOR SVG LOGO --- */
+      .flash-glitch-img {
+        width: clamp(200px, 50vw, 500px);
         height: auto;
         display: inline-block;
-        /* Glowing effect */
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        /* Using drop-shadow to create the "glow" effect on the SVG shape */
+        filter: drop-shadow(4px 0 0 rgba(255, 40, 40, 0.9)) drop-shadow(-3px 0 0 rgba(0, 255, 255, 0.7));
         animation: logo-shake 0.1s infinite;
-      }
-      
-      /* Ensure SVG paths are white */
-      .flash-glitch-svg path {
-          fill: #ffffff !important;
-          stroke: #ffffff !important;
       }
 
       @keyframes logo-shake {
@@ -227,7 +221,7 @@
             constructor(el, glitchAudioEl) {
                 this.el = el;
                 this.glitchEl = glitchAudioEl;
-                this.chars = '█▓▒░▀▄▌▐ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                this.chars = '█▓▒░▀▄▌▐█▓▒░▀▄▌▐THE LAST ART';
                 this.update = this.update.bind(this);
             }
             setText(newText) {
@@ -347,9 +341,9 @@
                     
                     const masterTl = gsap.timeline({ onComplete: startMainAppTransition });
 
-                    // SVG CODE AS STRING (INLINE)
-                    // This is robust for mobile as it parses as HTML, not an external resource
-                    const svgLogoInline = `<svg class="flash-glitch-svg" viewBox="0 0 615.6 78.608" xmlns="http://www.w3.org/2000/svg"><g id="svgGroup" stroke-linecap="round" fill-rule="evenodd" font-size="9pt" stroke="#ffffff" stroke-width="0.25mm" fill="#ffffff" style="stroke:#ffffff;stroke-width:0.25mm;fill:#ffffff"><path d="M 528.9 0.605 L 500 0.605 L 500 78.605 L 513.6 78.605 L 513.6 14.205 L 528.6 14.205 C 538.6 14.205 544.2 18.705 544.2 27.605 C 544.2 37.105 537.2 41.705 522.8 42.705 C 517.4 43.105 514.7 45.405 514.7 49.705 C 514.7 52.005 516 54.205 518.4 56.705 L 539.1 78.605 L 558.1 78.605 L 534.2 53.205 C 552.5 50.305 558.3 37.605 558.3 27.305 C 558.3 10.005 545.3 0.605 528.9 0.605 Z M 72.1 45.905 L 95.2 45.905 L 95.2 78.605 L 108.8 78.605 L 108.8 0.605 L 95.2 0.605 L 95.2 32.305 L 72.1 32.305 L 72.1 0.605 L 58.5 0.605 L 58.5 78.605 L 72.1 78.605 L 72.1 45.905 Z M 323 30.605 L 315.3 30.605 C 309.8 30.605 306 27.005 306 22.205 C 306 17.805 309.6 14.205 315.3 14.205 L 341.9 14.205 L 341.9 0.605 L 316 0.605 C 301.5 0.605 291.7 9.905 291.7 22.105 C 291.7 34.505 301.4 43.305 314.1 43.305 L 320.3 43.305 C 328.7 43.305 334.8 47.805 334.8 54.205 C 334.8 60.605 328.7 65.005 320.3 65.005 L 293 65.005 L 293 78.605 L 320.3 78.605 C 336.3 78.605 347 68.505 347 54.505 C 347 40.505 336.9 30.605 323 30.605 Z M 220.6 78.605 L 236.8 78.605 L 270.2 25.905 L 270.2 78.605 L 283.7 78.605 L 283.7 6.805 C 283.7 2.705 281.5 0.005 278 0.005 C 274.9 0.005 272.1 1.205 270.2 4.105 L 220.6 78.605 Z M 428.2 78.605 L 444.4 78.605 L 477.8 25.905 L 477.8 78.605 L 491.3 78.605 L 491.3 6.805 C 491.3 2.705 489.1 0.005 485.6 0.005 C 482.5 0.005 479.7 1.205 477.8 4.105 L 428.2 78.605 Z M 156.2 65.005 L 131.1 65.005 L 131.1 45.805 L 152.2 45.805 L 152.2 32.305 L 131.1 32.305 L 131.1 14.205 L 155.6 14.205 L 155.6 0.605 L 117.5 0.605 L 117.5 78.605 L 156.2 78.605 L 156.2 65.005 Z M 53.4 14.205 L 53.4 0.605 L 0 0.605 L 0 14.205 L 19.9 14.205 L 19.9 78.605 L 33.5 78.605 L 33.5 14.205 L 53.4 14.205 Z M 404.6 14.205 L 404.6 0.605 L 351.2 0.605 L 351.2 14.205 L 371.1 14.205 L 371.1 78.605 L 384.7 78.605 L 384.7 14.205 L 404.6 14.205 Z M 615.6 14.205 L 615.6 0.605 L 562.2 0.605 L 562.2 14.205 L 582.1 14.205 L 582.1 78.605 L 595.7 78.605 L 595.7 14.205 L 615.6 14.205 Z M 220.7 78.605 L 220.7 65.005 L 199.5 65.005 L 199.5 0.605 L 186 0.605 L 186 78.605 L 220.7 78.605 Z" vector-effect="non-scaling-stroke"/></g></svg>`;
+                    // THIS IS THE KEY FIX FOR THE SUBLIMINAL MESSAGE
+                    // We encode the SVG directly to avoid file fetching issues in the preloader phase
+                    const logoBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjE1LjYiIGhlaWdodD0iNzguNjA4IiB2aWV3Qm94PSIwIDAgNjE1LjYgNzguNjA4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJzdmdHcm91cCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZvbnQtc2l6ZT0iOS4wcHQiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjI1bW0iIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJzdHJva2U6I2ZmZmZmZjtzdHJva2Utd2lkdGg6MC4yNW1tO2ZpbGw6I2ZmZmZmZiI+PHBhdGggZD0iTSA1MjguOSAwLjYwNSBMIDUwMCAwLjYwNSBMIDUwMCA3OC42MDUgTCA1MTMuNiA3OC42MDUgTCA1MTMuNiAxNC4yMDUgTCA1MjguNiAxNC4yMDUgQyA1MzguNiAxNC4yMDUgNTQ0LjIgMTguNzA1IDU0NC4yIDI3LjYwNSBDIDU0NC4yIDM3LjEwNSA1MzcuMiA0MS43MDUgNTIyLjggNDIuNzA1IEMgNTE3LjQgNDMuMTA1IDUxNC43IDQ1LjQwNSA1MTQuNyA0OS43MDUgQyA1MTQuNyA1Mi4wMDUgNTE2IDU0LjIwNSA1MTguNCA1Ni43MDUgTCA1MzkuMSA3OC42MDUgTCA1NTguMSA3OC42MDUgTCA1MzQuMiA1My4yMDUgQyA1NTIuNSA1MC4zMDUgNTU4LjMgMzcuNjA1IDU1OC4zIDI3LjMwNSBDIDU1OC4zIDEwLjAwNSA1NDUuMyAwLjYwNSA1MjguOSAwLjYwNSBaIE0gNzIuMSA0NS45MDUgTCA5NS4yIDQ1LjkwNSBMIDk1LjIgNzguNjA1IEwgMTA4LjggNzguNjA1IEwgMTA4LjggMC42MDUgTCA5NS4yIDAuNjA1IEwgOTUuMiAzMi4zMDUgTCA3Mi4xIDMyLjMwNSBMIDcyLjEgMC42MDUgTCA1OC41IDAuNjA1IEwgNTguNSA3OC42MDUgTCA3Mi4xIDc4LjYwNSBMIDcyLjEgNDUuOTA1IFogTSAzMjMgMzAuNjA1IEwgMzE1LjMgMzAuNjA1IEMgMzA5LjggMzAuNjA1IDMwNiAyNy4wMDUgMzA2IDIyLjIwNSBDIDMwNiAxNy44MDUgMzA5LjYgMTQuMjA1IDMxNS4zIDE0LjIwNSBMIDM0MS45IDE0LjIwNSBMIDM0MS45IDAuNjA1IEwgMzE2IDAuNjA1IEMgMzAxLjUgMC42MDUgMjkxLjcgOS45MDUgMjkxLjcgMjIuMTA1IEMgMjkxLjcgMzQuNTA1IDMwMS40IDQzLjMwNSAzMTQuMSA0My4zMDUgTCAzMjAuMyA0My4zMDUgQyAzMjguNyA0My4zMDUgMzM0LjggNDcuODA1IDMzNC44IDU0LjIwNSBDIDMzNC44IDYwLjYwNSAzMjguNyA2NS4wMDUgMzIwLjMgNjUuMDA1IEwgMjkzIDY1LjAwNSBMIDI5MyA3OC42MDUgTCAzMjAuMyA3OC42MDUgQyAzMzYuMyA3OC42MDUgMzQ3IDY4LjUwNSAzNDcgNTQuNTA1IEMgMzQ3IDQwLjUwNSAzMzYuOSAzMC42MDUgMzIzIDMwLjYwNSBaIE0gMjIwLjYgNzguNjA1IEwgMjM2LjggNzguNjA1IEwgMjcwLjIgMjUuOTA1IEwgMjcwLjIgNzguNjA1IEwgMjgzLjcgNzguNjA1IEwgMjgzLjcgNi44MDUgQyAyODMuNyAyLjcwNSAyODEuNSAwLjAwNSAyNzggMC4wMDUgQyAyNzQuOSAwLjAwNSAyNzIuMSAxLjIwNSAyNzAuMiA0LjEwNSBMIDIyMC42IDc4LjYwNSBaIE0gNDI4LjIgNzguNjA1IEwgNDQ0LjQgNzguNjA1IEwgNDc3LjggMjUuOTA1IEwgNDc3LjggNzguNjA1IEwgNDkxLjMgNzguNjA1IEwgNDkxLjMgNi44MDUgQyA0OTEuMyAyLjcwNSA0ODkuMSAwLjAwNSA0ODUuNiAwLjAwNSBDIDQ4Mi41IDAuMDA1IDQ3OS43IDEuMjA1IDQ3Ny44IDQuMTA1IEwgNDI4LjIgNzguNjA1IFogTSAxNTYuMiA2NS4wMDUgTCAxMzEuMSA2NS4wMDUgTCAxMzEuMSA0NS44MDUgTCAxNTIuMiA0NS44MDUgTCAxNTIuMiAzMi4zMDUgTCAxMzEuMSAzMi4zMDUgTCAxMzEuMSAxNC4yMDUgTCAxNTUuNiAxNC4yMDUgTCAxNTUuNiAwLjYwNSBMIDExNy41IDAuNjA1IEwgMTE3LjUgNzguNjA1IEwgMTU2LjIgNzguNjA1IEwgMTU2LjIgNjUuMDA1IFogTSA1My40IDE0LjIwNSBMIDUzLjQgMC42MDUgTCAwIDAuNjA1IEwgMCAxNC4yMDUgTCAxOS45IDE0LjIwNSBMIDE5LjkgNzguNjA1IEwgMzMuNSA3OC42MDUgTCAzMy41IDE0LjIwNSBMIDUzLjQgMTQuMjA1IFogTSA0MDQuNiAxNC4yMDUgTCA0MDQuNiAwLjYwNSBMIDM1MS4yIDAuNjA1IEwgMzUxLjIgMTQuMjA1IEwgMzcxLjEgMTQuMjA1IEwgMzcxLjEgNzguNjA1IEwgMzg0LjcgNzguNjA1IEwgMzg0LjcgMTQuMjA1IEwgNDA0LjYgMTQuMjA1IFogTSA2MTUuNiAxNC4yMDUgTCA2MTUuNiAwLjYwNSBMIDU2Mi4yIDAuNjA1IEwgNTYyLjIgMTQuMjA1IEwgNTgyLjEgMTQuMjA1IEwgNTgyLjEgNzguNjA1IEwgNTk1LjcgNzguNjA1IEwgNTk1LjcgMTQuMjA1IEwgNjE1LjYgMTQuMjA1IFogTSAyMjAuNyA3OC42MDUgTCAyMjAuNyA2NS4wMDUgTCAxOTkuNSA2NS4wMDUgTCAxOTkuNSAwLjYwNSBMIDE4NiAwLjYwNSBMIDE4NiA3OC42MDUgTCAyMjAuNyA3OC42MDUgWiIgdmVjdG9yLWVmZmVjdD0ibm9uLXNjYWxpbmctc3Ryb2tlIi8+PC9nPjwvc3ZnPg==";
 
                     const triggerSubliminal = () => {
                          const currentContent = textElement.innerHTML;
@@ -357,8 +351,9 @@
                          textElement.innerHTML = ""; 
 
                          setTimeout(() => {
-                             // INJECT SVG CODE DIRECTLY
-                             textElement.innerHTML = svgLogoInline;
+                             // SVG LOGO INJECTION FOR FLASH EFFECT
+                             // This replaces the text based subliminal message with the SVG logo
+                             textElement.innerHTML = `<img src="${logoBase64}" class="flash-glitch-img" alt="The Last Art" />`;
 
                              setTimeout(() => {
                                  // BLACKOUT 2 (60ms)
@@ -411,6 +406,7 @@
 
                 const startOrbEl = document.getElementById('start-orb');
                 
+                // Static centering via GSAP just to be safe
                 gsap.set(startOrbEl, { xPercent: -50, yPercent: -50, opacity: 1, left: '50%', top: '50%' });
                 
                 const breathing = { scale: 1 };
