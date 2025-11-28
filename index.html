@@ -464,7 +464,7 @@
             const skipIntro = urlParams.get('skipIntro') === 'true';
 
             // --- DEVELOPMENT: Set to true to skip preloader, false to enable it ---
-            const forceSkip = true;
+            const forceSkip = false;
 
             // Check if the intro has been seen before or if skipIntro is true
             if (forceSkip || skipIntro || localStorage.getItem('hasSeenIntro') === 'true') {
