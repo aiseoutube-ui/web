@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- PRIMARY SEO -->
     <title>The Last Art | Agencia Creativa de Inteligencia Artificial</title>
     <meta name="title" content="The Last Art | Agencia Creativa de Inteligencia Artificial">
     <meta name="description" content="Transformamos marcas fusionando arte y algoritmos. Agencia de publicidad especializada en contenido generado por IA, video sintético y experiencias digitales inmersivas.">
@@ -14,18 +13,13 @@
     <meta name="author" content="The Last Art">
     <link rel="canonical" href="https://www.thelastart.com/" />
 
-    <!-- GEO POSITIONING (SEO LOCAL) -->
-    <!-- Ajustado a Perú por el código +51, cambiar si la sede física es otra -->
     <meta name="geo.region" content="PE-LMA" />
     <meta name="geo.placename" content="Lima" />
     <meta name="geo.position" content="-12.046374;-77.042793" />
     <meta name="ICBM" content="-12.046374, -77.042793" />
 
-    <!-- GENERATIVE ENGINE OPTIMIZATION (GEO) -->
-    <!-- Indica a los bots de IA dónde encontrar el resumen optimizado del sitio -->
     <link rel="alternate" type="text/markdown" href="/llms.txt" title="Resumen para IA" />
 
-    <!-- OPEN GRAPH / FACEBOOK / LINKEDIN -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.thelastart.com/">
     <meta property="og:site_name" content="The Last Art">
@@ -35,14 +29,12 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!-- TWITTER -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.thelastart.com/">
     <meta property="twitter:title" content="The Last Art | Agencia Creativa de IA">
     <meta property="twitter:description" content="Fusionamos arte y algoritmos. Agencia líder en contenido generado por IA.">
     <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg">
 
-    <!-- DEFENSIVE SCHEMA MARKUP (JSON-LD) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -51,19 +43,13 @@
       "alternateName": "The Last Art AI Agency",
       "url": "https://www.thelastart.com",
       "logo": "https://aiseoutube-ui.github.io/Tap/logo.svg",
-      "description": "Agencia creativa especializada en soluciones de Inteligencia Artificial, automatización de marketing y generación de contenido sintético para empresas.",
-      "disambiguatingDescription": "Una agencia de servicios tecnológicos y creativos de IA, distinta del libro 'The Last Art College' o conceptos de historia del arte.",
+      "description": "Agencia creativa especializada en soluciones de Inteligencia Artificial.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lima",
         "addressRegion": "LMA",
         "addressCountry": "PE"
       },
-      "sameAs": [
-        "https://www.linkedin.com/company/thelastart-agency",
-        "https://twitter.com/thelastart_ai",
-        "https://www.instagram.com/thelastart_tech"
-      ],
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+51-999-999-999",
@@ -74,7 +60,6 @@
     }
     </script>
 
-    <!-- PRELOAD CRITICAL ASSETS -->
     <link rel="preload" href="https://aiseoutube-ui.github.io/thelastart/video.mp4" as="video" type="video/mp4">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -89,7 +74,7 @@
           extend: {
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
-              strasua: ['Strasua', 'sans-serif'], // Custom font registration
+              strasua: ['Strasua', 'sans-serif'], 
             },
             colors: {
               'brand-primary': '#0A0A0A',
@@ -97,20 +82,6 @@
               'brand-accent': '#00FFFF',
               'brand-light': '#F5F5F5',
               'brand-muted': '#888888',
-            },
-            animation: {
-              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-              'pulse-subtle': 'pulseSubtle 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1)',
-            },
-            keyframes: {
-              fadeInUp: {
-                '0%': { opacity: '0', transform: 'translateY(20px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              },
-              pulseSubtle: {
-                '0%, 100%': { opacity: '0.7' },
-                '50%': { opacity: '1' },
-              }
             },
           },
         },
@@ -120,7 +91,6 @@
       /* --- GLOBAL STYLES --- */
       * { box-sizing: border-box; }
 
-      /* --- CUSTOM FONTS --- */
       @font-face {
         font-family: 'Strasua';
         src: url('/Strasua.otf') format('opentype');
@@ -129,98 +99,59 @@
         font-display: swap;
       }
 
-      html {
-          width: 100%;
-          margin: 0;
-          padding: 0;
-          scroll-behavior: smooth; /* Native smooth scroll for anchors */
-      }
+      html { width: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
       body {
-          width: 100%;
-          max-width: 100%;
-          overflow-x: hidden; 
-          margin: 0;
-          padding: 0;
-          background-color: #000000;
-          color: #e0e0e0;
-          font-family: 'Inter', sans-serif;
+          width: 100%; max-width: 100%; overflow-x: hidden; margin: 0; padding: 0;
+          background-color: #000000; color: #e0e0e0; font-family: 'Inter', sans-serif;
           overscroll-behavior: none;
       }
+
       /* --- SCRAMBLE PRELOADER --- */
       #scramble-preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10000;
-        background-color: #000;
-        opacity: 1;
-        visibility: visible;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
+        background-color: #000; opacity: 1; visibility: visible;
+        display: flex; align-items: center; justify-content: center;
       }
-      .hero-container, .percentage-counter {
-        opacity: 0; /* Initially hidden */
-        visibility: hidden; /* Initially hidden */
-      }
+      .hero-container, .percentage-counter { opacity: 0; visibility: hidden; }
       #start-orb {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100px;
-        height: 100px;
-        z-index: 10001; /* Above other preloader elements but below cursor */
-        cursor: pointer;
-        will-change: transform; /* Performance hint for animation */
-        opacity: 0; /* Hidden until JS positions it */
+        position: absolute; top: 0; left: 0; width: 100px; height: 100px; z-index: 10001;
+        cursor: pointer; will-change: transform; opacity: 0;
       }
-
       .hero-container {
-          position: absolute;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          height: 100vh;
-          width: 100%; 
-          padding: 2rem;
+          position: absolute; display: flex; align-items: center; justify-content: center;
+          text-align: center; height: 100vh; width: 100%; padding: 2rem;
       }
       #target-text {
           font-family: 'Archivo', sans-serif;
           font-size: clamp(2rem, 6vw, 5.5rem);
-          font-weight: 700;
-          line-height: 1.1;
-          margin: 0;
-          min-height: 1.2em;
-          white-space: pre-wrap;
-          color: #ffffff;
+          font-weight: 700; line-height: 1.1; margin: 0; min-height: 1.2em;
+          white-space: pre-wrap; color: #ffffff;
           text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
       }
       .percentage-counter {
-        position: absolute;
-        bottom: 30px;
-        right: 30px;
-        font-family: 'Archivo', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #ffffff;
-        letter-spacing: 0.1em;
+        position: absolute; bottom: 30px; right: 30px;
+        font-family: 'Archivo', sans-serif; font-size: 1.5rem; font-weight: 500;
+        color: #ffffff; letter-spacing: 0.1em;
       }
+      
+      /* --- ESTILOS DEL FLASH SUBLIMINAL --- */
+      .flash-glitch {
+        font-family: 'Strasua', sans-serif;
+        font-size: 1.5em; /* Un poco más grande para impacto */
+        color: #ffffff;
+        display: inline-block;
+        /* Sombra roja fuerte + offset cian + resplandor rojo sutil */
+        text-shadow: 4px 0 0 rgba(255, 40, 40, 0.9), -3px 0 0 rgba(0, 255, 255, 0.7), 0 0 15px rgba(255, 0, 0, 0.6);
+      }
+
       .scramble-char {
-          color: #ffffff; 
-          display: inline-block;
-          font-weight: bold;
+          color: #ffffff; display: inline-block; font-weight: bold;
           text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px rgba(255, 255, 255, 0.7);
           animation: panic-flicker 0.1s infinite;
       }
       .scramble-char.red-glitch {
-          color: transparent; 
-          -webkit-text-stroke: 1px #E20000; 
-          text-stroke: 1px #E20000; 
-          font-weight: 500; 
-          text-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 12px rgba(255, 0, 0, 0.4);
+          color: transparent; -webkit-text-stroke: 1px #E20000; text-stroke: 1px #E20000;
+          font-weight: 500; text-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 12px rgba(255, 0, 0, 0.4);
           animation: none;
       }
       @keyframes panic-flicker {
@@ -228,9 +159,7 @@
           50% { opacity: 0.6; filter: brightness(1); }
           100% { opacity: 1; filter: brightness(1.5); }
       }
-      .is-glitching {
-          animation: shake-hard 0.2s infinite;
-      }
+      .is-glitching { animation: shake-hard 0.2s infinite; }
       @keyframes shake-hard {
           0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-1px, -1px); }
           20% { transform: translate(1px, 1px); } 30% { transform: translate(-1px, 1px); }
@@ -241,115 +170,32 @@
       .scanline {
           width: 100%; height: 100%; z-index: 99;
           background: linear-gradient(0deg, rgba(0,0,0,0) 50%, rgba(255, 255, 255, 0.01) 50%), linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-          background-size: 100% 3px, 3px 100%; position: fixed; top: 0; left: 0;
-          pointer-events: none;
+          background-size: 100% 3px, 3px 100%; position: fixed; top: 0; left: 0; pointer-events: none;
       }
 
       /* --- REACT APP CONTAINER --- */
-      #root {
-        opacity: 0;
-        visibility: hidden;
-      }
+      #root { opacity: 0; visibility: hidden; }
 
-      /* --- SWIPER & CURSOR STYLES --- */
+      /* --- CURSOR STYLES --- */
       ::selection { background-color: #00FFFF; color: #0A0A0A; }
-      .swiper-button-next, .swiper-button-prev { color: #00FFFF !important; transition: transform 0.3s ease; }
-      .swiper-button-next, .swiper-button-prev:hover { transform: scale(1.2); }
-      .swiper-pagination-bullet-active { background: #00FFFF !important; }
       .custom-cursor { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
       .cursor-dot { width: 8px; height: 8px; background-color: white; border-radius: 50%; transform: translate(-50%, -50%); }
       .cursor-outline { width: 40px; height: 40px; border: 2px solid white; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-width 0.3s; }
       .cursor-outline.hovered { width: 60px; height: 60px; border-width: 2px; }
       
-      /* UTILITY: Hide Scrollbar */
-      .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-      }
-      .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-      /* Hide default cursor only on devices that can support the custom cursor */
       @media (min-width: 768px) and (pointer: fine) {
-        body, .cursor-pointer-grow, .cursor-pointer-grow * {
-          cursor: none;
-        }
+        body, .cursor-pointer-grow, .cursor-pointer-grow * { cursor: none; }
       }
 
-      /* --- COMPARISON SECTION --- */
-      .comparisonSection {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-      .comparisonImage {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-      }
-      .comparisonImage img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      
       /* --- CONTACT SECTION --- */
       .contact-orb {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
+        width: 40px; height: 40px; border-radius: 50%;
         background: radial-gradient(circle at 30% 30%, #5DFDFD, #004D4D 70%, #0A0A0A 100%);
         box-shadow: 0 0 15px 5px rgba(0, 255, 255, var(--glow-opacity, 0.2));
-        position: relative;
-        will-change: transform, box-shadow;
-        transition: background 0.3s, box-shadow 0.3s;
-      }
-      .orb-error {
-        background: radial-gradient(circle at 30% 30%, #ff8080, #800000 70%, #0A0A0A 100%);
-        box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
-      }
-      .contact-input {
-        background-color: transparent;
-        border: 1px solid #333;
-        color: #F5F5F5;
-        padding: 0.75rem 1rem;
-        border-radius: 0.5rem;
-        transition: all 0.3s ease;
-        width: 100%;
-      }
-      .contact-input:focus {
-        outline: none;
-        border-color: #00FFFF;
-        box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.2);
-      }
-      .submit-btn {
-        background-color: #0A0A0A;
-        color: #F5F5F5;
-        border: 1px solid #F5F5F5;
-        padding: 0.75rem 1.5rem;
-        border-radius: 9999px;
-        font-weight: bold;
-        transition: all 0.3s ease;
-      }
-      .submit-btn:hover {
-        background-color: #00FFFF;
-        color: #0A0A0A;
-        border-color: #00FFFF;
-      }
-      .secondary-btn {
-        background-color: transparent;
-        color: #F5F5F5;
-        border: 1px solid #333;
-        padding: 0.75rem 1.5rem;
-        border-radius: 9999px;
-        transition: all 0.3s ease;
-      }
-      .secondary-btn:hover {
-        border-color: #F5F5F5;
+        position: relative; will-change: transform, box-shadow; transition: background 0.3s, box-shadow 0.3s;
       }
     </style>
   <script type="importmap">
@@ -368,11 +214,10 @@
 </script>
 </head>
   <body class="preloader-active">
-    <!-- SCRAMBLE PRELOADER -->
     <div id="scramble-preloader">
       <audio id="bg-audio" src="https://cdn.pixabay.com/audio/2025/06/06/audio_d5026f8df6.mp3" loop></audio>
       <audio id="loop-audio" src="https://cdn.pixabay.com/audio/2022/03/17/audio_5f88a20fde.mp3"></audio>
-      <audio id="glitch-audio" src="https://cdn.pixabay.com/audio/2022/03/10/audio_caa9fe2ba1.mp3"></audio>
+      <audio id="glitch-audio"></audio>
       <audio id="transition-audio" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2ab03de167.mp3"></audio>
       
       <div id="start-orb" class="contact-orb"></div>
@@ -384,10 +229,8 @@
       <div class="percentage-counter">0%</div>
     </div>
     
-    <!-- MAIN REACT APP -->
     <div id="root"></div>
 
-    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -412,7 +255,8 @@
                     const from = oldText[i] || '';
                     const to = newText[i] || '';
                     const start = Math.floor(Math.random() * 40);
-                    const end = start + Math.floor(Math.random() * 80) + 40;
+                    // UPGRADE VISUAL: Mayor duración del efecto scramble (de 40 a 60)
+                    const end = start + Math.floor(Math.random() * 60) + 60;
                     this.queue.push({ from, to, start, end, char: from });
                 }
                 cancelAnimationFrame(this.frameRequest);
@@ -432,8 +276,10 @@
                     } else if (this.frame >= start) {
                         if (Math.random() < 0.2) char = this.chars[Math.floor(Math.random() * this.chars.length)];
                         if (this.glitchEl && Math.random() < 0.05) charClass = ' red-glitch';
-                        if (this.glitchEl && this.glitchPlayCount < this.maxGlitches && Math.random() < 0.01 && window.isAudioReady) {
-                            if (this.glitchEl.paused) {
+                        
+                        // LÓGICA DE AUDIO: Probabilidad bajada a 0.5% (0.005) para cuando se active
+                        if (this.glitchEl && this.glitchPlayCount < this.maxGlitches && Math.random() < 0.005 && window.isAudioReady) {
+                            if (this.glitchEl.paused && this.glitchEl.currentSrc) {
                                 if (isFinite(this.glitchEl.duration) && this.glitchEl.duration > 0) this.glitchEl.currentTime = Math.random() * this.glitchEl.duration;
                                 else this.glitchEl.currentTime = 0;
                                 this.glitchEl.play().catch(e => {});
@@ -462,25 +308,15 @@
             
             const urlParams = new URLSearchParams(window.location.search);
             const skipIntro = urlParams.get('skipIntro') === 'true';
-
-            // --- DEVELOPMENT: Set to true to skip preloader, false to enable it ---
             const forceSkip = false;
 
-            // Check if the intro has been seen before or if skipIntro is true
             if (forceSkip || skipIntro || localStorage.getItem('hasSeenIntro') === 'true') {
-                // If yes, skip the preloader immediately
                 preloaderEl.style.display = 'none';
                 rootEl.style.opacity = '1';
                 rootEl.style.visibility = 'visible';
                 document.body.classList.remove('preloader-active');
-                
-                // Use a small timeout to ensure the DOM is fully ready for JS manipulation in React
-                setTimeout(() => {
-                    window.dispatchEvent(new CustomEvent('preloaderFinished'));
-                }, 10);
-
+                setTimeout(() => { window.dispatchEvent(new CustomEvent('preloaderFinished')); }, 10);
             } else {
-                // If it's the first visit, run the full preloader sequence
                 const bgAudioEl = document.getElementById('bg-audio');
                 const loopAudioEl = document.getElementById('loop-audio');
                 const glitchAudioEl = document.getElementById('glitch-audio');
@@ -491,7 +327,7 @@
                     if (window.isAudioReady) return;
                     bgAudioEl.play().catch(e => {});
                     loopAudioEl.play().catch(e => {});
-                    glitchAudioEl.play().then(() => { glitchAudioEl.pause(); glitchAudioEl.currentTime = 0; }).catch(e => {});
+                    if(glitchAudioEl.currentSrc) glitchAudioEl.play().then(() => { glitchAudioEl.pause(); glitchAudioEl.currentTime = 0; }).catch(e => {});
                     transitionAudioEl.play().then(() => { transitionAudioEl.pause(); transitionAudioEl.currentTime = 0; }).catch(e => {});
                     window.isAudioReady = true;
                 };
@@ -508,13 +344,7 @@
                       onComplete: () => {
                         preloaderEl.style.display = 'none';
                         document.body.classList.remove('preloader-active');
-
-                        try {
-                          localStorage.setItem('hasSeenIntro', 'true');
-                        } catch (e) {
-                          console.error("Could not save to localStorage", e);
-                        }
-
+                        try { localStorage.setItem('hasSeenIntro', 'true'); } catch (e) { console.error(e); }
                         window.dispatchEvent(new CustomEvent('preloaderFinished'));
                       }
                     });
@@ -526,27 +356,62 @@
                     const textElement = document.getElementById('target-text');
                     const percentageElement = document.querySelector('.percentage-counter');
                     const fx = new TextScramble(textElement, glitchAudioEl);
-                    const phrases = ['FROM SENSING', 'TO LEARNING.', 'CAPABILITIES', 'THAT MULTIPLY.'];
-                    let progress = { value: 0 };
 
-                    const masterTl = gsap.timeline({
-                        onComplete: startMainAppTransition
-                    });
+                    const phrases = [
+                        'DE LA VISIÓN',
+                        'CON ADAPTACIÓN',
+                        'INTELIGENCIA',
+                        'SIN LÍMITES'
+                    ];
+
+                    const subliminalText = "THE LAST ART"; 
+
+                    // Tiempos ajustados para fluidez
+                    const phraseTimings = [1, 6, 11, 16]; 
+                    const subliminalTimings = [3.5, 8.5, 13.5];
+
+                    let progress = { value: 0 };
+                    const masterTl = gsap.timeline({ onComplete: startMainAppTransition });
+
+                    // --- LÓGICA DEL FLASH CON PARPADEO OSCURO (CINE) ---
+                    const triggerSubliminal = () => {
+                         const currentContent = textElement.innerHTML;
+
+                         // SECUENCIA: NEGRO (60ms) -> FLASH (120ms) -> NEGRO (60ms) -> RESTAURAR
+                         // Tiempos aumentados para mayor impacto
+                         textElement.innerHTML = ""; 
+
+                         setTimeout(() => {
+                             // Mostrar flash con fuente Strasua
+                             textElement.innerHTML = `<span class="flash-glitch">${subliminalText}</span>`;
+
+                             if (window.isAudioReady && glitchAudioEl && glitchAudioEl.currentSrc) {
+                                 glitchAudioEl.currentTime = 0;
+                                 glitchAudioEl.volume = 0.6;
+                                 glitchAudioEl.play().catch(e => {});
+                             }
+
+                             setTimeout(() => {
+                                 textElement.innerHTML = ""; 
+                                 if (glitchAudioEl) glitchAudioEl.volume = 1.0;
+
+                                 setTimeout(() => {
+                                     textElement.innerHTML = currentContent; 
+                                 }, 60); // 60ms negro final
+
+                             }, 120); // 120ms duración del flash visible
+
+                         }, 60); // 60ms negro inicial
+                    };
 
                     masterTl.to(progress, {
-                        value: 100,
-                        duration: 20,
-                        ease: 'none',
+                        value: 100, duration: 20, ease: 'none',
                         onUpdate: () => {
-                            if (Math.random() > 0.15) {
-                                percentageElement.innerText = `${Math.floor(progress.value)}%`;
-                            } else {
-                                percentageElement.innerText = `${Math.floor(Math.random() * 100)}%`;
-                            }
+                            if (Math.random() > 0.15) percentageElement.innerText = `${Math.floor(progress.value)}%`;
+                            else percentageElement.innerText = `${Math.floor(Math.random() * 100)}%`;
                         }
                     }, 0);
 
-                    const phraseTimings = [1, 6, 11, 16];
                     phrases.forEach((phrase, index) => {
                         masterTl.call(() => {
                             textElement.classList.add('is-glitching');
@@ -563,11 +428,15 @@
                             });
                         }, [], phraseTimings[index]);
                     });
+
+                    subliminalTimings.forEach((time) => {
+                        masterTl.call(triggerSubliminal, [], time);
+                    });
                 };
 
                 const startOrbEl = document.getElementById('start-orb');
                 
-                // --- INTERACTIVE ORB LOGIC ---
+                // ORB LOGIC
                 gsap.set(startOrbEl, { xPercent: -50, yPercent: -50, opacity: 1 });
                 const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
                 const mouse = { x: pos.x, y: pos.y };
@@ -575,40 +444,18 @@
                 const ySet = gsap.quickSetter(startOrbEl, "y", "px");
                 
                 const breathing = { scale: 1 };
-                gsap.to(breathing, {
-                    scale: 1.15,
-                    duration: 3,
-                    ease: 'sine.inOut',
-                    repeat: -1,
-                    yoyo: true,
-                });
+                gsap.to(breathing, { scale: 1.15, duration: 3, ease: 'sine.inOut', repeat: -1, yoyo: true });
 
                 gsap.set(startOrbEl, { x: pos.x, y: pos.y });
 
-                const mouseMoveHandler = e => {
-                    mouse.x = e.clientX;
-                    mouse.y = e.clientY;
-                };
+                const mouseMoveHandler = e => { mouse.x = e.clientX; mouse.y = e.clientY; };
                 window.addEventListener("mousemove", mouseMoveHandler);
 
                 const mouseLeaveHandler = () => {
-                    mouse.x = window.innerWidth / 2;
-                    mouse.y = window.innerHeight / 2;
-                    
-                    // A simple delay before glowing, allows the orb time to return
+                    mouse.x = window.innerWidth / 2; mouse.y = window.innerHeight / 2;
                     gsap.delayedCall(0.7, () => {
-                        // Only trigger glow if the preloader is still active
                         if (document.body.classList.contains('preloader-active')) {
-                            gsap.fromTo(startOrbEl, 
-                                { '--glow-opacity': 0.2 }, 
-                                { 
-                                    '--glow-opacity': 0.9, 
-                                    duration: 0.5, 
-                                    yoyo: true, 
-                                    repeat: 1,
-                                    ease: 'power2.inOut'
-                                }
-                            );
+                            gsap.fromTo(startOrbEl, { '--glow-opacity': 0.2 }, { '--glow-opacity': 0.9, duration: 0.5, yoyo: true, repeat: 1, ease: 'power2.inOut' });
                         }
                     });
                 };
@@ -616,54 +463,35 @@
 
                 const ticker = () => {
                     const dt = 1.0 - Math.pow(1.0 - 0.15, gsap.ticker.deltaRatio()); 
-                    const prevX = pos.x;
-                    const prevY = pos.y;
-                    
-                    pos.x += (mouse.x - pos.x) * dt;
-                    pos.y += (mouse.y - pos.y) * dt;
-
-                    const speedX = pos.x - prevX;
-                    const speedY = pos.y - prevY;
+                    const prevX = pos.x; const prevY = pos.y;
+                    pos.x += (mouse.x - pos.x) * dt; pos.y += (mouse.y - pos.y) * dt;
+                    const speedX = pos.x - prevX; const speedY = pos.y - prevY;
                     const rotation = Math.atan2(speedY, speedX) * (180 / Math.PI);
                     const scaleDistortion = Math.min(Math.sqrt(speedX**2 + speedY**2) * 0.05, 0.4);
 
-                    // Combine breathing with mouse-follow distortion
                     gsap.set(startOrbEl, {
-                        rotation: rotation,
-                        scaleX: (1 + scaleDistortion) * breathing.scale,
-                        scaleY: (1 - scaleDistortion) * breathing.scale,
+                        rotation: rotation, scaleX: (1 + scaleDistortion) * breathing.scale, scaleY: (1 - scaleDistortion) * breathing.scale,
                     });
-                    
-                    xSet(pos.x);
-                    ySet(pos.y);
+                    xSet(pos.x); ySet(pos.y);
                 };
                 gsap.ticker.add(ticker);
 
                 startOrbEl.addEventListener('click', () => {
-                    // Cleanup orb animation logic
                     window.removeEventListener("mousemove", mouseMoveHandler);
                     document.documentElement.removeEventListener("mouseleave", mouseLeaveHandler);
                     gsap.ticker.remove(ticker);
-                    gsap.killTweensOf(breathing); // Stop the breathing animation
-                    gsap.killTweensOf(startOrbEl); // Stop any direct animations on the orb
+                    gsap.killTweensOf(breathing); gsap.killTweensOf(startOrbEl);
 
                     unlockAudio();
                     
                     const tl = gsap.timeline();
-                    // Animate orb as it fades out for a smooth transition
                     tl.to(startOrbEl, {
-                        opacity: 0,
-                        scale: 0.2,
-                        duration: 0.7,
-                        ease: 'power3.in',
+                        opacity: 0, scale: 0.2, duration: 0.7, ease: 'power3.in',
                         onComplete: () => startOrbEl.style.display = 'none'
                     }).to(['.hero-container', '.percentage-counter'], {
-                        opacity: 1,
-                        visibility: 'visible',
-                        duration: 1,
-                        ease: 'power3.out',
+                        opacity: 1, visibility: 'visible', duration: 1, ease: 'power3.out',
                         onComplete: runIntroSequence
-                    }, "-=0.2"); // Overlap animations for a smoother flow
+                    }, "-=0.2");
 
                 }, { once: true });
             }
@@ -675,41 +503,26 @@
   document.addEventListener("DOMContentLoaded", () => {
     const percentageElement = document.querySelector(".percentage-counter");
     if (!percentageElement) return;
-
     const glitchChars = ["Ô", "▒", "░", "▀", "▄", "¥", "▐", "█"];
-
     const glitchEffect = () => {
-      // 5% solo para probar — bájalo a 0.01 cuando funcione
+      // VISUAL GLITCH: RESTAURADO A 45% (0.45) PARA SER AGRESIVO
       if (Math.random() < 0.45) {
         const original = percentageElement.textContent;
         const randIndex = Math.floor(Math.random() * glitchChars.length);
         const glitchChar = glitchChars[randIndex];
-
-        // Inserta el carácter glitch
         const glitched = original.replace(/\d+%/, (m) => {
           const pos = Math.floor(Math.random() * m.length);
-          return (
-            m.substring(0, pos) +
-            glitchChar +
-            m.substring(pos + 1)
-          );
+          return (m.substring(0, pos) + glitchChar + m.substring(pos + 1));
         });
-
-        // Cambia color temporal a rojo glitch
         percentageElement.style.color = "#ff2a2a";
         percentageElement.textContent = glitched;
-
-        // Restaura texto y color en pocos milisegundos
         setTimeout(() => {
           percentageElement.textContent = original;
           percentageElement.style.color = "#ffffff";
         }, gsap.utils.random(60, 200));
       }
-
-      // Repite con intervalo aleatorio
       gsap.delayedCall(gsap.utils.random(0.2, 0.8), glitchEffect);
     };
-
     glitchEffect();
   });
 </script>
