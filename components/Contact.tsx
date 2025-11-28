@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 import type { ContactContent } from '../types';
 import { GoogleGenAI, LiveServerMessage, Modality, FunctionDeclaration, Type } from "@google/genai";
@@ -119,6 +120,7 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
 
   // Form States - Added appointmentDate
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '', appointmentDate: '' });
+  const [honeypot, setHoneypot] = useState(''); // SPAM PROTECTION: Honeypot State
   const [errors, setErrors] = useState({ name: false, email: false, phone: false, message: false });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [latency, setLatency] = useState<number | null>(null);
@@ -669,6 +671,24 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitted) return;
+
+    // --- SPAM PROTECTION (HONEYPOT & RATE LIMIT) ---
+    // 1. Honeypot check
+    if (honeypot) {
+        console.warn("Spam detected: Honeypot filled.");
+        return; // Silently fail
+    }
+
+    // 2. Rate Limiting (5 minutes)
+    const lastSubmissionTime = localStorage.getItem('last_submission_timestamp');
+    if (lastSubmissionTime) {
+        const timePassed = Date.now() - parseInt(lastSubmissionTime, 10);
+        if (timePassed < 5 * 60 * 1000) { // 5 mins
+            alert("Has enviado un mensaje recientemente. Por favor espera unos minutos.");
+            return;
+        }
+    }
+
     const nameError = validateField('name', formData.name);
     const emailError = validateField('email', formData.email);
     const messageError = validateField('message', formData.message);
@@ -682,6 +702,9 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
         confirmation: formData.appointmentDate ? "Si" : "No",
         appointmentDate: formData.appointmentDate || "N/A"
     });
+
+    // Set Rate Limit Timestamp
+    localStorage.setItem('last_submission_timestamp', Date.now().toString());
 
     const tl = gsap.timeline();
     tl.to(formContentRef.current, { opacity: 0, y: 50, duration: 0.6, ease: 'power3.in' })
@@ -905,7 +928,17 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                             </h2>
                             
                             <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-4 mt-6">
-                                {/* Form Inputs (Name, Email, Phone, Message) remain same ... */}
+                                {/* HONEYPOT FIELD (Hidden) */}
+                                <input 
+                                    type="text" 
+                                    name="website_honey" 
+                                    value={honeypot}
+                                    onChange={(e) => setHoneypot(e.target.value)}
+                                    className="hidden" 
+                                    tabIndex={-1} 
+                                    autoComplete="off"
+                                />
+
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div>
                                         <label htmlFor="name" className={`block text-xs font-bold mb-2 uppercase tracking-wider ${isAIMode && formData.name ? 'text-brand-accent animate-pulse' : 'text-brand-light/70'}`}>Nombre</label>
