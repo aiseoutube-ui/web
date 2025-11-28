@@ -6,124 +6,111 @@
     
     <title>The Last Art | Agencia Creativa de Inteligencia Artificial</title>
     <meta name="title" content="The Last Art | Agencia Creativa de Inteligencia Artificial">
-    <meta name="description" content="Transformamos marcas fusionando arte y algoritmos. Agencia de publicidad especializada en contenido generado por IA, video sintético y experiencias digitales inmersivas.">
-    <meta name="keywords" content="Agencia IA, Publicidad Artificial, Generación de Video AI, Diseño Generativo, Marketing Futuro, Gemini API, Creatividad Sintética, The Last Art Agency">
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="description" content="Transformamos marcas fusionando arte y algoritmos.">
+    
+    <meta name="robots" content="index, follow">
     <meta name="language" content="Spanish">
-    <meta name="author" content="The Last Art">
     <link rel="canonical" href="https://www.thelastart.com/" />
-
-    <meta name="geo.region" content="PE-LMA" />
-    <meta name="geo.placename" content="Lima" />
-    <meta name="geo.position" content="-12.046374;-77.042793" />
-    <meta name="ICBM" content="-12.046374, -77.042793" />
-
-    <link rel="alternate" type="text/markdown" href="/llms.txt" title="Resumen para IA" />
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.thelastart.com/">
-    <meta property="og:site_name" content="The Last Art">
-    <meta property="og:title" content="The Last Art | El Futuro de la Creatividad">
-    <meta property="og:description" content="Descubre cómo la Inteligencia Artificial potencia la narrativa visual. Videos, imágenes y experiencias web de última generación.">
+    <meta property="og:title" content="The Last Art">
     <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.thelastart.com/">
-    <meta property="twitter:title" content="The Last Art | Agencia Creativa de IA">
-    <meta property="twitter:description" content="Fusionamos arte y algoritmos. Agencia líder en contenido generado por IA.">
-    <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "The Last Art",
-      "alternateName": "The Last Art AI Agency",
-      "url": "https://www.thelastart.com",
-      "logo": "https://aiseoutube-ui.github.io/Tap/logo.svg",
-      "description": "Agencia creativa especializada en soluciones de Inteligencia Artificial.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Lima",
-        "addressRegion": "LMA",
-        "addressCountry": "PE"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+51-999-999-999",
-        "contactType": "sales",
-        "areaServed": ["PE", "US", "ES"],
-        "availableLanguage": ["es", "en"]
-      }
-    }
-    </script>
-
-    <link rel="preload" href="https://aiseoutube-ui.github.io/thelastart/video.mp4" as="video" type="video/mp4">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
     <script>
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: {
+              // Aquí está el truco: Usamos la variable CSS como en la doc de Next.js
+              strasua: ['var(--font-strasua)', 'sans-serif'], 
               sans: ['Inter', 'sans-serif'],
-              strasua: ['Strasua', 'sans-serif'], 
             },
             colors: {
               'brand-primary': '#0A0A0A',
               'brand-secondary': '#1A1A1A',
               'brand-accent': '#00FFFF',
               'brand-light': '#F5F5F5',
-              'brand-muted': '#888888',
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
             },
           },
         },
       }
     </script>
-    <style>
-      /* --- GLOBAL STYLES --- */
-      * { box-sizing: border-box; }
 
+    <style>
+      /* --- CARGA DE FUENTES ROBUSTA --- */
+      /* Definimos la fuente apuntando a los archivos que vi en tu GitHub */
       @font-face {
         font-family: 'Strasua';
-        /* FIX MÓVIL: Rutas relativas (sin / al inicio) + Cache Buster + Orden WOFF2 primero */
-        src: url('Strasua-Regular.woff2?v=mobile_fix_final') format('woff2'),
-             url('Strasua-Regular.woff?v=mobile_fix_final') format('woff'),
-             url('Strasua.otf?v=mobile_fix_final') format('opentype');
+        src: url('/Strasua-Regular.woff2') format('woff2'),
+             url('/Strasua-Regular.woff') format('woff'),
+             url('/Strasua.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
-        font-display: block; /* Obliga a esperar la fuente en móvil */
+        font-display: swap;
       }
 
+      /* DEFINICIÓN DE VARIABLE CSS (Técnica Next.js/Tailwind) */
+      :root {
+        --font-strasua: 'Strasua', sans-serif;
+      }
+
+      /* --- ESTILOS GLOBALES --- */
+      * { box-sizing: border-box; }
+      
       html { width: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
+      
       body {
           width: 100%; max-width: 100%; overflow-x: hidden; margin: 0; padding: 0;
           background-color: #000000; color: #e0e0e0; font-family: 'Inter', sans-serif;
           overscroll-behavior: none;
-          /* Mejoras de renderizado de texto para móvil */
+          /* Suavizado de fuente para móviles */
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
-          text-rendering: optimizeLegibility;
       }
 
-      /* --- SCRAMBLE PRELOADER --- */
+      /* --- FLASH GLITCH CON VARIABLE CSS --- */
+      .flash-glitch {
+        /* Usamos la clase de utilidad de Tailwind o la variable directamente */
+        font-family: var(--font-strasua); 
+        font-size: 1.6em; 
+        color: #ffffff;
+        display: inline-block;
+        text-shadow: 4px 0 0 rgba(255, 40, 40, 0.9), -3px 0 0 rgba(0, 255, 255, 0.7), 0 0 20px rgba(255, 0, 0, 0.8);
+        letter-spacing: 2px;
+      }
+
+      /* --- PRELOADER --- */
       #scramble-preloader {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
         background-color: #000; opacity: 1; visibility: visible;
         display: flex; align-items: center; justify-content: center;
       }
       .hero-container, .percentage-counter { opacity: 0; visibility: hidden; }
+      
       #start-orb {
         position: absolute; top: 0; left: 0; width: 100px; height: 100px; z-index: 10001;
-        cursor: pointer; will-change: transform; opacity: 0;
+        cursor: pointer; opacity: 0;
       }
+      .contact-orb {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #5DFDFD, #004D4D 70%, #0A0A0A 100%);
+        box-shadow: 0 0 15px 5px rgba(0, 255, 255, 0.2);
+      }
+
       .hero-container {
           position: absolute; display: flex; align-items: center; justify-content: center;
           text-align: center; height: 100vh; width: 100%; padding: 2rem;
@@ -140,26 +127,16 @@
         font-family: 'Archivo', sans-serif; font-size: 1.5rem; font-weight: 500;
         color: #ffffff; letter-spacing: 0.1em;
       }
-      
-      /* --- ESTILOS DEL FLASH SUBLIMINAL --- */
-      .flash-glitch {
-        font-family: 'Strasua', sans-serif;
-        font-size: 1.6em; 
-        color: #ffffff;
-        display: inline-block;
-        /* Sombra roja fuerte + offset cian */
-        text-shadow: 4px 0 0 rgba(255, 40, 40, 0.9), -3px 0 0 rgba(0, 255, 255, 0.7), 0 0 20px rgba(255, 0, 0, 0.8);
-        letter-spacing: 2px;
-      }
 
+      /* SCRAMBLE CHARS */
       .scramble-char {
           color: #ffffff; display: inline-block; font-weight: bold;
-          text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px rgba(255, 255, 255, 0.7);
+          text-shadow: 0 0 10px #ffffff;
           animation: panic-flicker 0.1s infinite;
       }
       .scramble-char.red-glitch {
           color: transparent; -webkit-text-stroke: 1px #E20000; text-stroke: 1px #E20000;
-          font-weight: 500; text-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 12px rgba(255, 0, 0, 0.4);
+          font-weight: 500; text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
           animation: none;
       }
       @keyframes panic-flicker {
@@ -169,67 +146,46 @@
       }
       .is-glitching { animation: shake-hard 0.2s infinite; }
       @keyframes shake-hard {
-          0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-1px, -1px); }
-          20% { transform: translate(1px, 1px); } 30% { transform: translate(-1px, 1px); }
-          40% { transform: translate(1px, -1px); } 50% { transform: translate(-1px, 0); }
-          60% { transform: translate(1px, 0); } 70% { transform: translate(0, 1px); }
-          80% { transform: translate(0, -1px); } 90% { transform: translate(-1px, 1px); }
+          0%, 100% { transform: translate(0, 0); } 
+          25% { transform: translate(1px, 1px); } 
+          50% { transform: translate(-1px, -1px); } 
+          75% { transform: translate(-1px, 1px); } 
       }
       .scanline {
           width: 100%; height: 100%; z-index: 99;
           background: linear-gradient(0deg, rgba(0,0,0,0) 50%, rgba(255, 255, 255, 0.01) 50%), linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
           background-size: 100% 3px, 3px 100%; position: fixed; top: 0; left: 0; pointer-events: none;
       }
-
-      /* --- REACT APP CONTAINER --- */
-      #root { opacity: 0; visibility: hidden; }
-
-      /* --- CURSOR STYLES --- */
-      ::selection { background-color: #00FFFF; color: #0A0A0A; }
-      .custom-cursor { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
-      .cursor-dot { width: 8px; height: 8px; background-color: white; border-radius: 50%; transform: translate(-50%, -50%); }
-      .cursor-outline { width: 40px; height: 40px; border: 2px solid white; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-width 0.3s; }
-      .cursor-outline.hovered { width: 60px; height: 60px; border-width: 2px; }
       
+      /* UTILS */
+      #root { opacity: 0; visibility: hidden; }
       .scrollbar-hide::-webkit-scrollbar { display: none; }
       .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-      @media (min-width: 768px) and (pointer: fine) {
-        body, .cursor-pointer-grow, .cursor-pointer-grow * { cursor: none; }
-      }
-
-      /* --- CONTACT SECTION --- */
-      .contact-orb {
-        width: 40px; height: 40px; border-radius: 50%;
-        background: radial-gradient(circle at 30% 30%, #5DFDFD, #004D4D 70%, #0A0A0A 100%);
-        box-shadow: 0 0 15px 5px rgba(0, 255, 255, var(--glow-opacity, 0.2));
-        position: relative; will-change: transform, box-shadow; transition: background 0.3s, box-shadow 0.3s;
-      }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "url": "https://aistudiocdn.com/url@^0.11.4",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "vite": "https://aistudiocdn.com/vite@^7.2.2",
-    "path": "https://aistudiocdn.com/path@^0.12.7",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
-  }
-}
-</script>
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "url": "https://aistudiocdn.com/url@^0.11.4",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+        "react/": "https://aistudiocdn.com/react@^19.2.0/",
+        "react": "https://aistudiocdn.com/react@^19.2.0",
+        "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+        "vite": "https://aistudiocdn.com/vite@^7.2.2",
+        "path": "https://aistudiocdn.com/path@^0.12.7",
+        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+      }
+    }
+    </script>
 </head>
-  <body class="preloader-active">
+<body class="preloader-active">
+
     <div id="scramble-preloader">
       <audio id="bg-audio" src="https://cdn.pixabay.com/audio/2025/06/06/audio_d5026f8df6.mp3" loop></audio>
       <audio id="loop-audio" src="https://cdn.pixabay.com/audio/2022/03/17/audio_5f88a20fde.mp3"></audio>
-      <audio id="glitch-audio"></audio>
-      <audio id="transition-audio" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2ab03de167.mp3"></audio>
+      <audio id="glitch-audio"></audio> <audio id="transition-audio" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2ab03de167.mp3"></audio>
       
       <div id="start-orb" class="contact-orb"></div>
-
       <div class="scanline"></div>
       <div class="hero-container">
           <h1 id="target-text"></h1>
@@ -263,7 +219,6 @@
                     const from = oldText[i] || '';
                     const to = newText[i] || '';
                     const start = Math.floor(Math.random() * 40);
-                    // UPGRADE VISUAL: Duración 60
                     const end = start + Math.floor(Math.random() * 60) + 60;
                     this.queue.push({ from, to, start, end, char: from });
                 }
@@ -284,8 +239,6 @@
                     } else if (this.frame >= start) {
                         if (Math.random() < 0.2) char = this.chars[Math.floor(Math.random() * this.chars.length)];
                         if (this.glitchEl && Math.random() < 0.05) charClass = ' red-glitch';
-                        
-                        // LÓGICA DE AUDIO: 0.5% probabilidad
                         if (this.glitchEl && this.glitchPlayCount < this.maxGlitches && Math.random() < 0.005 && window.isAudioReady) {
                             if (this.glitchEl.paused && this.glitchEl.currentSrc) {
                                 if (isFinite(this.glitchEl.duration) && this.glitchEl.duration > 0) this.glitchEl.currentTime = Math.random() * this.glitchEl.duration;
@@ -313,7 +266,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const preloaderEl = document.getElementById('scramble-preloader');
             const rootEl = document.getElementById('root');
-            
             const urlParams = new URLSearchParams(window.location.search);
             const skipIntro = urlParams.get('skipIntro') === 'true';
             const forceSkip = false;
@@ -347,7 +299,6 @@
                       transitionAudioEl.play().catch(e => {});
                       gsap.to([bgAudioEl, loopAudioEl], { volume: 0, duration: 1 });
                     }
-
                     const tl = gsap.timeline({
                       onComplete: () => {
                         preloaderEl.style.display = 'none';
@@ -364,51 +315,34 @@
                     const textElement = document.getElementById('target-text');
                     const percentageElement = document.querySelector('.percentage-counter');
                     const fx = new TextScramble(textElement, glitchAudioEl);
-
-                    const phrases = [
-                        'DE LA VISIÓN',
-                        'CON ADAPTACIÓN',
-                        'INTELIGENCIA',
-                        'SIN LÍMITES'
-                    ];
-
+                    const phrases = ['DE LA VISIÓN', 'CON ADAPTACIÓN', 'INTELIGENCIA', 'SIN LÍMITES'];
                     const subliminalText = "THE LAST ART"; 
-
-                    // Tiempos ajustados para fluidez
                     const phraseTimings = [1, 6, 11, 16]; 
                     const subliminalTimings = [3.5, 8.5, 13.5];
-
                     let progress = { value: 0 };
                     const masterTl = gsap.timeline({ onComplete: startMainAppTransition });
 
-                    // --- LÓGICA DEL FLASH CON PARPADEO OSCURO (CINE) ---
                     const triggerSubliminal = () => {
                          const currentContent = textElement.innerHTML;
-
-                         // SECUENCIA: NEGRO (60ms) -> FLASH (120ms) -> NEGRO (60ms) -> RESTAURAR
+                         // BLACKOUT 1 (60ms)
                          textElement.innerHTML = ""; 
-
                          setTimeout(() => {
-                             // Mostrar flash con fuente Strasua
+                             // FLASH
                              textElement.innerHTML = `<span class="flash-glitch">${subliminalText}</span>`;
-
                              if (window.isAudioReady && glitchAudioEl && glitchAudioEl.currentSrc) {
                                  glitchAudioEl.currentTime = 0;
                                  glitchAudioEl.volume = 0.6;
                                  glitchAudioEl.play().catch(e => {});
                              }
-
                              setTimeout(() => {
+                                 // BLACKOUT 2 (60ms)
                                  textElement.innerHTML = ""; 
                                  if (glitchAudioEl) glitchAudioEl.volume = 1.0;
-
                                  setTimeout(() => {
                                      textElement.innerHTML = currentContent; 
-                                 }, 60); // 60ms negro final
-
-                             }, 120); // 120ms duración del flash visible
-
-                         }, 60); // 60ms negro inicial
+                                 }, 60); 
+                             }, 120); 
+                         }, 60); 
                     };
 
                     masterTl.to(progress, {
@@ -442,17 +376,14 @@
                 };
 
                 const startOrbEl = document.getElementById('start-orb');
-                
-                // ORB LOGIC
                 gsap.set(startOrbEl, { xPercent: -50, yPercent: -50, opacity: 1 });
                 const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
                 const mouse = { x: pos.x, y: pos.y };
                 const xSet = gsap.quickSetter(startOrbEl, "x", "px");
                 const ySet = gsap.quickSetter(startOrbEl, "y", "px");
-                
                 const breathing = { scale: 1 };
+                
                 gsap.to(breathing, { scale: 1.15, duration: 3, ease: 'sine.inOut', repeat: -1, yoyo: true });
-
                 gsap.set(startOrbEl, { x: pos.x, y: pos.y });
 
                 const mouseMoveHandler = e => { mouse.x = e.clientX; mouse.y = e.clientY; };
@@ -475,7 +406,6 @@
                     const speedX = pos.x - prevX; const speedY = pos.y - prevY;
                     const rotation = Math.atan2(speedY, speedX) * (180 / Math.PI);
                     const scaleDistortion = Math.min(Math.sqrt(speedX**2 + speedY**2) * 0.05, 0.4);
-
                     gsap.set(startOrbEl, {
                         rotation: rotation, scaleX: (1 + scaleDistortion) * breathing.scale, scaleY: (1 - scaleDistortion) * breathing.scale,
                     });
@@ -488,7 +418,6 @@
                     document.documentElement.removeEventListener("mouseleave", mouseLeaveHandler);
                     gsap.ticker.remove(ticker);
                     gsap.killTweensOf(breathing); gsap.killTweensOf(startOrbEl);
-
                     unlockAudio();
                     
                     const tl = gsap.timeline();
@@ -499,39 +428,37 @@
                         opacity: 1, visibility: 'visible', duration: 1, ease: 'power3.out',
                         onComplete: runIntroSequence
                     }, "-=0.2");
-
                 }, { once: true });
             }
         });
     </script>
     <script type="module" src="index.tsx"></script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const percentageElement = document.querySelector(".percentage-counter");
-    if (!percentageElement) return;
-    const glitchChars = ["Ô", "▒", "░", "▀", "▄", "¥", "▐", "█"];
-    const glitchEffect = () => {
-      // VISUAL GLITCH: RESTAURADO A 45% (0.45) PARA SER AGRESIVO
-      if (Math.random() < 0.45) {
-        const original = percentageElement.textContent;
-        const randIndex = Math.floor(Math.random() * glitchChars.length);
-        const glitchChar = glitchChars[randIndex];
-        const glitched = original.replace(/\d+%/, (m) => {
-          const pos = Math.floor(Math.random() * m.length);
-          return (m.substring(0, pos) + glitchChar + m.substring(pos + 1));
-        });
-        percentageElement.style.color = "#ff2a2a";
-        percentageElement.textContent = glitched;
-        setTimeout(() => {
-          percentageElement.textContent = original;
-          percentageElement.style.color = "#ffffff";
-        }, gsap.utils.random(60, 200));
-      }
-      gsap.delayedCall(gsap.utils.random(0.2, 0.8), glitchEffect);
-    };
-    glitchEffect();
-  });
-</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const percentageElement = document.querySelector(".percentage-counter");
+        if (!percentageElement) return;
+        const glitchChars = ["Ô", "▒", "░", "▀", "▄", "¥", "▐", "█"];
+        const glitchEffect = () => {
+          if (Math.random() < 0.45) { // 45% VISUAL GLITCH
+            const original = percentageElement.textContent;
+            const randIndex = Math.floor(Math.random() * glitchChars.length);
+            const glitchChar = glitchChars[randIndex];
+            const glitched = original.replace(/\d+%/, (m) => {
+              const pos = Math.floor(Math.random() * m.length);
+              return (m.substring(0, pos) + glitchChar + m.substring(pos + 1));
+            });
+            percentageElement.style.color = "#ff2a2a";
+            percentageElement.textContent = glitched;
+            setTimeout(() => {
+              percentageElement.textContent = original;
+              percentageElement.style.color = "#ffffff";
+            }, gsap.utils.random(60, 200));
+          }
+          gsap.delayedCall(gsap.utils.random(0.2, 0.8), glitchEffect);
+        };
+        glitchEffect();
+      });
+    </script>
 </body>
 </html>
