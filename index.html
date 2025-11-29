@@ -2,21 +2,63 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>The Last Art | Agencia Creativa de Inteligencia Artificial</title>
     <meta name="title" content="The Last Art | Agencia Creativa de Inteligencia Artificial">
-    <meta name="description" content="Transformamos marcas fusionando arte y algoritmos.">
-    
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="Transformamos marcas fusionando arte y algoritmos. Agencia de publicidad especializada en contenido generado por IA, video sintético y experiencias digitales inmersivas.">
+    <meta name="keywords" content="Agencia IA, Publicidad Artificial, Generación de Video AI, Diseño Generativo, Marketing Futuro, Gemini API, Creatividad Sintética, The Last Art Agency">
+    <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="language" content="Spanish">
+    <meta name="author" content="The Last Art">
     <link rel="canonical" href="https://www.thelastart.com/" />
+
+    <meta name="geo.region" content="PE-LMA" />
+    <meta name="geo.placename" content="Lima" />
+    <meta name="geo.position" content="-12.046374;-77.042793" />
+    <meta name="ICBM" content="-12.046374, -77.042793" />
+
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="Resumen para IA" />
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.thelastart.com/">
-    <meta property="og:title" content="The Last Art">
+    <meta property="og:site_name" content="The Last Art">
+    <meta property="og:title" content="The Last Art | El Futuro de la Creatividad">
+    <meta property="og:description" content="Descubre cómo la Inteligencia Artificial potencia la narrativa visual. Videos, imágenes y experiencias web de última generación.">
     <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
     <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.thelastart.com/">
+    <meta property="twitter:title" content="The Last Art | Agencia Creativa de IA">
+    <meta property="twitter:description" content="Fusionamos arte y algoritmos. Agencia líder en contenido generado por IA.">
+    <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs1qGXV4xNbXKX71cOIHIzasdSX1siu2j239TemtO1C9c7-LXzSRJAQZ1VCuC2g9GkS5EsDvKkHKR2qBWm_XD2iHNA8qvqrjUlNGDbae7R7Rdz023xdnAv-J3ItXTpvBF6VeMsIvqbnSPzZPI6U961wnfVBWEXdn6vHqbAdYrZn-siiFqv9UdgmE8fuv6p/s1280/Adobe%20Express%20-%20file.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "The Last Art",
+      "alternateName": "The Last Art AI Agency",
+      "url": "https://www.thelastart.com",
+      "logo": "https://aiseoutube-ui.github.io/Tap/logo.svg",
+      "description": "Agencia creativa especializada en soluciones de Inteligencia Artificial.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lima",
+        "addressRegion": "LMA",
+        "addressCountry": "PE"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+51-999-999-999",
+        "contactType": "sales",
+        "areaServed": ["PE", "US", "ES"],
+        "availableLanguage": ["es", "en"]
+      }
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -68,6 +110,7 @@
         background-color: #000; opacity: 1; visibility: visible;
         display: flex; align-items: center; justify-content: center;
         flex-direction: column;
+        cursor: default; /* FIX: Force cursor visibility during preload */
       }
       
       .hero-container {
@@ -221,7 +264,7 @@
             constructor(el, glitchAudioEl) {
                 this.el = el;
                 this.glitchEl = glitchAudioEl;
-                this.chars = '█▓▒░▀▄▌▐█▓▒░▀▄▌▐THE LAST ART';
+                this.chars = '█▓░▄▌THELASTART ';
                 this.update = this.update.bind(this);
             }
             setText(newText) {
@@ -444,7 +487,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const percentageElement = document.querySelector(".percentage-counter");
     if (!percentageElement) return;
-    const glitchChars = ["Ô", "▒", "░", "▀", "▄", "¥", "▐", "█"];
+    const glitchChars = ["Ô", "▒", "░", "ART▀", "THE▄", "¥", "▐", "LAST█"];
     const glitchEffect = () => {
       if (Math.random() < 0.45) {
         const original = percentageElement.textContent;

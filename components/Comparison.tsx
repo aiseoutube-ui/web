@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 
 declare const gsap: any;
@@ -137,7 +136,7 @@ const Comparison: React.FC = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative bg-brand-primary">
+        <section id="comparison" ref={sectionRef} className="relative bg-brand-primary">
             {/* Using min-h-[100dvh] helps mobile browsers address bar resizing */}
             <div ref={pinnedContainerRef} className="min-h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-20 items-center">
