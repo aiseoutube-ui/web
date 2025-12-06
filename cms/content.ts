@@ -13,9 +13,8 @@ export const content: CMSContent = {
       { name: 'Contacto', href: '#contact' },
     ],
     socialLinks: [
-      { platform: 'instagram', url: 'https://instagram.com' },
-      { platform: 'twitter', url: 'https://twitter.com' },
-      { platform: 'linkedin', url: 'https://linkedin.com' },
+      { platform: 'Youtube', url: 'https://www.youtube.com/@thelastart.c' },
+    
     ],
   },
   hero: {
@@ -151,8 +150,6 @@ export const content: CMSContent = {
     ],
     socialLinks: [
       { platform: 'instagram', url: 'https://instagram.com' },
-      { platform: 'twitter', url: 'https://twitter.com' },
-      { platform: 'linkedin', url: 'https://linkedin.com' },
     ],
   }
 };
