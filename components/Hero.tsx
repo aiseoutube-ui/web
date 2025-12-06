@@ -12,10 +12,52 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ content, isLoaded }) => {
   const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const animationStarted = useRef(false);
+
+  useEffect(() => {
+    // Manejo de reproducción de Video con Audio
+    const video = videoRef.current;
+    if (video) {
+        // 1. Cuando el usuario hace clic en el orbe, desbloqueamos el audio
+        const handleUnlock = () => {
+            video.volume = 0;
+            video.play().then(() => {
+                video.pause();
+                video.currentTime = 0;
+            }).catch(e => console.log("Unlock video failed", e));
+        };
+
+        // 2. Cuando termina el preloader, reproducimos con sonido
+        const handlePlay = () => {
+            video.volume = 0; // Empezar en 0 para fade in
+            video.currentTime = 0;
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Fade in del audio para que sea elegante
+                    gsap.to(video, { volume: 0.8, duration: 2 });
+                }).catch(error => {
+                    console.warn("Auto-play prevented, falling back to muted", error);
+                    video.muted = true;
+                    video.play();
+                });
+            }
+        };
+
+        window.addEventListener('unlockMedia', handleUnlock);
+        window.addEventListener('preloaderFinished', handlePlay);
+
+        return () => {
+            window.removeEventListener('unlockMedia', handleUnlock);
+            window.removeEventListener('preloaderFinished', handlePlay);
+        };
+    }
+  }, []);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -93,14 +135,13 @@ const Hero: React.FC<HeroProps> = ({ content, isLoaded }) => {
     <section id="hero" ref={heroRef} className="relative h-[100dvh] w-full flex items-center justify-center text-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-0">
         <video
+          ref={videoRef}
           className="hero-video absolute top-0 left-0 w-full h-full object-contain bg-black"
           src={content.backgroundVideoUrl}
-          autoPlay
-          loop
-          muted
           playsInline
           // @ts-ignore
           webkit-playsinline="true" 
+          // Removed autoPlay, loop, and muted to handle programmatically
         />
         <div className="absolute inset-0 bg-brand-primary opacity-60"></div>
       </div>
