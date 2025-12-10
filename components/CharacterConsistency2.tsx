@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 const consistencyContent2 = {
   title: "Tu Seguro ante lo Inesperado",
-  description: "Sabemos que la vida sucede: cambios de look repentinos, agendas que no cuadran o imprevistos de última hora. Esta tecnología te blinda ante esas variables. No buscamos sustituir el talento humano, sino ofrecerte una alternativa estable que garantiza que tu proyecto avance, pase lo que pase.",
+  description: "Sabemos que en la vida sucede: cambios de look repentinos, agendas que no cuadran o imprevistos de última hora. Esta tecnología te blinda ante esas variables. No buscamos sustituir el talento humano, sino ofrecerte una alternativa estable que garantiza que tu proyecto avance, pase lo que pase.",
   slides: [
     {
       id: 0,
