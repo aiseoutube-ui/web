@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 
 declare const gsap: any;
@@ -46,6 +47,9 @@ const Comparison: React.FC = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const pinnedContainerRef = useRef<HTMLDivElement>(null);
     const videoMediaRef = useRef<HTMLVideoElement>(null);
+    const progressBarRef = useRef<HTMLDivElement>(null);
+    const scrollHintRef = useRef<HTMLDivElement>(null);
+    
     const [typedText, setTypedText] = useState('');
     const [showCursor, setShowCursor] = useState(true);
     
@@ -65,9 +69,9 @@ const Comparison: React.FC = () => {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     pin: pinnedContainerRef.current,
-                    scrub: 1, // Increased scrub for smoother, heavier feel
+                    scrub: 0.5, // Faster scrub response
                     start: 'top top',
-                    end: `+=${window.innerHeight * 10}` // Reduced to 10x per user request for better mobile pacing
+                    end: `+=${window.innerHeight * 6}` // Reduced from 10x to 6x for faster pacing
                 }
             });
 
@@ -75,11 +79,19 @@ const Comparison: React.FC = () => {
             gsap.set(textSteps, { opacity: 0 });
             gsap.set([simplePromptContainer, technicalPromptContainer, image2El, image3El, image4El, videoEl], { opacity: 0 });
             gsap.set([image2El, image3El, image4El, videoEl], { scale: 0.95 });
+            gsap.set(progressBarRef.current, { height: '0%' });
+            
             setTypedText('');
             setShowCursor(true);
 
+            // ANIMATION SEQUENCE
+            
+            // 0. Global Progress Bar Animation tied to the entire timeline
+            // We use a separate tween added to the timeline duration
+            tl.to(progressBarRef.current, { height: '100%', ease: 'none', duration: tl.duration() }, 0);
+
             // 1. Simple prompt appears
-            tl.to(simplePromptContainer, { opacity: 1, duration: 2 });
+            tl.to(simplePromptContainer, { opacity: 1, duration: 1 });
             
             // 2. Technical prompt types out
             tl.to(technicalPromptContainer, { opacity: 1, duration: 0.5 }, "<");
@@ -87,7 +99,7 @@ const Comparison: React.FC = () => {
             const proxy = { value: 0 };
             tl.to(proxy, {
                 value: fullText.length,
-                duration: 4, 
+                duration: 3, // Faster typing 
                 ease: 'none',
                 onUpdate: () => {
                     setTypedText(fullText.substring(0, Math.ceil(proxy.value)));
@@ -95,40 +107,43 @@ const Comparison: React.FC = () => {
                 onComplete: () => {
                     setShowCursor(false);
                 }
-            }, "+=0.5");
+            }, "+=0.2");
 
             // 3. Pause, then fade out both prompts
-            tl.to([simplePromptContainer, technicalPromptContainer], { opacity: 0, duration: 1 }, "+=1");
+            tl.to([simplePromptContainer, technicalPromptContainer], { opacity: 0, duration: 0.5 }, "+=0.5");
 
             // 4. Text Step 1 & Image 2 appear
-            tl.to(textSteps[0], { opacity: 1, duration: 2 }, "+=0.5")
-              .to(image2El, { opacity: 1, scale: 1, duration: 2 }, "<");
+            tl.to(textSteps[0], { opacity: 1, duration: 1 }, "+=0.2")
+              .to(image2El, { opacity: 1, scale: 1, duration: 1 }, "<");
 
             // 5. Fade out step 1, fade in step 2 & image 3
-            tl.to(textSteps[0], { opacity: 0, duration: 1 }, "+=2") 
-              .to(textSteps[1], { opacity: 1, duration: 2 }, "<")
-              .to(image2El, { opacity: 0, duration: 1 }, "<")
-              .to(image3El, { opacity: 1, scale: 1, duration: 2 }, "<+=0.2");
+            tl.to(textSteps[0], { opacity: 0, duration: 0.5 }, "+=1.5") 
+              .to(textSteps[1], { opacity: 1, duration: 1 }, "<")
+              .to(image2El, { opacity: 0, duration: 0.5 }, "<")
+              .to(image3El, { opacity: 1, scale: 1, duration: 1 }, "<+=0.1");
 
             // 6. Fade out step 2, fade in step 3 & image 4
-            tl.to(textSteps[1], { opacity: 0, duration: 1 }, "+=2")
-              .to(textSteps[2], { opacity: 1, duration: 2 }, "<")
-              .to(image3El, { opacity: 0, duration: 1 }, "<")
-              .to(image4El, { opacity: 1, scale: 1, duration: 2 }, "<+=0.2");
+            tl.to(textSteps[1], { opacity: 0, duration: 0.5 }, "+=1.5")
+              .to(textSteps[2], { opacity: 1, duration: 1 }, "<")
+              .to(image3El, { opacity: 0, duration: 0.5 }, "<")
+              .to(image4El, { opacity: 1, scale: 1, duration: 1 }, "<+=0.1");
 
             // 7. Fade out step 3, fade in step 4 & video
-            tl.to(textSteps[2], { opacity: 0, duration: 1 }, "+=2")
-              .to(textSteps[3], { opacity: 1, duration: 2 }, "<")
-              .to(image4El, { opacity: 0, scale: 0.95, duration: 1 }, "<")
+            tl.to(textSteps[2], { opacity: 0, duration: 0.5 }, "+=1.5")
+              .to(textSteps[3], { opacity: 1, duration: 1 }, "<")
+              .to(image4El, { opacity: 0, scale: 0.95, duration: 0.5 }, "<")
               .to(videoEl, { 
                 opacity: 1, 
                 scale: 1, 
-                duration: 2, 
+                duration: 1, 
                 onStart: () => videoMediaRef.current?.play().catch(e => console.error("Video play failed", e)) 
-              }, "<+=0.2");
+              }, "<+=0.1");
               
+            // Fade out the Scroll Hint near the end
+            tl.to(scrollHintRef.current, { opacity: 0, y: 20, duration: 0.5 }, ">-1");
+
             // Add a final pause
-            tl.to({}, {duration: 3});
+            tl.to({}, {duration: 1});
 
         }, sectionRef);
 
@@ -139,10 +154,16 @@ const Comparison: React.FC = () => {
         <section id="comparison" ref={sectionRef} className="relative bg-brand-primary">
             {/* Using min-h-[100dvh] helps mobile browsers address bar resizing */}
             <div ref={pinnedContainerRef} className="min-h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-20 items-center">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-20 items-center relative">
                     
                     {/* Left side: Text content */}
-                    <div className="z-10 relative order-2 md:order-1">
+                    <div className="z-10 relative order-2 md:order-1 pl-6 border-l border-white/10">
+                        {/* Vertical Progress Bar Track */}
+                        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white/5">
+                             {/* The Fill */}
+                             <div ref={progressBarRef} className="w-full bg-brand-accent shadow-[0_0_10px_#00FFFF] h-0 origin-top"></div>
+                        </div>
+
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-8">{processContent.title}</h2>
                         <div className="relative min-h-[12rem] md:min-h-[10rem]">
                             {/* Container for initial simple prompt */}
@@ -201,6 +222,15 @@ const Comparison: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* SCROLL HINT INDICATOR */}
+                <div ref={scrollHintRef} className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center pointer-events-none z-20">
+                     <p className="text-brand-accent/70 font-mono text-[10px] uppercase tracking-[0.3em] animate-pulse mb-2">
+                        Rendering Sequence... [ SCROLL ]
+                     </p>
+                     <div className="w-[1px] h-8 bg-gradient-to-b from-brand-accent to-transparent"></div>
+                </div>
+
             </div>
         </section>
     );
