@@ -82,57 +82,7 @@ export const content: CMSContent = {
         ],
         social: [{ platform: 'linkedin', url: '#' }, { platform: 'github', url: '#' }] 
     },
-    { 
-        id: 3, 
-        name: 'Sasha Moretti', 
-        role: 'Marketing Communications Manager', 
-        image: 'https://picsum.photos/500/700?random=40', 
-        burstImages: [
-            'https://picsum.photos/500/700?random=41',
-            'https://picsum.photos/500/700?random=42',
-            'https://picsum.photos/500/700?random=43'
-        ],
-        stats: [
-            { label: 'Estilo', value: 95 },
-            { label: 'UX/UI', value: 92 },
-            { label: 'Composición', value: 97 }
-        ],
-        social: [{ platform: 'instagram', url: '#' }, { platform: 'linkedin', url: '#' }] 
-    },
-    { 
-        id: 4, 
-        name: 'Daniela Flores', 
-        role: 'Estratega de Contenido', 
-        image: 'https://picsum.photos/500/700?random=50', 
-        burstImages: [
-            'https://picsum.photos/500/700?random=51',
-            'https://picsum.photos/500/700?random=52',
-            'https://picsum.photos/500/700?random=53'
-        ],
-        stats: [
-            { label: 'Narrativa', value: 98 },
-            { label: 'Estrategia', value: 94 },
-            { label: 'SEO', value: 90 }
-        ],
-        social: [{ platform: 'linkedin', url: '#' }, { platform: 'twitter', url: '#' }] 
-    },
-    { 
-        id: 5, 
-        name: 'Eva Mendez', 
-        role: 'Project Manager', 
-        image: 'https://picsum.photos/500/700?random=60', 
-        burstImages: [
-            'https://picsum.photos/500/700?random=61',
-            'https://picsum.photos/500/700?random=62',
-            'https://picsum.photos/500/700?random=63'
-        ],
-        stats: [
-            { label: 'Agilidad', value: 100 },
-            { label: 'Organización', value: 98 },
-            { label: 'Liderazgo', value: 95 }
-        ],
-        social: [{ platform: 'linkedin', url: '#' }] 
-    },
+   
   ],
   contact: {
     preTitle: 'Looks like you need some help!!!',

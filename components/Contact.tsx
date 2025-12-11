@@ -521,11 +521,14 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
                                       setShowScheduler(true);
                                   }
                               });
-                              session.sendToolResponse({
-                                  functionResponses: calls.map(call => ({
-                                      id: call.id, name: call.name, response: { result: "OK" }
-                                  }))
-                              });
+                              // Safely send response using ref
+                              if (sessionRef.current) {
+                                  sessionRef.current.sendToolResponse({
+                                      functionResponses: calls.map(call => ({
+                                          id: call.id, name: call.name, response: { result: "OK" }
+                                      }))
+                                  });
+                              }
                           }
                       }
 
@@ -607,7 +610,8 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
           const processor = ctx.createScriptProcessor(4096, 1, 1);
           processorRef.current = processor;
           processor.onaudioprocess = (e) => {
-              if (!isRecordingRef.current) return;
+              // CRITICAL FIX: Ensure session exists before sending
+              if (!isRecordingRef.current || !sessionRef.current) return;
               
               const inputData = e.inputBuffer.getChannelData(0);
               const downsampledData = downsampleBuffer(inputData, inputSampleRate, targetSampleRate);
@@ -617,9 +621,13 @@ const Contact: React.FC<ContactProps> = ({ content }) => {
               
               lastAudioSentTimeRef.current = Date.now();
 
-              sessionRef.current.sendRealtimeInput({
-                  media: { mimeType: "audio/pcm;rate=16000", data: base64Params }
-              });
+              try {
+                  sessionRef.current.sendRealtimeInput({
+                      media: { mimeType: "audio/pcm;rate=16000", data: base64Params }
+                  });
+              } catch (err) {
+                  console.warn("Session error during audio send:", err);
+              }
           };
           source.connect(processor);
           processor.connect(ctx.destination);
