@@ -39,7 +39,7 @@ steps: [
     image2: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjz2KndddO5ApH9P2Ic8li8zIdMYMxyhCxxXlJPDFXA1zSNNGI0szA6DGTxIvfT_zUtsJfAK-UHRtdVP9CzksJePX9Rj_n15LBQAsDUbJLYuRPaBV9U2UjsbFcBbKiMR6GmldN3TcoxG-tE_XHZzVwRGBTABRRINB-m7yi_-jcBLObtXwOzS49DwcJxBpZ1/s1600/Gemini_Generated_Image_k0e5hek0e5hek0e5.png',
     image3: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhW0C7_WUTw0stvYIc9HhhzTlcQpuv48Z9FnRSu9UmOGGWzJhms8AxwHvBmN89KbEf5Q-2RznNiUYjXoogyTmKT8ZmGybwb2jFwOTg06mT-yks6iKzmAtXpphV6XJMsHzlVbkQ4vM7l3laqwh5yQsZcitAcB2uF9cvnO9NVBptbIPOsw2TwaP8jkiZUK6b4/s1600/Whisk_6c2b320cb27dbe58ebc41b7da48239a3dr.png',
     image4: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjmC96iMf3DZLTRaXmHYSqXBzAi5FtqWc1h_r7LKFszk4lyfhzHcXOZ-s1jPmSruo_2tsD-T8xDx7AWgMtf7XEG2aQOXTWw1hXLENkqLZtm7vgD9mSYNDRrc4OdUrylJQqffFWiZgFflbF6HRKTkg5uT33Oa21SPsfAB_SUYncuSvBDkv3dVP2Qy2kdJsxT/s1600/Gemini_Generated_Image_k0e5hek0e5hek0e5%20%280-00-00-00%29.png',
-    video: 'https://aiseoutube-ui.github.io/thelastart/video.mp4'
+    video: 'https://aiseoutube-ui.github.io/thelastart/r2.mp4'
   }
 };
 

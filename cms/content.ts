@@ -18,7 +18,7 @@ export const content: CMSContent = {
     ],
   },
   hero: {
-    backgroundVideoUrl: 'https://aiseoutube-ui.github.io/thelastart/video.mp4',
+    backgroundVideoUrl: 'https://aiseoutube-ui.github.io/thelastart/r1.mp4',
     title: '',
     subtitle: 'Agencia creativa especializada en Inteligencia Artificial. Fusionamos arte y algoritmos para liberar el potencial de tu marca.',
     ctaText: 'Ver el Impacto',
