@@ -1,0 +1,21 @@
+{
+  "name": "The Last Art",
+  "short_name": "The Last Art",
+  "description": "Agencia Creativa de Inteligencia Artificial",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    {
+      "src": "https://yt3.ggpht.com/BP3gVREZPL3Kvl20wRKahktMgKUb7ev-E2nMhsUjoNMojVv907RzcIoLUBEwPpn6WSSVX4YRcg=s600-c-k-c0x00ffffff-no-rj-rp-mo",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://yt3.ggpht.com/BP3gVREZPL3Kvl20wRKahktMgKUb7ev-E2nMhsUjoNMojVv907RzcIoLUBEwPpn6WSSVX4YRcg=s600-c-k-c0x00ffffff-no-rj-rp-mo",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
