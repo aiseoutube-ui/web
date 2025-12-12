@@ -67,7 +67,7 @@ export const content: CMSContent = {
     { 
         id: 2, 
         name: 'Peter Queens', 
-        role: 'Peter Queens: Chief AI Officer (CAIO)', 
+        role: 'Chief AI Officer (CAIO)', 
         image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3CO5r51IGOzX6xS9atNPnikklH7-EK6YtSydBx7Bx9y0A2yHguX3OJdBLWPSrYmkgEVZnFPCQvW71H9TC3jWMA60Kqaswi6THG6udQiZBzrBZ3DuUUhU9QeAjqn0tLIZv2qphqoAy_LVxpClis9yvauJAPVekUWqhcp_c2k6Ktbvj7S9M3DMSQrsgWAZ3/s1184/past-forward-1960s.jpg', 
         burstImages: [
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgoPgDdMfFrFS7qm1HLPsF9MpSdPengO-lBV5c7xbbXfQgaWlAHnLnqubYgJBwBXXtyx9n1Jm5ayv6pazciKW6uJ0BYvhpWcWo-5XrACDLx_tesZG0-bB2NdpPtsBBF0SNTcUj3qblhQQiSL-uQE270Q0T5LDLU5lpgFoe3MqyaZseQp7ATR3yp3pSJN_m8/s1184/past-forward-1950s.jpg',
@@ -79,6 +79,25 @@ export const content: CMSContent = {
             { label: 'Prompting', value: 100 },
             { label: 'Sinergia AI', value: 98 },
             { label: 'Con Energia', value: 10 }
+        ],
+        social: [{ platform: 'linkedin', url: '#' }, { platform: 'github', url: '#' }] 
+    },
+
+        { 
+        id: 3, 
+        name: 'Zoila Araujo', 
+        role: ' Product Manager (PM)', 
+        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZK4urTM1VoeUsGiG2DBOZ6KaTSf8If4NkC9zpl0416DXd9evCwGYaKkFxhyphenhyphen8wua6SUNd1viUeCmy1DJbX-0EkbY0VggMgUH2K5OnPKWRsJn50aV8_W38gAQOwu4R237vauee8Sbp1HjSXPA3dvknh3iP9ImtTaIxsT3jh2WbM8y1YwhRwKVX71N9H6oUK/s1184/past-forward-1950s.jpg', 
+        burstImages: [
+            'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8IwYpKG9c5z_e_kPQvKnvtYznCQfY5w1XZ3oodrfJEsvCQnAZ2xr3nkC1t2v0UB3Ejpz9xpORqB5lrnQkTC2k1FDrh_SEmdvsuKdTNZXB-zlMBEx0ifmcvr3MdI_iYNUYcRkuBBf_ikK-etTUujwsfUHuclke7apAM1jDL_fq_qPxAg0Xf6Y3DQ4hKcfO/s1184/past-forward-1980s.jpg',
+            'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh625PNGJLz0dxsrgadWjUDgdojNQZYtlL0obB8LBEEDOZrnqVDs2E_XvbI0y39HgPhm6IOQaIk5hm-wHkbqXG1DlJU1LGA3_6T4FUzmUADbszQE5OADP2e-cayvKDNMIERd8li-TbUpyQYt2GQpeCbF63hGsWitlQ64OiHbq7ADSrrfeNX9hQJNkBPw-ug/s1184/past-forward-1990s.jpg',
+            'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiP-ZbrM0d80qWsnOLApyy1Vb5sMzUz4OpI6GP_ltmTnPZfldfUf38UDEC6Q7kzMmsxId0JKbu7AEdG0KVfsx7Ym0xnHIVlLhqfyMftrZ5u2cK-x5JRCXT0p0nHcU0INPyJUZVmCZy0i8NFcVRnRMUwuZORiw0RoBEzg7_nVPlvmjE4l7Sx8BdNv6C-hnjz/s1184/past-forward-2000s.jpg'
+        ],
+stats: [
+            { label: 'Marketing', value: 98 },
+            { label: 'Ejecuccion', value: 100 },
+            { label: 'Planiemiento', value: 98 },
+            { label: 'Healthy Snacks', value: 30 }
         ],
         social: [{ platform: 'linkedin', url: '#' }, { platform: 'github', url: '#' }] 
     },
