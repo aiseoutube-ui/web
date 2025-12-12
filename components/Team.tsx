@@ -126,7 +126,8 @@ const TeamCard: React.FC<{
              <img 
                 src={currentImg} 
                 alt={member.name}
-                className={`w-full h-full object-cover transition-transform duration-100 ease-linear ${isActive ? 'scale-100' : 'scale-110'} object-top`}
+                // Changed from object-top to object-center to fix cropping issues
+                className={`w-full h-full object-cover transition-transform duration-100 ease-linear ${isActive ? 'scale-100' : 'scale-110'} object-center`}
                 loading={isActive ? "eager" : "lazy"}
                 decoding={isActive ? "sync" : "async"}
              />
