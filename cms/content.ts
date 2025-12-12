@@ -51,6 +51,7 @@ export const content: CMSContent = {
         name: 'Cristobal Pallete', 
         role: 'Director Creativo', 
         image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhaglXGCfTfSx6bIN3Ym88Aw_09Xv2X62ytp_mMSyFWHEmvPl-l_tly6GtynOqQBBYSSfdnVGCoVIhM57AGFlM8W0IPuByO3vVA0VIX-K_AMNmSIlYV0_bCKIdKS4c5r7neZfyHRhS8Vki3AZluy9kX-mmjgQoOoM4NPYZN7X4Ompp2NDki-Elbbrze6uis/s769/cb971b78-d8b3-45a3-93c9-b9e2570d4ec2.webp', 
+        alignment: 'object-top',
         burstImages: [
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsy-tx2F3PzJykytuhdGks10b4DpLgbpwdXxPh4ILP6T0_I3rpgw5-A22DGtJwPBFLyJfF8wkvTBeWFwn6paSdrIaV7TMSRVWGSAZObZMCjBOBwIGIh8GSWFNAbbAKizY-SGJ7L8tySZyy98Dn-QDVSLRso61OetbcqGL7SgrWWQFLJQvdHeIafEl0jD7x/s787/8310fc70-9ad2-4475-aac0-56bc2b7c31bb.webp',
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhE2QG1rNEkgvsXQMjnbDRchEgFNZDuKLNWYkJJH5Ue4dLyLI95dgxZDBUYo1sMDxvKY4qLvrRW7LIcNHhdjTf9z8IXCFGQ8xRRf0LUn6olMgxCNW6xcy1ax1YVJG5rHAVCs1cKvBoQ5ASkATI0DRBfE6-gAYcHWHXa1zXP98_v55BUMXoFnVkZ5FFyZDb/s787/e662b3ff-d46d-46d9-8fd0-df61b6c14f26.webp',
@@ -69,6 +70,7 @@ export const content: CMSContent = {
         name: 'Peter Queens', 
         role: 'Chief AI Officer (CAIO)', 
         image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3CO5r51IGOzX6xS9atNPnikklH7-EK6YtSydBx7Bx9y0A2yHguX3OJdBLWPSrYmkgEVZnFPCQvW71H9TC3jWMA60Kqaswi6THG6udQiZBzrBZ3DuUUhU9QeAjqn0tLIZv2qphqoAy_LVxpClis9yvauJAPVekUWqhcp_c2k6Ktbvj7S9M3DMSQrsgWAZ3/s1184/past-forward-1960s.jpg', 
+        alignment: 'object-top',
         burstImages: [
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgoPgDdMfFrFS7qm1HLPsF9MpSdPengO-lBV5c7xbbXfQgaWlAHnLnqubYgJBwBXXtyx9n1Jm5ayv6pazciKW6uJ0BYvhpWcWo-5XrACDLx_tesZG0-bB2NdpPtsBBF0SNTcUj3qblhQQiSL-uQE270Q0T5LDLU5lpgFoe3MqyaZseQp7ATR3yp3pSJN_m8/s1184/past-forward-1950s.jpg',
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUXtyYvdnnh1yBzWdPfpa5qLaStjsAoYmh_ROR9SH-fxL1nBTNmwmf5Kd4IVXB6r719QtM5aUfWugwJFsaSzi5h8VJUk4f9k4_2trjDCAIcoUNteDwMhtmCNp5hX6wIFswCvaqY0BaquTBEDwEHeHgf6e4VEQ8tzT_jfTeOLyo2Hp8bVitTJRAsIwVeppi/s1184/past-forward-1970s.jpg',
@@ -88,6 +90,7 @@ export const content: CMSContent = {
         name: 'Zoila Araujo', 
         role: ' Product Manager (PM)', 
         image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZK4urTM1VoeUsGiG2DBOZ6KaTSf8If4NkC9zpl0416DXd9evCwGYaKkFxhyphenhyphen8wua6SUNd1viUeCmy1DJbX-0EkbY0VggMgUH2K5OnPKWRsJn50aV8_W38gAQOwu4R237vauee8Sbp1HjSXPA3dvknh3iP9ImtTaIxsT3jh2WbM8y1YwhRwKVX71N9H6oUK/s1184/past-forward-1950s.jpg', 
+        alignment: 'object-center',
         burstImages: [
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8IwYpKG9c5z_e_kPQvKnvtYznCQfY5w1XZ3oodrfJEsvCQnAZ2xr3nkC1t2v0UB3Ejpz9xpORqB5lrnQkTC2k1FDrh_SEmdvsuKdTNZXB-zlMBEx0ifmcvr3MdI_iYNUYcRkuBBf_ikK-etTUujwsfUHuclke7apAM1jDL_fq_qPxAg0Xf6Y3DQ4hKcfO/s1184/past-forward-1980s.jpg',
             'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh625PNGJLz0dxsrgadWjUDgdojNQZYtlL0obB8LBEEDOZrnqVDs2E_XvbI0y39HgPhm6IOQaIk5hm-wHkbqXG1DlJU1LGA3_6T4FUzmUADbszQE5OADP2e-cayvKDNMIERd8li-TbUpyQYt2GQpeCbF63hGsWitlQ64OiHbq7ADSrrfeNX9hQJNkBPw-ug/s1184/past-forward-1990s.jpg',

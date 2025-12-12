@@ -51,6 +51,7 @@ export interface TeamMember {
   burstImages: string[]; // Array of 3 images for the "Wosh" effect
   stats: TeamMemberStat[]; // HUD Data from CMS
   social: SocialLink[];
+  alignment?: string; // Optional: 'object-top', 'object-center', etc.
 }
 
 export interface ContactContent {

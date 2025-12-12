@@ -126,8 +126,8 @@ const TeamCard: React.FC<{
              <img 
                 src={currentImg} 
                 alt={member.name}
-                // Changed from object-top to object-center to fix cropping issues
-                className={`w-full h-full object-cover transition-transform duration-100 ease-linear ${isActive ? 'scale-100' : 'scale-110'} object-center`}
+                // DYNAMIC ALIGNMENT: Uses specific alignment from CMS or defaults to object-top
+                className={`w-full h-full object-cover transition-transform duration-100 ease-linear ${isActive ? 'scale-100' : 'scale-110'} ${member.alignment || 'object-top'}`}
                 loading={isActive ? "eager" : "lazy"}
                 decoding={isActive ? "sync" : "async"}
              />
